@@ -1,7 +1,7 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": ["next/core-web-vitals"],
+  "plugins": ["@typescript-eslint", "unused-imports"],
   "rules": {
-    "react/self-closing-comp": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "unused-imports/no-unused-imports": "error"
   }
