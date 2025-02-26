@@ -21,7 +21,7 @@ const ContactFormEmail = ({ message, senderEmail }: ContactFormEmailProps) => (
       <Tailwind>
         <Body className='bg-slate-200 text-black'>
           <Container>
-            <Section className='bg-white borderBlack my-10 px-10 rounded-md'>
+            <Section className='bg-white my-10 px-10 rounded-md'>
               <Heading className='leading-tight'>
                 You received this message from contact form in your portfolio.
               </Heading>

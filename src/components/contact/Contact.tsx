@@ -36,7 +36,7 @@ const Contact = () => {
           maxLength={750}
           required
           name='message'
-          className='h-52 p-4 my-3 rounded-lg borderBlack resize-none dark:bg-gray-700'
+          className='h-52 p-4 my-3 rounded-lg resize-none dark:bg-gray-700'
           placeholder='Your message.'
         />
         <div className='w-full flex justify-center mt-4'>

@@ -71,7 +71,7 @@ const Intro = () => {
             href='https://linkedin.com/in/marek-lipčák'
             target='_blank'
             className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer borderBlack'>
+            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsLinkedin />
           </a>
 
@@ -79,14 +79,14 @@ const Intro = () => {
             href='https://www.instagram.com/marek.lipcak/'
             target='_blank'
             className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer borderBlack'>
+            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsInstagram />
           </a>
           <a
             href='https://github.com/mark-fender'
             target='_blank'
             className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer borderBlack'>
+            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsGithub />
           </a>
         </div>
