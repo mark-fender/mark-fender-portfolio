@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import photo from '/public/assets/photo.jpeg';
 import { motion } from 'framer-motion';
+import photo from '../../../public/assets/photo.jpeg';
 import Link from 'next/link';
 import { BsArrowRight, BsGithub, BsInstagram, BsLinkedin } from 'react-icons/bs';
 import { TypeAnimation } from 'react-type-animation';
@@ -92,5 +92,4 @@ const Intro = () => {
     </section>
   );
 };
-
 export default Intro;

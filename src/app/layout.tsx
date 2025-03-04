@@ -36,7 +36,7 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <html lang='en' className='!scroll-smooth' suppressHydrationWarning>
+    <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
       <body
         className={`${satoshi.className} bg-slate-200 text-gray-950 relative pt-28 sm:pt-36 
       dark:bg-slate-800 dark:text-gray-50 dark:text-opacity-900 overscroll-none`}>
