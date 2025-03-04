@@ -29,7 +29,7 @@ const Intro = () => {
             height={256}
             quality='95'
             priority={true}
-            className='rounded-full border-[0.15rem] border-gray-200 shadow-xl'
+            className='intro-image'
           />
         </motion.div>
       </div>
@@ -62,8 +62,7 @@ const Intro = () => {
         transition={{ delay: 0.15, duration: 0.35 }}>
         <Link
           href='#contact'
-          className='bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none
-          focus:scale-105 hover:scale-105 hover:bg-gray-950 dark:bg-gray-950 active:scale-102 transition group'>
+          className='contact-button group'>
           Contact me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
         </Link>
         <div className='flex flex-row gap-2'>
@@ -74,7 +73,6 @@ const Intro = () => {
             focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsLinkedin />
           </a>
-
           <a
             href='https://www.instagram.com/marek.lipcak/'
             target='_blank'

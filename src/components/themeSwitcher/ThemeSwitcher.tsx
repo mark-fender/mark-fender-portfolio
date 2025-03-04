@@ -19,10 +19,7 @@ const ThemeSwitcher = () => {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'tween', duration: 0.25 }}
-      className='fixed bottom-10 right-10 bg-white w-[3rem] h-[3rem] bg-opacity-80 
-      backdrop-blur-[0.5rem] border border-white border-opacity-40 shadow-xl 
-      rounded-full flex items-center justify-center hover:scale-[1.15] 
-      active:scale-105 transition-all dark:bg-gray-950'
+      className='theme-switcher'
       onClick={themeSwitchHandler}>
       {resolvedTheme && resolvedTheme === ThemeModes.LIGHT ? (
         <BsLightbulbOff />

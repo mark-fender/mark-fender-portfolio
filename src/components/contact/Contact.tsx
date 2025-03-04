@@ -18,7 +18,7 @@ const Contact = () => {
       transition={{ duration: 1.2 }}
       viewport={{ once: true }}>
       <SectionHeading>Contact me</SectionHeading>
-      <form className='mt-4 flex flex-col' action={handleFormSubmitAction}>
+      <form className='contact-form' action={handleFormSubmitAction}>
         <span className='w-full text-center mb-4'>
           Let&apos;s talk about possible collaboration.
         </span>
@@ -28,7 +28,7 @@ const Contact = () => {
           type='email'
           autoComplete='off'
           name='senderEmail'
-          className='h-14 px-4 rounded-lg borderBblack dark:bg-gray-700'
+          className='contact-input'
           placeholder='Your e-mail.'
         />
         <textarea
@@ -36,7 +36,7 @@ const Contact = () => {
           maxLength={750}
           required
           name='message'
-          className='h-52 p-4 my-3 rounded-lg resize-none dark:bg-gray-700'
+          className='contact-textarea'
           placeholder='Your message.'
         />
         <div className='w-full flex justify-center mt-4'>

@@ -10,7 +10,7 @@ type CustomToastProps = {
 
 const CustomToast = ({ toast, message, icon }: CustomToastProps) => (
   <div className={clsx(
-    'max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex text-gray-900 dark:bg-gray-900 dark:text-gray-50',
+    'custom-toast',
     {
       'animate-enter': toast.visible,
       'animate-leave': !toast.visible,
