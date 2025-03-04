@@ -7,7 +7,7 @@ const useExperience = () => {
   const { isMobile } = useIsMobile();
   const { sectionRef } = useSectionInView({
     sectionName: 'Experience',
-    threshold: isMobile ? 0.3 : 0.9,
+    threshold: isMobile ? 0.3 : 0.5,
   });
   const experienceListRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: experienceListRef, offset: ['0 1', '1.33 1'] });
