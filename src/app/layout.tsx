@@ -2,7 +2,6 @@ import localFont from 'next/font/local';
 import { ReactNode } from 'react';
 import '@/app/globals.css';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import ThemeSwitcher from '@/components/themeSwitcher/ThemeSwitcher';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
@@ -51,7 +50,6 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <Providers>
           <Header />
           {children}
-          <Footer />
           <Toaster position='top-right' />
           <ThemeSwitcher />
         </Providers>
