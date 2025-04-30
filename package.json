@@ -31,7 +31,7 @@
     "react-type-animation": "^3.2.0",
     "resend": "^4.1.2",
     "tailwindcss": "^4.0.14",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.31.0",
