@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import photo from '../../../public/assets/photo.jpeg';
 import Link from 'next/link';
 import { BsArrowRight, BsGithub, BsInstagram, BsLinkedin } from 'react-icons/bs';
 import { TypeAnimation } from 'react-type-animation';
 import useIntro from './hooks/useIntro';
+import TiltedCard from '../TiltedCard';
 
 const Intro = () => {
   const { isMobile, sectionRef, mounted } = useIntro();
@@ -22,15 +21,7 @@ const Intro = () => {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'tween', duration: 0.6 }}>
-          <Image
-            src={photo}
-            alt='marek-lipcak-portrait'
-            width={256}
-            height={256}
-            quality='95'
-            priority={true}
-            className='intro-image'
-          />
+          <TiltedCard />
         </motion.div>
       </div>
       <motion.h1

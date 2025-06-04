@@ -38,7 +38,7 @@
 }
 
 @utility submit-button {
-  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-900 text-white rounded-full outline-hidden transition-all hover:scale-110 hover:bg-gray-950 active:scale-105 disabled:scale-100 disabled:opacity-65 dark:bg-white/10 sm:dark:bg-gray-900/60;
+  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-900 text-white rounded-full outline-hidden transition-all hover:scale-110 dark:bg-gray-950 active:scale-105 disabled:scale-100 disabled:opacity-65;
 }
 
 @utility contact-button {
@@ -54,7 +54,7 @@
 }
 
 @utility project-card {
-  @apply relative flex flex-col justify-between bg-slate-300 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-black/10 p-8 rounded-lg shadow-lg shadow-black/[0.10] dark:bg-slate-600 dark:border dark:border-black/25;
+  @apply relative flex flex-col justify-between bg-slate-600 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-black/10 p-8 rounded-lg shadow-lg shadow-black/[0.10] dark:bg-slate-700 dark:border dark:border-black/25;
 }
 
 @utility skills-list {
@@ -62,7 +62,7 @@
 }
 
 @utility skill-item {
-  @apply bg-slate-300 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] dark:bg-slate-600;
+  @apply bg-slate-300 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] dark:bg-slate-700;
 }
 
 @utility contact-form {
@@ -70,11 +70,11 @@
 }
 
 @utility contact-input {
-  @apply h-14 px-4 rounded-lg bg-white dark:bg-gray-700;
+  @apply h-14 px-4 rounded-lg bg-white dark:bg-gray-600;
 }
 
 @utility contact-textarea {
-  @apply h-52 p-4 my-3 rounded-lg resize-none bg-white dark:bg-gray-700;
+  @apply h-52 p-4 my-3 rounded-lg resize-none bg-white dark:bg-gray-600;
 }
 
 @utility theme-switcher {
