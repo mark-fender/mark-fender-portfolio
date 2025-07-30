@@ -5,10 +5,7 @@ const SubmitButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <button
-      type='submit'
-      disabled={pending}
-      className='submit-button group'>
+    <button type='submit' disabled={pending} className='submit-button group '>
       {pending ? (
         <div className='h-5 w-5 animate-spin rounded-full border-b-2 border-white' />
       ) : (

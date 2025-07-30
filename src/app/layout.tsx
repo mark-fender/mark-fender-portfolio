@@ -40,11 +40,11 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
       <body
         className={`${satoshi.className} bg-slate-200 text-gray-950 relative pt-28 sm:pt-36 
-      dark:bg-slate-900 dark:text-gray-50 dark:text-opacity-900 overscroll-none`}>
+      dark:bg-slate-800 dark:text-gray-50 dark:text-opacity-900 overscroll-none`}>
         <Aurora
         colorStops={auroraColors}
-        blend={0.95}
-        amplitude={1}
+        blend={0.75}
+        amplitude={0.75}
         speed={0.5}
         />
         <Providers>
