@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from "react";
-import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
+import { useEffect, useRef } from 'react';
+import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
 
 const VERT = `#version 300 es
 in vec2 position;
@@ -141,11 +141,11 @@ const Aurora = (props: AuroraProps) => {
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    gl.canvas.style.backgroundColor = "transparent";
+    gl.canvas.style.backgroundColor = 'transparent';
 
     let program: Program | undefined;
 
-    function resize() {
+    const resize = () => {
       if (!ctn) return;
       const width = ctn.offsetWidth;
       const height = ctn.offsetHeight;
@@ -153,12 +153,11 @@ const Aurora = (props: AuroraProps) => {
       if (program) {
         program.uniforms.uResolution.value = [width, height];
       }
-    }
-    window.addEventListener("resize", resize);
+    };
+    window.addEventListener('resize', resize);
 
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) {
-      // TypeScript may require a type assertion here.
       delete (geometry.attributes as any).uv;
     }
 
@@ -204,15 +203,15 @@ const Aurora = (props: AuroraProps) => {
 
     return () => {
       cancelAnimationFrame(animateId);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener('resize', resize);
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas);
       }
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="w-full h-[50rem] absolute top-0" />;
-}
+  return <div ref={ctnDom} className='w-full h-[50rem] absolute top-0' />;
+};
 
 export default Aurora;

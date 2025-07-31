@@ -33,7 +33,7 @@ const Contact = () => {
         />
         <textarea
           id='contact'
-          maxLength={750}
+          maxLength={1000}
           required
           name='message'
           className='contact-textarea'
