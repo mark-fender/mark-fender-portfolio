@@ -28,7 +28,7 @@ const satoshi = localFont({
   ],
 });
 
-const auroraColors = ["#2d95eb", "#9737C3", "#08d1bd"]
+const auroraColors = ['#2d95eb', '#9737C3', '#08d1bd'];
 
 export const metadata = {
   title: 'Marek Lipčák',
@@ -39,14 +39,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
       <body
-        className={`${satoshi.className} bg-slate-200 text-gray-950 relative pt-28 sm:pt-36 
-      dark:bg-slate-800 dark:text-gray-50 dark:text-opacity-900 overscroll-none`}>
-        <Aurora
-        colorStops={auroraColors}
-        blend={0.75}
-        amplitude={0.75}
-        speed={0.5}
-        />
+        className={`${satoshi.className} text-gray-50 text-opacity-900 relative pt-28 sm:pt-36 overscroll-none bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800`}>
+        <Aurora colorStops={auroraColors} blend={0.75} amplitude={0.75} speed={0.5} />
         <Providers>
           <Header />
           {children}

@@ -28,11 +28,13 @@ const Intro = () => {
         className='w-fit h-fit mb-10 mt-16 px-8 text-xl font-!leading-[1.5] sm:text-2xl text-center sm:text-left'
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}>
-        <span className='font-bold'>Hi, my name is Marek.</span> I am an experienced{' '}
+        <span className='font-bold'>Hi, my name is Marek.</span> I am a{' '}
         <span className='font-bold'>frontend developer</span> with{' '}
         <span className='font-bold'>6 years</span> of professional experience in web development. I
-        am passionate about building responsive user interfaces with performance and attention to
-        detail in mind. My main focus is on{' '}
+        specialize in building <span className='font-bold'>responsive</span>,{' '}
+        <span className='font-bold'>high-performance</span> user interfaces with a strong focus on{' '}
+        <span className='font-bold'>usability</span> and{' '}
+        <span className='font-bold'>attention to detail</span>. My main focus is on{' '}
         {mounted && isMobile ? (
           <span className='font-bold'>ReactJS</span>
         ) : (
@@ -51,31 +53,29 @@ const Intro = () => {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.35 }}>
-        <Link
-          href='#contact'
-          className='contact-button group'>
+        <Link href='#contact' className='contact-button group'>
           Contact me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
         </Link>
         <div className='flex flex-row gap-2'>
           <a
             href='https://linkedin.com/in/marek-lipčák'
             target='_blank'
-            className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsLinkedin />
           </a>
           <a
             href='https://www.instagram.com/marek.lipcak/'
             target='_blank'
-            className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsInstagram />
           </a>
           <a
             href='https://github.com/mark-fender'
             target='_blank'
-            className='bg-white p-4 flex text-gray-700 items-center gap-2 rounded-full dark:text-white/60 dark:bg-white/10
-            focus:scale-105 hover:text-gray-950 hover:scale-105 active:scale-102 transition group cursor-pointer'>
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsGithub />
           </a>
         </div>

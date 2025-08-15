@@ -1,16 +1,15 @@
 'use client';
 
-import type { SpringOptions } from "framer-motion";
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-
+import type { SpringOptions } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 type TiltedCardProps = {
   scaleOnHover?: number;
   rotateAmplitude?: number;
   overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
-}
+};
 
 const springValues: SpringOptions = {
   damping: 30,
@@ -79,8 +78,7 @@ const TiltedCard = ({
       style={{ height: 256, width: 256 }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+      onMouseLeave={handleMouseLeave}>
       <motion.div
         className='relative [transform-style:preserve-3d]'
         style={{
@@ -89,8 +87,7 @@ const TiltedCard = ({
           rotateX,
           rotateY,
           scale,
-        }}
-      >
+        }}>
         <motion.img
           src='/assets/photo.jpeg'
           alt='marek-lipcak-portrait'
@@ -102,9 +99,9 @@ const TiltedCard = ({
             {overlayContent}
           </motion.div>
         )}
-      </motion.div>   
+      </motion.div>
     </figure>
   );
-}
+};
 
-export default TiltedCard
+export default TiltedCard;

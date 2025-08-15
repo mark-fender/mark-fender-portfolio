@@ -118,11 +118,7 @@ type AuroraProps = {
 };
 
 const Aurora = (props: AuroraProps) => {
-  const {
-    colorStops,
-    amplitude,
-    blend,
-  } = props;
+  const { colorStops, amplitude, blend } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
@@ -209,6 +205,7 @@ const Aurora = (props: AuroraProps) => {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
   return <div ref={ctnDom} className='w-full h-[50rem] absolute top-0' />;

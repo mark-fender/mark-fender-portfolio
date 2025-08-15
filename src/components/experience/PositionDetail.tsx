@@ -25,12 +25,11 @@ const PositionDetail = ({ title, company, description, date, index }: PositionDe
     initial='initial'
     whileInView='animate'
     viewport={{ once: true }}
-    custom={index}
-  >
+    custom={index}>
     <h3 className='text-xl font-semibold'>
       {title} at {company}
     </h3>
-    <span className='font-medium my-2 text-gray-950/55 dark:text-white/55'>{date}</span>
+    <span className='font-medium my-2 text-white/55'>{date}</span>
     <p className='w-full'>{description}</p>
   </motion.li>
 );

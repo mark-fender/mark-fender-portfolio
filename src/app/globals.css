@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:is(.dark *));
-
 @theme {
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
@@ -21,7 +19,7 @@
 
 @layer components {
   .fixed-header {
-    @apply fixed top-0 left-1/2 h-[4.5rem] w-full rounded-none border border-white/40 bg-white/75 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] sm:top-6 sm:h-[3.25rem] sm:w-[36rem] sm:rounded-full dark:bg-slate-900/75 dark:border-black/10;
+    @apply fixed top-0 left-1/2 h-[4.5rem] w-full rounded-none border border-white/15 bg-slate-800/75 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] sm:top-6 sm:h-[3.25rem] sm:w-[36rem] sm:rounded-full;
   }
 }
 
@@ -30,23 +28,19 @@
 }
 
 @utility section-heading {
-  @apply text-3xl font-medium capitalize mb-16 text-center;
-}
-
-@utility footer {
-  @apply mt-8 mb-4 px-4 text-center text-gray-600 dark:text-gray-400;
+  @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
 }
 
 @utility submit-button {
-  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-900 text-white rounded-full outline-hidden transition-all hover:scale-110 dark:bg-gray-950 active:scale-105 disabled:scale-100 disabled:opacity-65;
+  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full outline-hidden transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
 }
 
 @utility contact-button {
-  @apply bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-hidden focus:scale-105 hover:scale-105 hover:bg-gray-950 dark:bg-gray-950 active:scale-105 transition;
+  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-hidden focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
 }
 
 @utility custom-toast {
-  @apply max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex text-gray-900 dark:bg-gray-900 dark:text-gray-50;
+  @apply max-w-md w-full bg-gray-900 shadow-lg rounded-lg pointer-events-auto flex text-gray-50 text-lg;
 }
 
 @utility intro-image {
@@ -54,15 +48,15 @@
 }
 
 @utility project-card {
-  @apply relative flex flex-col justify-between bg-slate-600 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-black/10 p-8 rounded-lg shadow-lg shadow-black/[0.10] dark:bg-slate-700 dark:border dark:border-black/25;
+  @apply relative flex flex-col justify-between bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-white/15 p-6 sm:p-8 rounded-lg shadow-lg shadow-black/[0.10] text-xl sm:text-lg;
 }
 
 @utility skills-list {
-  @apply flex flex-wrap justify-center gap-2 text-lg text-gray-800 dark:text-gray-50;
+  @apply flex flex-wrap justify-center gap-2 text-xl text-gray-50 sm:text-2xl;
 }
 
 @utility skill-item {
-  @apply bg-slate-300 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] dark:bg-slate-700;
+  @apply bg-gradient-to-br from-slate-900 via-black to-slate-900 border border-white/15 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] text-lg sm:text-xl;
 }
 
 @utility contact-form {
@@ -70,20 +64,44 @@
 }
 
 @utility contact-input {
-  @apply h-14 px-4 rounded-lg bg-white dark:bg-slate-600;
+  @apply h-14 px-4 rounded-lg bg-slate-600 text-base;
 }
 
 @utility contact-textarea {
-  @apply h-52 p-4 my-3 rounded-lg resize-none bg-white dark:bg-slate-600;
+  @apply h-52 p-4 my-3 rounded-lg resize-none bg-slate-600 text-base;
 }
 
-@utility theme-switcher {
-  @apply fixed bottom-10 right-10 bg-white/80 w-[3rem] h-[3rem] backdrop-blur-[0.5rem] border border-white shadow-xl rounded-full flex items-center justify-center hover:scale-[1.15] active:scale-105 transition-all dark:bg-gray-950 dark:border-gray-950;
+@utility body-text {
+  @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
+}
+
+@utility heading-text {
+  @apply text-2xl font-semibold sm:text-3xl lg:text-4xl;
+}
+
+@utility subheading-text {
+  @apply text-xl font-medium sm:text-2xl lg:text-3xl;
+}
+
+@utility small-text {
+  @apply text-base sm:text-lg;
+}
+
+@utility about-text {
+  @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
+}
+
+@utility collaboration-text {
+  @apply text-xl font-bold tracking-tight text-white sm:text-2xl;
+}
+
+@utility collaboration-subtitle {
+  @apply mt-4 text-base leading-8 text-gray-300 sm:text-lg;
 }
 
 @layer base {
   body {
-    @apply bg-slate-200 text-gray-950 dark:bg-slate-800 dark:text-gray-50;
+    @apply bg-slate-900 text-gray-50 text-lg sm:text-xl;
   }
 
   .main {

@@ -25,9 +25,7 @@ const ProjectCard = ({
 
   return (
     <motion.div ref={projectRef} style={{ scale }} className='sticky top-24 sm:top-40'>
-      <section
-        style={{ top: `${index * 25}px` }}
-        className='project-card'>
+      <section style={{ top: `${index * 25}px` }} className='project-card'>
         <div>
           <h3 className='text-2xl font-semibold'>{title}</h3>
           <p className='mt-8 leading-relaxed'>{description}</p>
@@ -36,7 +34,7 @@ const ProjectCard = ({
           {tags.map((tag, index) => (
             <li
               key={index}
-              className='bg-black/[0.7] px-3 py-1 text-[0.7rem] uppercase tracking-wider text-white rounded-full'>
+              className='bg-white/75 px-3 py-1 text-[0.7rem] uppercase tracking-wider text-black rounded-full font-bold'>
               {tag}
             </li>
           ))}

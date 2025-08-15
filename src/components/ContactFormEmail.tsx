@@ -13,9 +13,10 @@ import {
 type ContactFormEmailProps = {
   message: string;
   senderEmail: string;
+  senderName: string;
 };
 
-const ContactFormEmail = ({ message, senderEmail }: ContactFormEmailProps) => (
+const ContactFormEmail = ({ message, senderEmail, senderName }: ContactFormEmailProps) => (
   <Html>
     <Head>
       <Tailwind>
@@ -27,7 +28,9 @@ const ContactFormEmail = ({ message, senderEmail }: ContactFormEmailProps) => (
               </Heading>
               <Text>{message}</Text>
               <Hr />
-              <Text>From: {senderEmail}</Text>
+              <Text>
+                From: {senderName} ({senderEmail})
+              </Text>
             </Section>
           </Container>
         </Body>

@@ -7,7 +7,10 @@ import useIsMobile from '@/hooks/useIsMobile';
 
 const About = () => {
   const { isMobile } = useIsMobile();
-  const { sectionRef } = useSectionInView({ sectionName: 'About', threshold: isMobile ? 0.2 : 0.8 });
+  const { sectionRef } = useSectionInView({
+    sectionName: 'About',
+    threshold: isMobile ? 0.2 : 0.8,
+  });
 
   return (
     <motion.section
@@ -18,27 +21,28 @@ const About = () => {
       transition={{ delay: 0.25 }}
       id='about'>
       <SectionHeading>About me</SectionHeading>
-      <p className='mb-3'>
-        I graduated with a <span className='font-medium'>master&apos;s degree</span> in
-        <span className='font-medium'> computer science</span> from
-        <span className='font-medium'> Technical University of Košice</span> in 2020. I embarked on
-        my journey in the tech world back in 2017 as a part-time Software Engineer, diving into
-        application testing and some Java coding. The transition to full-time
-        <span className='font-medium'> frontend development</span> was a game changer, and I
-        instantly fell in love with it. What excites me most about frontend development is the
-        perfect blend of logical problem solving and unleashing creativity for stunning designs. I
-        thrive on creating software that not only works seamlessly but also looks and feels
-        fantastic. My go-to stack includes
-        <span className='font-medium'> ReactJS, NextJS, Angular, & TypeScript</span>. Always eager
-        to learn, I stay updated with the latest technologies to bring innovative solutions to the
-        table.
+      <p className='about-text mb-3'>
+        I build interfaces that feel effortless to use and memorable to look at. Frontend
+        development, for me, is the sweet spot where logical problem-solving meets creative
+        expression — transforming ideas into smooth, intuitive, and visually engaging experiences. I
+        focus on writing <span className='font-medium'>clean, well-structured code</span> and
+        crafting designs that are both functional and delightful to interact with. I enjoy working
+        with <span className='font-medium'>modern tools and frameworks</span> to deliver software
+        that is robust, elegant, and built to last. Beyond writing code, I pay attention to the
+        small details that make a big difference, from subtle animations to polished interaction
+        flows.
       </p>
 
-      <p>
-        <span className='italic'>When I&apos;m not coding</span>, you can find me immersed in a
-        world of video games, breaking a sweat at the gym, strumming my guitar, expanding my tech
-        knowledge, getting lost in books, or brewing the perfect cup of coffee. Let&apos;s connect
-        and explore the endless possibilities of tech and beyond!
+      <p className='about-text mb-3'>
+        I&apos;m endlessly curious, always exploring new technologies, experimenting with UI
+        animations, and refining interaction details that elevate the user experience. My goal
+        isn&apos;t just to deliver features, but to craft software that people genuinely enjoy
+        using.
+      </p>
+
+      <p className='about-text'>
+        When I&apos;m not coding, you&apos;ll find me hiking, reading, or tinkering with side
+        projects&mdash;always learning, always building.
       </p>
     </motion.section>
   );

@@ -9,13 +9,11 @@ type CustomToastProps = {
 };
 
 const CustomToast = ({ toast, message, icon }: CustomToastProps) => (
-  <div className={clsx(
-    'custom-toast',
-    {
+  <div
+    className={clsx('custom-toast', {
       'animate-enter': toast.visible,
       'animate-leave': !toast.visible,
-    },
-  )}>
+    })}>
     <div className='flex-1 w-0 p-4'>
       <div className='flex items-start'>
         {icon}
