@@ -22,20 +22,10 @@ const About = () => {
       transition={{ delay: 0.25 }}
       id='about'>
       <SectionHeading>About me</SectionHeading>
-      <TextRevealOnScroll
-        className='about-text mb-3'
-        text="I build interfaces that feel effortless to use and memorable to look at. Frontend development, for me, is the sweet spot where logical problem-solving meets creative expression — transforming ideas into smooth, intuitive, and visually engaging experiences. I focus on writing clean, well-structured code and crafting designs that are both functional and delightful to interact with. I enjoy working with modern tools and frameworks to deliver software that is robust, elegant, and built to last. Beyond writing code, I pay attention to the small details that make a big difference, from subtle animations to polished interaction flows."
-      />
-
-      <TextRevealOnScroll
-        className='about-text mb-3'
-        text="I'm endlessly curious, always exploring new technologies, experimenting with UI animations, and refining interaction details that elevate the user experience. My goal isn't just to deliver features, but to craft software that people genuinely enjoy using."
-      />
-
-      <TextRevealOnScroll
-        className='about-text'
-        text="When I'm not coding, you'll find me hiking, reading, or tinkering with side projects—always learning, always building."
-      />
+        <TextRevealOnScroll
+          className='about-text'
+          text="I build interfaces that feel effortless to use and memorable to look at. Frontend development, for me, is the sweet spot where logical problem-solving meets creative expression — transforming ideas into smooth, intuitive, and visually engaging experiences. I focus on writing clean, well-structured code and crafting designs that are both functional and delightful to interact with. I enjoy working with modern tools and frameworks to deliver software that is robust, elegant, and built to last. Beyond writing code, I pay attention to the small details that make a big difference, from subtle animations to polished interaction flows. I'm endlessly curious, always exploring new technologies, experimenting with UI animations, and refining interaction details that elevate the user experience. My goal isn't just to deliver features, but to craft software that people genuinely enjoy using. When I'm not coding, you'll find me hiking, reading, or tinkering with side projects—always learning, always building."
+        />
     </motion.section>
   );
 };
