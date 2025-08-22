@@ -24,7 +24,7 @@
 }
 
 @utility section-divider {
-  @apply bg-gray-300 my-24 h-1 rounded-full;
+  @apply bg-gray-300 my-16 h-1 rounded-full sm:my-24 lg:my-32;
 }
 
 @utility section-heading {
@@ -88,7 +88,7 @@
 }
 
 @utility about-text {
-  @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
+  @apply text-xl tracking-wide leading-relaxed sm:text-2xl lg:text-3xl;
 }
 
 @utility collaboration-text {
