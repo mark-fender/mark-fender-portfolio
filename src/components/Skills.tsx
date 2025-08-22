@@ -31,7 +31,7 @@ const Skills = () => {
     <section ref={sectionRef} className='max-w-[53rem] scroll-mt-36 text-center' id='skills'>
       <SectionHeading>My skills</SectionHeading>
       <ul className='skills-list'>
-        {skillsData.map((skill, index) => (
+        {skillsData.map(({ name, icon: Icon }, index) => (
           <motion.li
             key={skill}
             className='skill-item'
@@ -40,7 +40,8 @@ const Skills = () => {
             whileInView='animate'
             viewport={{ once: true }}
             custom={index}>
-            {skill}
+            <Icon />
+            <span>{name}</span>
           </motion.li>
         ))}
       </ul>
