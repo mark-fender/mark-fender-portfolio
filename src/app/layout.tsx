@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
-import { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import type { PropsWithChildren } from 'react';
 import '@/app/globals.css';
 import Header from '@/components/Header';
 import { Toaster } from 'react-hot-toast';
@@ -29,28 +30,60 @@ const satoshi = localFont({
 });
 
 const auroraColors = ['#2d95eb', '#9737C3', '#08d1bd'];
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.markfender.dev/';
 
-export const metadata = {
-  title: 'Marek Lipčák',
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Marek Lipčák',
+    template: '%s | Marek Lipčák',
+  },
   description: "Marek Lipčák's personal web developer portfolio.",
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: 'Marek Lipčák',
+    description: "Marek Lipčák's personal web developer portfolio.",
+    url: siteUrl,
+    siteName: 'Marek Lipčák',
+    images: [
+      {
+        url: '/assets/photo.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Marek Lipčák portrait',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Marek Lipčák',
+    description: "Marek Lipčák's personal web developer portfolio.",
+    images: ['/assets/photo.jpeg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
-  return (
-    <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
-      <body
-        className={`${satoshi.className} text-gray-50 text-opacity-900 relative pt-28 sm:pt-36 overscroll-none bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800`}>
-        <Aurora colorStops={auroraColors} blend={0.75} amplitude={0.75} speed={0.5} />
-        <Providers>
-          <Header />
-          {children}
-          <Toaster position='top-right' />
-        </Providers>
-        <Analytics />
-        <SpeedInsights />
-      </body>
-    </html>
-  );
-};
+const RootLayout = ({ children }: PropsWithChildren) => (
+  <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
+    <body
+      className={`${satoshi.className} text-gray-50 text-opacity-900 relative pt-28 sm:pt-36 overscroll-none bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800`}>
+      <Aurora colorStops={auroraColors} blend={0.75} amplitude={0.75} speed={0.5} />
+      <Providers>
+        <Header />
+        {children}
+        <Toaster position='top-right' />
+      </Providers>
+      <Analytics />
+      <SpeedInsights />
+    </body>
+  </html>
+);
 
 export default RootLayout;

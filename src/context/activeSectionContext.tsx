@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState, type PropsWithChildren } from 'react';
 import { SectionName } from '@/types';
 
 type ActiveSection = {
@@ -12,7 +12,7 @@ type ActiveSection = {
 
 export const ActiveSectionContext = createContext<ActiveSection>(null);
 
-const ActiveSectionContextProvider = ({ children }: { children: ReactNode }) => {
+const ActiveSectionContextProvider = ({ children }: PropsWithChildren) => {
   const [activeSection, setActiveSection] = useState<SectionName>('Home');
   const [lastClickTime, setLastClickTime] = useState<number>(0);
 

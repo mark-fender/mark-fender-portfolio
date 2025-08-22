@@ -1,9 +1,9 @@
 'use client';
 
 import ActiveSectionContextProvider from '@/context/activeSectionContext';
-import { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-const Providers = ({ children }: { children: ReactNode }) => (
+const Providers = ({ children }: PropsWithChildren) => (
   <ActiveSectionContextProvider>{children}</ActiveSectionContextProvider>
 );
 
