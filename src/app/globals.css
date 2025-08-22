@@ -88,7 +88,7 @@
 }
 
 @utility about-text {
-  @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
+  @apply text-xl tracking-wide leading-relaxed sm:text-2xl lg:text-3xl;
 }
 
 @utility collaboration-text {

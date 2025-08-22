@@ -12,11 +12,11 @@ export type AnimatedWordProps = {
 
 const AnimatedWord = ({ word, index, totalWords, scrollYProgress }: AnimatedWordProps) => {
   const start = index / totalWords;
-  const end = (index + 1) / totalWords;
+  const end = (index + 0.3) / totalWords;
   const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
 
   return (
-    <motion.span style={{ opacity }} className='inline-block'>
+    <motion.span style={{ opacity }} className='inline-block text-white'>
       {word}
       {index < totalWords - 1 && '\u00A0'}
     </motion.span>
