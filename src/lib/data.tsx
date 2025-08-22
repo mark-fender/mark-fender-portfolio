@@ -62,7 +62,7 @@ export const projectsData = [
     description: (
       <>
         An online SaaS platform enabling users to edit photos using AI. It is possible to restore
-        images in poor quality, generative fill image surroundings,remove or recolor objects or
+        images in poor quality, generative fill image surroundings, remove or recolor objects or
         remove image background. Each edit costs one credit and credits can be purchased via Stripe
         payment gateway. Each user can view their edited images in their profile and all of the
         edits in homepage. Used for learning and based on design and resources provided by{' '}
