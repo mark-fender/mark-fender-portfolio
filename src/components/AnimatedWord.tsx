@@ -5,20 +5,29 @@ import { motion, useTransform } from 'framer-motion';
 
 export type AnimatedWordProps = {
   word: string;
-  index: number;
-  totalWords: number;
+  groupIndex: number;
+  totalGroups: number;
+  isLast: boolean;
   scrollYProgress: MotionValue<number>;
 };
 
-const AnimatedWord = ({ word, index, totalWords, scrollYProgress }: AnimatedWordProps) => {
-  const start = index / totalWords;
-  const end = (index + 0.3) / totalWords;
+const AnimatedWord = ({
+  word,
+  groupIndex,
+  totalGroups,
+  isLast,
+  scrollYProgress,
+}: AnimatedWordProps) => {
+  const maxProgress = 0.6;
+  const step = maxProgress / totalGroups;
+  const start = groupIndex * step;
+  const end = start + step;
   const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
 
   return (
     <motion.span style={{ opacity }} className='inline-block text-white'>
       {word}
-      {index < totalWords - 1 && '\u00A0'}
+      {!isLast && '\u00A0'}
     </motion.span>
   );
 };
