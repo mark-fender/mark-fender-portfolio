@@ -23,7 +23,6 @@ import {
   SiZod,
 } from 'react-icons/si';
 import { GiBearFace } from 'react-icons/gi';
-import { RiEmotionLine } from 'react-icons/ri';
 import { TbApi } from 'react-icons/tb';
 
 export const navBarLinks = [
@@ -193,7 +192,6 @@ export const skillsData = [
   { name: 'Zustand', icon: GiBearFace },
   { name: 'Git', icon: FaGitAlt },
   { name: 'Tailwind', icon: SiTailwindcss },
-  { name: 'Emotion', icon: RiEmotionLine },
   { name: 'Styled Components', icon: SiStyledcomponents },
   { name: 'Framer Motion', icon: SiFramer },
   { name: 'RxJs', icon: SiReactivex },
