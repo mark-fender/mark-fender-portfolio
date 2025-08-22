@@ -18,7 +18,7 @@ const AnimatedWord = ({
   isLast,
   scrollYProgress,
 }: AnimatedWordProps) => {
-  const maxProgress = 0.6;
+  const maxProgress = 0.75;
   const step = maxProgress / totalGroups;
   const start = groupIndex * step;
   const end = start + step;
