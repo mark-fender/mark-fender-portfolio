@@ -31,9 +31,9 @@ const ProjectCard = ({
           <p className='mt-8 leading-relaxed'>{description}</p>
         </div>
         <ul className='hidden sm:flex flex-wrap mt-8 mb-2 gap-2 '>
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <li
-              key={index}
+              key={tag}
               className='bg-white/75 px-3 py-1 text-[0.7rem] uppercase tracking-wider text-black rounded-full font-bold'>
               {tag}
             </li>

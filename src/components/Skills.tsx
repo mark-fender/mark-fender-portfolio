@@ -21,7 +21,7 @@ const fadeInAnimationVariants = {
 };
 
 const Skills = () => {
-  const { isMobile } = useIsMobile();
+  const isMobile = useIsMobile();
   const { sectionRef } = useSectionInView({
     sectionName: 'Skills',
     threshold: isMobile ? 0.5 : 0.9,
@@ -33,7 +33,7 @@ const Skills = () => {
       <ul className='skills-list'>
         {skillsData.map((skill, index) => (
           <motion.li
-            key={index}
+            key={skill}
             className='skill-item'
             variants={fadeInAnimationVariants}
             initial={'initial'}

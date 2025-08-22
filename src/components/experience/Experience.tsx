@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import SectionHeading from '@/components/SectionHeading';
 import { experiencesData } from '@/lib/data';
 import PositionDetail from '@/components/experience/PositionDetail';
@@ -20,7 +19,7 @@ const Experience = () => {
         />
         <ul className='sm:ml-16 overflow-hidden'>
           {experiencesData.map((position, index) => (
-            <PositionDetail key={index} {...position} index={index} />
+            <PositionDetail key={position.title} {...position} index={index} />
           ))}
         </ul>
       </div>

@@ -6,7 +6,7 @@ import useSectionInView from '@/hooks/useSectionInView';
 import useIsMobile from '@/hooks/useIsMobile';
 
 const About = () => {
-  const { isMobile } = useIsMobile();
+  const isMobile = useIsMobile();
   const { sectionRef } = useSectionInView({
     sectionName: 'About',
     threshold: isMobile ? 0.2 : 0.8,

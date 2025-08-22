@@ -3,7 +3,7 @@ import useSectionInView from '@/hooks/useSectionInView';
 import { useState, useEffect } from 'react';
 
 const useIntro = () => {
-  const { isMobile } = useIsMobile();
+  const isMobile = useIsMobile();
   const { sectionRef } = useSectionInView({
     sectionName: 'Home',
     threshold: isMobile ? 0.25 : 0.75,

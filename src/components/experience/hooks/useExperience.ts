@@ -4,7 +4,7 @@ import { useScroll } from 'framer-motion';
 import { useRef } from 'react';
 
 const useExperience = () => {
-  const { isMobile } = useIsMobile();
+  const isMobile = useIsMobile();
   const { sectionRef } = useSectionInView({
     sectionName: 'Experience',
     threshold: isMobile ? 0.3 : 0.5,

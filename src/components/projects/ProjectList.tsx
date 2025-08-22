@@ -16,7 +16,7 @@ const ProjectList = () => {
           const targetScale = 1 - (projectsData.length - index) * 0.05;
           return (
             <ProjectCard
-              key={index}
+              key={project.title}
               index={index}
               {...project}
               range={[index * 0.25, 1]}
