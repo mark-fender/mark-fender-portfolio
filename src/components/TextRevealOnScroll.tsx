@@ -5,31 +5,37 @@ import { useRef } from 'react';
 import AnimatedWord from '@/components/AnimatedWord';
 
 type TextRevealOnScrollProps = {
-  text: string;
+  paragraphs: string[];
   className?: string;
 };
 
-const TextRevealOnScroll = ({ text, className }: TextRevealOnScrollProps) => {
-  const ref = useRef<HTMLParagraphElement>(null);
+const TextRevealOnScroll = ({ paragraphs, className }: TextRevealOnScrollProps) => {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  const words = text.split(' ');
+  const allWords = paragraphs.flatMap((p) => p.split(' '));
+  let wordOffset = 0;
 
   return (
-    <p ref={ref} className={className}>
-      {words.map((word, index) => (
-        <AnimatedWord
-          key={`${word}-${index}`}
-          word={word}
-          index={index}
-          totalWords={words.length}
-          scrollYProgress={scrollYProgress}
-        />
-      ))}
-    </p>
+    <div ref={ref} className={className}>
+      {paragraphs.map((paragraph, pIndex) => {
+        const words = paragraph.split(' ');
+        const content = words.map((word, index) => (
+          <AnimatedWord
+            key={`${word}-${wordOffset + index}`}
+            word={word}
+            index={wordOffset + index}
+            totalWords={allWords.length}
+            scrollYProgress={scrollYProgress}
+          />
+        ));
+        wordOffset += words.length;
+        return <p key={pIndex}>{content}</p>;
+      })}
+    </div>
   );
 };
 
