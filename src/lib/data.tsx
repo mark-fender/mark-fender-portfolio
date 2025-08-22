@@ -195,7 +195,7 @@ export const skillsData = [
   { name: 'Styled Components', icon: SiStyledcomponents },
   { name: 'Framer Motion', icon: SiFramer },
   { name: 'RxJs', icon: SiReactivex },
-  { name: 'REST API', icon: TbApi },
+  { name: 'REST', icon: TbApi },
   { name: 'WebSocket', icon: SiSocketdotio },
   { name: 'Vite', icon: SiVite },
   { name: 'Webpack', icon: SiWebpack },
