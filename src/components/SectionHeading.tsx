@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-const SectionHeading = ({ children }: { children: ReactNode }) => (
+const SectionHeading = ({ children }: PropsWithChildren) => (
   <h2 className='section-heading'>{children}</h2>
 );
 
