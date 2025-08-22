@@ -6,7 +6,7 @@ import { skillsData } from '@/lib/data';
 import SectionHeading from '@/components/SectionHeading';
 import useIsMobile from '@/hooks/useIsMobile';
 
-const fadeInAnimationVariants = {
+const FADE_IN_VARIANTS = {
   initial: {
     opacity: 0,
     y: 100,
@@ -33,10 +33,10 @@ const Skills = () => {
       <ul className='skills-list'>
         {skillsData.map((skill, index) => (
           <motion.li
-            key={index}
+            key={skill}
             className='skill-item'
-            variants={fadeInAnimationVariants}
-            initial={'initial'}
+            variants={FADE_IN_VARIANTS}
+            initial='initial'
             whileInView='animate'
             viewport={{ once: true }}
             custom={index}>

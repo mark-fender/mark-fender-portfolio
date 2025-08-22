@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { experiencesData } from '@/lib/data';
+import type { experiencesData } from '@/lib/data';
 
-const fadeInAnimationVariants = {
+const FADE_IN_VARIANTS = {
   initial: {
     opacity: 0,
     x: 100,
@@ -21,7 +21,7 @@ type PositionDetailProps = (typeof experiencesData)[number] & { index: number };
 const PositionDetail = ({ title, company, description, date, index }: PositionDetailProps) => (
   <motion.li
     className='mb-16 last:mb-0 w-full mx-auto flex flex-col items-left justify-between'
-    variants={fadeInAnimationVariants}
+    variants={FADE_IN_VARIANTS}
     initial='initial'
     whileInView='animate'
     viewport={{ once: true }}

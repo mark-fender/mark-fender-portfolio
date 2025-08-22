@@ -1,34 +1,36 @@
 'use client';
 
+import type { MouseEvent, PropsWithChildren } from 'react';
 import type { SpringOptions } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
-type TiltedCardProps = {
+type TiltedCardProps = PropsWithChildren<{
   scaleOnHover?: number;
   rotateAmplitude?: number;
-  overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
-};
+}>;
 
-const springValues: SpringOptions = {
+const SPRING_CONFIG: SpringOptions = {
   damping: 30,
   stiffness: 100,
   mass: 2,
 };
 
+const CARD_SIZE = 256;
+
 const TiltedCard = ({
   scaleOnHover = 1.1,
   rotateAmplitude = 28,
-  overlayContent = null,
   displayOverlayContent = false,
+  children,
 }: TiltedCardProps) => {
   const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useSpring(useMotionValue(0), springValues);
-  const rotateY = useSpring(useMotionValue(0), springValues);
-  const scale = useSpring(1, springValues);
+  const rotateX = useSpring(useMotionValue(0), SPRING_CONFIG);
+  const rotateY = useSpring(useMotionValue(0), SPRING_CONFIG);
+  const scale = useSpring(1, SPRING_CONFIG);
   const opacity = useSpring(0);
   const rotateFigcaption = useSpring(0, {
     stiffness: 350,
@@ -36,9 +38,9 @@ const TiltedCard = ({
     mass: 1,
   });
 
-  const [lastY, setLastY] = useState(0);
+  const lastY = useRef(0);
 
-  const handleMouse = (e: React.MouseEvent<HTMLElement>) => {
+  const handleMouse = (e: MouseEvent<HTMLElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const offsetX = e.clientX - rect.left - rect.width / 2;
@@ -53,9 +55,9 @@ const TiltedCard = ({
     x.set(e.clientX - rect.left);
     y.set(e.clientY - rect.top);
 
-    const velocityY = offsetY - lastY;
+    const velocityY = offsetY - lastY.current;
     rotateFigcaption.set(-velocityY * 0.6);
-    setLastY(offsetY);
+    lastY.current = offsetY;
   };
 
   const handleMouseEnter = () => {
@@ -75,15 +77,15 @@ const TiltedCard = ({
     <figure
       ref={ref}
       className='relative w-full h-full [perspective:800px] flex flex-col items-center justify-center'
-      style={{ height: 256, width: 256 }}
+      style={{ height: CARD_SIZE, width: CARD_SIZE }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       <motion.div
         className='relative [transform-style:preserve-3d]'
         style={{
-          width: 256,
-          height: 256,
+          width: CARD_SIZE,
+          height: CARD_SIZE,
           rotateX,
           rotateY,
           scale,
@@ -92,11 +94,11 @@ const TiltedCard = ({
           src='/assets/photo.jpeg'
           alt='marek-lipcak-portrait'
           className='absolute top-0 left-0 object-cover will-change-transform [transform:translateZ(0)] intro-image'
-          style={{ width: 256, height: 256 }}
+          style={{ width: CARD_SIZE, height: CARD_SIZE }}
         />
-        {displayOverlayContent && overlayContent && (
+        {displayOverlayContent && children && (
           <motion.div className='absolute top-0 left-0 z-[2] will-change-transform [transform:translateZ(30px)]'>
-            {overlayContent}
+            {children}
           </motion.div>
         )}
       </motion.div>
