@@ -33,6 +33,10 @@ export const sendEmail = async (formData: FormData) => {
     return { error: 'Recipient email not configured' };
   }
 
+  if (!process.env.RESEND_EMAIL_DOMAIN) {
+    return { error: 'Sender domain not configured' };
+  }
+
   const fromEmail = `noreply@${process.env.RESEND_EMAIL_DOMAIN}`;
 
   try {
