@@ -33,7 +33,7 @@ const Skills = () => {
       <ul className='skills-list'>
         {skillsData.map(({ name, icon: Icon }, index) => (
           <motion.li
-            key={skill}
+            key={name}
             className='skill-item'
             variants={FADE_IN_VARIANTS}
             initial='initial'
