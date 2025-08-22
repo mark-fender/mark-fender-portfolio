@@ -17,6 +17,8 @@ const springValues: SpringOptions = {
   mass: 2,
 };
 
+const CARD_SIZE = 256;
+
 const TiltedCard = ({
   scaleOnHover = 1.1,
   rotateAmplitude = 28,
@@ -75,15 +77,15 @@ const TiltedCard = ({
     <figure
       ref={ref}
       className='relative w-full h-full [perspective:800px] flex flex-col items-center justify-center'
-      style={{ height: 256, width: 256 }}
+      style={{ height: CARD_SIZE, width: CARD_SIZE }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       <motion.div
         className='relative [transform-style:preserve-3d]'
         style={{
-          width: 256,
-          height: 256,
+          width: CARD_SIZE,
+          height: CARD_SIZE,
           rotateX,
           rotateY,
           scale,
@@ -92,7 +94,7 @@ const TiltedCard = ({
           src='/assets/photo.jpeg'
           alt='marek-lipcak-portrait'
           className='absolute top-0 left-0 object-cover will-change-transform [transform:translateZ(0)] intro-image'
-          style={{ width: 256, height: 256 }}
+          style={{ width: CARD_SIZE, height: CARD_SIZE }}
         />
         {displayOverlayContent && overlayContent && (
           <motion.div className='absolute top-0 left-0 z-[2] will-change-transform [transform:translateZ(30px)]'>
