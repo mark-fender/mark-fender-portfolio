@@ -56,7 +56,7 @@
 }
 
 @utility skill-item {
-  @apply bg-gradient-to-br from-slate-900 via-black to-slate-900 border border-white/15 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] text-lg sm:text-xl;
+  @apply bg-gradient-to-br from-gray-800 via-black to-slate-900 border border-white/15 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] text-lg sm:text-xl;
 }
 
 @utility contact-form {
