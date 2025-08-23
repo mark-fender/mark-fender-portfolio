@@ -32,11 +32,11 @@
 }
 
 @utility submit-button {
-  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full outline-hidden transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
+  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full outline-hidden transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base border border-white/15;
 }
 
 @utility contact-button {
-  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-hidden focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
+  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-hidden focus:scale-105 hover:scale-105 active:scale-105 transition text-base border border-white/15;
 }
 
 @utility custom-toast {

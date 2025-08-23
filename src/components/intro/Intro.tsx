@@ -60,21 +60,21 @@ const Intro = () => {
           <a
             href='https://linkedin.com/in/marek-lipčák'
             target='_blank'
-            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full border border-white/15
             focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsLinkedin />
           </a>
           <a
             href='https://www.instagram.com/marek.lipcak/'
             target='_blank'
-            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full border border-white/15
             focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsInstagram />
           </a>
           <a
             href='https://github.com/mark-fender'
             target='_blank'
-            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full
+            className='bg-white/10 p-4 flex text-white/60 items-center gap-2 rounded-full border border-white/15
             focus:scale-105 hover:scale-105 active:scale-102 transition group cursor-pointer'>
             <BsGithub />
           </a>
