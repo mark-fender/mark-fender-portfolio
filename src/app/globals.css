@@ -1,5 +1,17 @@
 @import 'tailwindcss';
 
+@property --aurora-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes aurora-rotate {
+  to {
+    --aurora-angle: 360deg;
+  }
+}
+
 @theme {
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
@@ -31,12 +43,19 @@
   @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
 }
 
+@utility aurora-outline {
+  @apply relative outline-hidden border border-transparent;
+  background: linear-gradient(#030712, #030712) padding-box,
+    conic-gradient(from var(--aurora-angle), #7dd3fc, #c084fc, #7dd3fc) border-box;
+  animation: aurora-rotate 12s linear infinite;
+}
+
 @utility submit-button {
-  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full outline-hidden transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base border border-white/15;
+  @apply aurora-outline flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
 }
 
 @utility contact-button {
-  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-hidden focus:scale-105 hover:scale-105 active:scale-105 transition text-base border border-white/15;
+  @apply aurora-outline bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
 }
 
 @utility custom-toast {
