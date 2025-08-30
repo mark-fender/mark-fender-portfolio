@@ -1,12 +1,4 @@
-import {
-  FaAngular,
-  FaCss3Alt,
-  FaDocker,
-  FaGitAlt,
-  FaHtml5,
-  FaJs,
-  FaReact,
-} from 'react-icons/fa';
+import { FaAngular, FaCss3Alt, FaDocker, FaGitAlt, FaHtml5, FaJs, FaReact } from 'react-icons/fa';
 import {
   SiFramer,
   SiJest,
