@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from 'framer-motion';
 import { experiencesData } from '@/lib/data';
 
@@ -16,9 +18,9 @@ const fadeInAnimationVariants = {
   }),
 };
 
-type PositionDetailProps = (typeof experiencesData)[number] & { index: number };
+type TimelineItemProps = (typeof experiencesData)[number] & { index: number };
 
-const PositionDetail = ({ title, company, description, date, index }: PositionDetailProps) => (
+const TimelineItem = ({ title, company, description, date, index }: TimelineItemProps) => (
   <motion.li
     className='mb-16 last:mb-0 w-full mx-auto flex flex-col items-left justify-between'
     variants={fadeInAnimationVariants}
@@ -34,4 +36,4 @@ const PositionDetail = ({ title, company, description, date, index }: PositionDe
   </motion.li>
 );
 
-export default PositionDetail;
+export default TimelineItem;
