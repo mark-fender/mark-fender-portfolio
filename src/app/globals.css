@@ -35,9 +35,6 @@
   }
 }
 
-@utility section-divider {
-  @apply bg-gray-300 my-16 h-1 rounded-full sm:my-24 lg:my-32;
-}
 
 @utility section-heading {
   @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
