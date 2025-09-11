@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import SectionHeading from '@/components/SectionHeading';
-import TextRevealOnScroll from '@/components/TextRevealOnScroll';
+import TextRevealOnScroll from '@/components/text-reveal/TextRevealOnScroll';
 import useSectionInView from '@/hooks/useSectionInView';
 import useIsMobile from '@/hooks/useIsMobile';
 

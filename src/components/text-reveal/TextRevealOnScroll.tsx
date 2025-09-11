@@ -2,7 +2,7 @@
 
 import { useScroll } from 'framer-motion';
 import { useRef } from 'react';
-import AnimatedWord from '@/components/AnimatedWord';
+import AnimatedWord from '@/components/text-reveal/AnimatedWord';
 
 type TextRevealOnScrollProps = {
   paragraphs: string[];
