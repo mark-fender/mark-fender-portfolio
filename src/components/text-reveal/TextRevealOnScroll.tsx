@@ -16,14 +16,22 @@ const TextRevealOnScroll = ({ paragraphs, className }: TextRevealOnScrollProps) 
     offset: ['start end', 'end start'],
   });
 
-  const allWords = paragraphs.flatMap((p) => p.split(' '));
-  const totalGroups = Math.ceil(allWords.length / 2);
-  let wordOffset = 0;
+  const wordsByParagraph = paragraphs.map((paragraph) => paragraph.split(' '));
+  const totalWords = wordsByParagraph.reduce((sum, words) => sum + words.length, 0);
+  const totalGroups = Math.ceil(totalWords / 2);
+  const paragraphOffsets = wordsByParagraph.reduce<number[]>((offsets, _, index) => {
+    if (index === 0) {
+      offsets.push(0);
+    } else {
+      offsets.push(offsets[index - 1] + wordsByParagraph[index - 1].length);
+    }
+    return offsets;
+  }, []);
 
   return (
     <div ref={ref} className={className}>
-      {paragraphs.map((paragraph, pIndex) => {
-        const words = paragraph.split(' ');
+      {wordsByParagraph.map((words, pIndex) => {
+        const wordOffset = paragraphOffsets[pIndex];
         const content = words.map((word, index) => {
           const globalIndex = wordOffset + index;
           return (
@@ -32,12 +40,11 @@ const TextRevealOnScroll = ({ paragraphs, className }: TextRevealOnScrollProps) 
               word={word}
               groupIndex={Math.floor(globalIndex / 2)}
               totalGroups={totalGroups}
-              isLast={globalIndex === allWords.length - 1}
+              isLast={globalIndex === totalWords - 1}
               scrollYProgress={scrollYProgress}
             />
           );
         });
-        wordOffset += words.length;
         return <p key={pIndex}>{content}</p>;
       })}
     </div>
