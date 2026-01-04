@@ -25,7 +25,6 @@ export default defineConfig([
       parser: tsParser,
     },
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       'unused-imports': unusedImports,
     },
     rules: {
