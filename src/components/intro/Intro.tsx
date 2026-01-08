@@ -30,7 +30,7 @@ const Intro = () => {
         animate={{ opacity: 1, y: 0 }}>
         <span className='font-bold'>Hi, my name is Marek.</span> I am a{' '}
         <span className='font-bold'>frontend developer</span> with{' '}
-        <span className='font-bold'>6 years</span> of professional experience in web development. I
+        <span className='font-bold'>7 years</span> of professional experience in web development. I
         specialize in building <span className='font-bold'>responsive</span>,{' '}
         <span className='font-bold'>high-performance</span> user interfaces with a strong focus on{' '}
         <span className='font-bold'>usability</span> and{' '}
