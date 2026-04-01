@@ -11,7 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@react-email/components": "^1.0.3",
+    "@react-email/components": "^1.0.11",
     "@react-email/tailwind": "^2.0.5",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^25.1.0",
