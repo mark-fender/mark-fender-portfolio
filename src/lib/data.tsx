@@ -63,11 +63,11 @@ export const siteMeta = {
 } as const;
 
 export const nowItems = [
-  { label: 'Building', value: '[placeholder]' },
-  { label: 'Learning', value: '[placeholder]' },
-  { label: 'Reading', value: '[placeholder]' },
-  { label: 'Listening', value: '[placeholder]' },
-  { label: 'Last hike', value: '[placeholder]' },
+  { label: 'Building', value: '[Side project placeholder]' },
+  { label: 'Learning', value: '[Topic placeholder]' },
+  { label: 'Reading', value: '[Book placeholder]' },
+  { label: 'Listening', value: '[Now playing — artist · track]' },
+  { label: 'Last hike', value: '[Trail placeholder]' },
 ] as const;
 
 export const experiencesData: readonly {
