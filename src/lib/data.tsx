@@ -75,7 +75,7 @@ export const experiencesData: readonly {
   },
   {
     title: 'Front-End Developer',
-    company: ' Global Logic',
+    company: 'Global Logic',
     description:
       'Lead the development of user interface for controlling sample registration module that processes samples of patients tissue in medical environment. As a single frontend developer I was responsible for designing architecture, implementing authentication, authorization and user management and using WebSockets to provide real time updates on processing state.',
     from: { year: 2022, month: 11 },

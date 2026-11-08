@@ -74,7 +74,7 @@
 - `sections`: an ordered list `{ id, label, nav }` for About, Skills, Experience, Projects, Off the clock (`nav: false`, label `[Off the clock]`), Contact. `navBarLinks` is **derived**: Home + `sections.filter(s => s.nav)`. `SectionRule` takes only `id` and computes `index` / `total` from `sections`.
 - `socialLinks`: LinkedIn, Instagram, GitHub (the URLs in `Intro.tsx` today). Used by both the hero and Contact.
 - `experiencesData[i]`: `from: YearMonth`, `to: YearMonth | null`. The display string comes from `formatRange(from, to)` and **must reproduce today's strings exactly** (tested). Delete the `date` field so the two can't drift.
-- `skillGroups` replaces `skillsData` (deleted in T8). The marquee uses `skillGroups.flatMap(g => g.items)`. The header count is `"${items.length} technologies · ${groups.length} groups"`.
+- `skillGroups` replaces `skillsData` as the public data. In T8 `skillsData` stops being exported and stays as the private icon registry. The marquee uses `skillGroups.flatMap(g => g.items)`. The header count is `"${items.length} technologies · ${groups.length} groups"`.
 - `siteMeta`, `nowItems`: as in T2.
 
 ### 2.3 Styling
@@ -412,14 +412,14 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
 
 > **Review gate 0**: APPROVED 2026-11-08 @ `478f76f` (see §5).
 
-### T1: Foundation (tokens, fonts, theme, shadcn, headers)
+### T1: Foundation (tokens, fonts, theme, shadcn, headers) (approved)
 
 **Files:** `globals.css`, `layout.tsx`, `providers.tsx`, `next.config.js`, `components.json`, `src/lib/utils.ts` (+test), `src/components/ui/*`
 **Delete:** `Aurora.tsx`, `src/app/fonts/Satoshi-*.ttf`
 
-- [ ] **1.** `npm i next-themes sonner && npm uninstall ogl`. (react-hot-toast stays until T12.)
-- [ ] **2.** `npx shadcn@latest init` (new-york, neutral, CSS variables), then `npx shadcn@latest add button input textarea label accordion sheet sonner`. Don't add `tooltip`; nothing in the design uses it.
-- [ ] **3.** `globals.css`: keep `@import 'tailwindcss'`, add `@import '../design-system/tokens.css';` right after it, and keep `@import 'tw-animate-css'` if init added it. Delete **only**:
+- [x] **1.** `npm i next-themes sonner && npm uninstall ogl`. (react-hot-toast stays until T12.)
+- [x] **2.** `npx shadcn@latest init` (new-york, neutral, CSS variables), then `npx shadcn@latest add button input textarea label accordion sheet sonner`. Don't add `tooltip`; nothing in the design uses it.
+- [x] **3.** `globals.css`: keep `@import 'tailwindcss'`, add `@import '../design-system/tokens.css';` right after it, and keep `@import 'tw-animate-css'` if init added it. Delete **only**:
   - the aurora rules (`@property --aurora-angle`, `aurora-rotate`, `aurora-outline`, and its use inside `submit-button` / `contact-button`)
   - the `--breakpoint-*` overrides (they're Tailwind's defaults)
   - the legacy `@layer base` border and body colour rules
@@ -433,9 +433,9 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   }
   ```
 
-- [ ] **4.** Replace `src/lib/utils.ts` with the §2.3 `cn` and add its test.
-- [ ] **5.** `layout.tsx`: use `Inter` / `JetBrains_Mono` from `next/font/google` (`subsets: ['latin','latin-ext']`, variable fonts, `display: 'swap'`), with both `.variable` classes plus `motion-safe:scroll-smooth` on `<html>` and keep `suppressHydrationWarning`. Body: `min-h-dvh flex flex-col overscroll-none` plus the existing `pt-28 sm:pt-36` (until T4). Remove Satoshi, Aurora, `auroraColors` and the gradient classes. Keep metadata, Analytics, SpeedInsights and the react-hot-toast `<Toaster>`.
-- [ ] **6.** `providers.tsx`:
+- [x] **4.** Replace `src/lib/utils.ts` with the §2.3 `cn` and add its test.
+- [x] **5.** `layout.tsx`: use `Inter` / `JetBrains_Mono` from `next/font/google` (`subsets: ['latin','latin-ext']`, variable fonts, `display: 'swap'`), with both `.variable` classes plus `motion-safe:scroll-smooth` on `<html>` and keep `suppressHydrationWarning`. Body: `min-h-dvh flex flex-col overscroll-none` plus the existing `pt-28 sm:pt-36` (until T4). Remove Satoshi, Aurora, `auroraColors` and the gradient classes. Keep metadata, Analytics, SpeedInsights and the react-hot-toast `<Toaster>`.
+- [x] **6.** `providers.tsx`:
   ```tsx
   <ThemeProvider
     attribute='data-theme'
@@ -448,7 +448,7 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   </ThemeProvider>
   ```
   (The context provider is removed in T4.)
-- [ ] **7.** `next.config.js`:
+- [x] **7.** `next.config.js`:
   ```js
   const securityHeaders = [
     { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -462,14 +462,14 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   };
   ```
   Add the CSP `shortcut:` comment from §2.7 above it.
-- [ ] **8.** Verify:
+- [x] **8.** Verify:
   - The build passes.
   - In dev, `/` has background `#262A30` and Inter text, and the old sections still work.
   - DevTools: computed `--shadow-card` on `:root` resolves to the shadow. `tokens.css` maps `--shadow-card` to itself in `@theme inline`; if it computes as invalid, rename the `:root` variable to `--elevation-card` and map that instead.
   - The response headers are present.
-- [ ] **9.** Commit `feat: tokens, fonts, theme provider, shadcn primitives, security headers`.
+- [x] **9.** Commit `feat: tokens, fonts, theme provider, shadcn primitives, security headers`.
 
-### T2: Data and pure helpers (TDD)
+### T2: Data and pure helpers (TDD) (approved)
 
 **Files:** `src/lib/data.tsx`, `src/lib/time.ts` (+test), `src/utils/validation.ts` (+test)
 
@@ -501,7 +501,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 `projectsData` (D4): **delete Imaginify.** "Cat AI Assistant" is already first in the list (added 2026-11-08; the owner will revise its copy, so keep the text exactly as it is). Every project gets an optional `url?: string` that drives the "Live preview ↗" button. Set Cat AI Assistant's to `'https://cat.ai'` only after the owner confirms that's a public link. With Imaginify gone no description contains JSX, so descriptions become plain strings.
 
-- [ ] **1. Failing tests first.** `time.test.ts`:
+- [x] **1. Failing tests first.** `time.test.ts`:
   ```ts
   const now = new Date('2026-11-08T12:00:00Z');
   expect(formatTenure({ year: 2023, month: 5 }, null, now)).toBe('3 yrs 7 mos');
@@ -521,17 +521,17 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   ]);
   ```
   `validation.test.ts`: 750 chars valid, 751 invalid, `''`, `'   '`, `null` and `42` invalid; `isEmail('a@b.co')` true, `isEmail('a@b')` and `isEmail('a b@c.d')` false.
-- [ ] **2.** `npm test` fails. Implement. `npm test` passes and `npm run typecheck` is clean.
-- [ ] **3.** `formatTenure` takes the current month from `now` in UTC (one-line comment; a day's difference doesn't matter here).
-- [ ] **4.** Commit `feat: structured data, time and validation helpers`.
+- [x] **2.** `npm test` fails. Implement. `npm test` passes and `npm run typecheck` is clean.
+- [x] **3.** `formatTenure` takes the current month from `now` in UTC (one-line comment; a day's difference doesn't matter here).
+- [x] **4.** Commit `feat: structured data, time and validation helpers`.
 
-### T3: Shared building blocks
+### T3: Shared building blocks (approved)
 
 **Files:** `SectionRule.tsx`, `SurfaceCard.tsx`, `LocalTime.tsx`, `Grain.tsx`, `globals.css`
 
-- [ ] **1.** `LocalTime` exactly as in §2.5.
-- [ ] **2.** `SectionRule({ id })` (server): looks up `index`/`total` in `sections` and renders mono `text-caption text-muted-foreground` `01 · About ─── 01 / 06`, with the index from `String(index).padStart(2, '0')`. The line is `<m.span className='h-px flex-1 origin-left bg-border' initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, ease: ease.out }} />` using `motion/react-client`, which lets T13 drop `react-intersection-observer`. It throws if `id` isn't in `sections`, so a typo fails the build.
-- [ ] **3.** `SurfaceCard` (client): the **only** card hover implementation, used by skill cards, the Now card, experience cards, gallery slots and project cards.
+- [x] **1.** `LocalTime` exactly as in §2.5.
+- [x] **2.** `SectionRule({ id })` (server): looks up `index`/`total` in `sections` and renders mono `text-caption text-muted-foreground` `01 · About ─── 01 / 06`, with the index from `String(index).padStart(2, '0')`. The line is `<m.span className='h-px flex-1 origin-left bg-border' initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, ease: ease.out }} />` using `motion/react-client`, which lets T13 drop `react-intersection-observer`. It throws if `id` isn't in `sections`, so a typo fails the build.
+- [x] **3.** `SurfaceCard` (client): the **only** card hover implementation, used by skill cards, the Now card, experience cards, gallery slots and project cards.
   ```tsx
   'use client';
   type Props = ComponentProps<'div'> & { interactive?: boolean };
@@ -582,11 +582,11 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   }
   ```
   Children react through `group-hover/card:` (tiles → `bg-card`). Children never get their own `hover:`.
-- [ ] **4.** `Grain` (server): inline SVG per README, `aria-hidden`, rendered once in `layout.tsx`.
-- [ ] **5.** Verify: `npm run lint && npm run build && npm run start`. View Source shows `--:--`; the console shows no hydration warning.
-- [ ] **6.** Commit `feat: section rule, surface card, local time, grain`.
+- [x] **4.** `Grain` (server): inline SVG per README, `aria-hidden`, rendered once in `layout.tsx`.
+- [x] **5.** Verify: `npm run lint && npm run build && npm run start`. View Source shows `--:--`; the console shows no hydration warning.
+- [x] **6.** Commit `feat: section rule, surface card, local time, grain`.
 
-> **Review gate A**: status NOT STARTED (see §5).
+> **Review gate A**: APPROVED 2026-11-08 @ `cacf53f` (see §5).
 
 ### T4: Header, scroll-spy, theme toggle, mobile nav
 
@@ -725,7 +725,9 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ### T8: Skills bento
 
-**Files:** `Skills.tsx` (server). Delete `skillsData` and the `skills-list` / `skill-item` utilities.
+**Files:** `Skills.tsx` (server), `src/lib/data.tsx`, `src/lib/data.test.ts`. Delete the `skills-list` / `skill-item` utilities.
+
+`skillsData` stays as the **private** icon registry that `skillGroups` picks from (Gate A amendment). Remove its `export` and every outside import. Change `data.test.ts` to assert 22 unique skill names across the groups instead of comparing with `skillsData`.
 
 - [ ] **1.** `SectionRule id='skills'`, then a header row with the derived count.
 - [ ] **2.** Cards are `SurfaceCard interactive`: `flex-[1_1_300px]`, with `wide` cards `flex-[2_1_620px]`.
@@ -906,6 +908,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   - `layout.tsx` swaps react-hot-toast's `<Toaster>` for `@/components/ui/sonner`, rendered inside `Providers` so it follows the theme.
   - `npm uninstall react-hot-toast`.
   - Delete the `custom-toast`, `contact-*`, `submit-button` and `collaboration-*` utilities.
+  - `ui/sonner.tsx` sets `'--border-radius': 'var(--radius)'`, but `tokens.css` defines no `--radius`. Use `var(--radius-md)` (added at Gate A).
 - [ ] **7. Section** (server):
   - Headline `text-statement`, with "collaboration" in `text-primary` (it's the call to action).
   - Left column: intro + `socialLinks` (`justify-between`).
@@ -931,7 +934,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 - [ ] **3.** Remove these, checking each with `grep -rn <name> src` first:
   - Dependencies: `react-type-animation`, `react-intersection-observer`.
   - Components and hooks: `SectionHeading`, `SectionDivider`, `useIsMobile`.
-  - CSS: the remaining legacy utilities and `.main`. `globals.css` should end as in §2.3.
+  - CSS: the remaining legacy utilities, `.main`, and the `@layer base { body { @apply text-lg sm:text-xl } }` kept since T1. `globals.css` should end as in §2.3.
   - `motion.ts`: the unused `lift`, `press`, `expand`. The `--animate-rule-draw` token can stay.
 - [ ] **4. E2E** `e2e/page.spec.ts`:
   - Reduced motion: every element's `getAnimations()` is finished or empty.
@@ -959,7 +962,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ## 5. Review log
 
-**Cleared to implement:** first the Gate 0 follow-ups R0.1–R0.5 (one commit, `chore: gate 0 follow-ups`), then R0.6 (its own commit), then **T1, T2, T3** in order. Stop at **Review gate A**. Nothing from T4 on is cleared.
+**Cleared to implement:** first the Gate A follow-ups RA.1–RA.4 (one commit, `chore: gate A follow-ups`), then **T4, T5, T6, T7** in order. Stop at **Review gate B1**. Nothing from T8 on is cleared.
 
 ### Gate 0: Upgrades (T0a–T0d)
 
@@ -979,12 +982,12 @@ READY FOR REVIEW: gate 0 @ 478f76f
 
 **Follow-ups.** These aren't blockers; they land before T1 and are checked at Gate A.
 
-- [ ] **R0.1** should-fix, `vitest.config.ts:1`: Vitest warns "ESM syntax in a file loaded as CommonJS" on every run, and a future Vite major will reject it. Rename to `vitest.config.mts`. Don't add `"type": "module"`, because `next.config.js` is CommonJS.
-- [ ] **R0.2** should-fix, `e2e/screenshots.spec.ts`: give screenshot runs `deviceScaleFactor: 1`. The mobile capture is currently 1024 × 29193 px (10 MB) at the Pixel 7 DPR. The references are 390 / 1440 px wide at 1×, so 1× captures compare directly and are 7× smaller.
-- [ ] **R0.3** should-fix, plan §4: tick the completed `- [ ]` steps of T0a–T0d. All 26 are still unticked, and the plan is the progress record.
-- [ ] **R0.4** nit, `package.json`: remove the unused `@eslint/js` devDependency (nothing imports it; `eslint` ships its own), and drop it from the ceiling line in `CLAUDE.md`.
-- [ ] **R0.5** nit, `CLAUDE.md`: the intro still says "framer-motion 12" (it's now `motion` 14) and the heading says "Redesign in progress (v2)". Make the "follow in order" line point to plan §5 "Cleared to implement".
-- [ ] **R0.6** `src/lib/data.tsx` holds the owner-requested "Cat AI Assistant" project (draft copy, added 2026-11-08), which is still uncommitted. Commit it on its own as `content: add Cat AI Assistant project (draft copy)`, with the text unchanged.
+- [x] **R0.1** (ab3df70) should-fix, `vitest.config.ts:1`: Vitest warns "ESM syntax in a file loaded as CommonJS" on every run, and a future Vite major will reject it. Rename to `vitest.config.mts`. Don't add `"type": "module"`, because `next.config.js` is CommonJS.
+- [x] **R0.2** (ab3df70) should-fix, `e2e/screenshots.spec.ts`: give screenshot runs `deviceScaleFactor: 1`. The mobile capture is currently 1024 × 29193 px (10 MB) at the Pixel 7 DPR. The references are 390 / 1440 px wide at 1×, so 1× captures compare directly and are 7× smaller.
+- [x] **R0.3** (ab3df70) should-fix, plan §4: tick the completed `- [ ]` steps of T0a–T0d. All 26 are still unticked, and the plan is the progress record.
+- [x] **R0.4** (ab3df70) nit, `package.json`: remove the unused `@eslint/js` devDependency (nothing imports it; `eslint` ships its own), and drop it from the ceiling line in `CLAUDE.md`.
+- [x] **R0.5** (ab3df70) nit, `CLAUDE.md`: the intro still says "framer-motion 12" (it's now `motion` 14) and the heading says "Redesign in progress (v2)". Make the "follow in order" line point to plan §5 "Cleared to implement".
+- [x] **R0.6** (7dbe25e) `src/lib/data.tsx` holds the owner-requested "Cat AI Assistant" project (draft copy, added 2026-11-08), which is still uncommitted. Commit it on its own as `content: add Cat AI Assistant project (draft copy)`, with the text unchanged.
 
 **Plan amendments from this review:**
 
@@ -993,7 +996,47 @@ READY FOR REVIEW: gate 0 @ 478f76f
 
 ### Gate A: Foundation (T1–T3)
 
-Status: NOT STARTED
+Status: **APPROVED 2026-11-08 @ `cacf53f`**, with follow-ups RA.1–RA.4, which land before T4 and are checked at Gate B1.
+
+READY FOR REVIEW: gate A @ cacf53f
+
+**Reviewer verified** (clean `.next`, Node 24.4.1):
+
+- Gate 0 follow-ups R0.1–R0.6 are done and confirmed. Vitest runs from `vitest.config.mts` without the warning, the screenshots are 1440 / 390 px wide, `@eslint/js` is gone, `CLAUDE.md` is updated, and Cat AI Assistant is committed (`7dbe25e`).
+- `npm run check` passes: lint has no output, Prettier is clean, TS 7 is clean, Vitest is 13/13 across 5 files, the build succeeds, and e2e is 2/2. `npm run screenshots` gives 3/3 at 1×.
+- Production build probe:
+  - All four security headers are sent, and there's no `X-Powered-By`.
+  - With the theme stored as `light`, `data-theme` is already `light` at DOMContentLoaded (no flash). Same for `dark`.
+  - Body is `#262A30` / `#ECEDE8` in dark and `#F2F1EC` / `#1F2328` in light. `--primary` is per theme, and `--shadow-card` resolves in both themes.
+  - Inter and JetBrains Mono both load; `font-mono` resolves to JetBrains Mono.
+  - Grain is 0.07 overlay in dark and 0.05 multiply in light.
+  - No console errors.
+- The old site renders and works in dark on the new tokens (checked in the screenshots).
+- Code read:
+  - `cn` has its regression test.
+  - The shadcn files have no `dark:` overrides and no competing focus rings.
+  - The time and validation helpers match the specified tests, with `formatRange` reproducing today's strings.
+  - `SectionRule` / `LocalTime` are covered by server-render tests.
+  - `SurfaceCard` writes `--mx` / `--my` without re-rendering.
+- The implementer's rulings 1–6 are **accepted**: `vite` as a declared devDependency, the hand-written `components.json` with our `cn`, the body type size kept until T13, render tests in place of the page check, the typed `SectionRule` id, and `data.test.ts`.
+- No Codex second opinion this round. The implementer's branch review found nothing, and nothing here is a design or architecture choice that another model would weigh differently.
+
+**Follow-ups.** These aren't blockers; they land before T4 as one commit, `chore: gate A follow-ups`.
+
+- [ ] **RA.1** should-fix, `src/components/ui/{input,textarea,button}.tsx`: remove `shadow-xs`. In the spec, depth comes from surface steps, and only the portrait card and the front project card get a shadow (`shadow-card`). While there, tidy what the earlier strip left behind: the empty `''` argument and trailing spaces in the class strings.
+- [ ] **RA.2** nit, `src/components/ui/button.tsx`: delete the `destructive` variant. There's no approved error colour, it uses `text-white`, and nothing should reach for it.
+- [ ] **RA.3** should-fix, `CLAUDE.md` → Known issues: record the shadcn CLI gotchas (they're only in a commit message right now). After any `shadcn add`:
+  - point the `cn` import from the npm package `cn` to `@/lib/utils` and uninstall that package
+  - strip `dark:` overrides, `outline-none` / `focus-visible:ring-*` and `shadow-xs` (plan §2.3)
+- [ ] **RA.4** nit, `src/lib/data.tsx`: `company: ' Global Logic'` has a leading space (pre-existing). Trim it. Whitespace isn't content, and the new layout puts the company on its own line.
+
+**Accepted interim state (T4–T12):** from T4 the theme toggle makes light mode reachable. Sections that haven't been rebuilt yet hard-code white text, so they're unreadable in light. That's accepted on this branch: don't patch legacy sections for light. Dark (the default) must stay usable at every commit, and each section must work in both themes from the task that rebuilds it. Gate C checks the whole page in both themes.
+
+**Plan amendments from this review:**
+
+- T8: keep the `skillsData` icon registry but stop exporting it, instead of deleting it.
+- T12: fix the sonner `--border-radius`.
+- T13: remove the legacy body type size.
 
 ### Gate B1: Top of page (T4–T7)
 

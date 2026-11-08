@@ -35,6 +35,9 @@ The site is being redesigned. Design is approved direction, not yet implemented.
   - `eslint` stays on 9.x: `eslint-plugin-react` (via `eslint-config-next`) peers end at ESLint 9.7. Lift when `eslint-config-next` supports ESLint 10.
   - `@types/node` matches the Node major in `engines` (24.x).
 - `vite` is a declared devDependency on purpose (Vitest's peer). Without it npm treats vite/rolldown as peer-only and drops the `@rolldown/binding-*` packages on the next install, and Vitest can't start (npm/cli#4828).
+- **shadcn CLI (4.x) gotchas.** `components.json` was written by hand (new-york, neutral, CSS variables, Radix); `init` only offers presets. After any `npx shadcn@latest add`:
+  - the generated files import `cn` from the npm package `cn`. Point them at `@/lib/utils` and `npm uninstall cn`.
+  - strip `dark:` overrides, `outline-none` / `focus-visible:ring-*` / `focus-visible:border-ring`, and `shadow-xs` (plan §2.3), so every control uses the `tokens.css` focus outline and depth comes from surface steps.
 - `tsconfig.json` sets `"allowJs": false` on purpose: `next build` re-adds `allowJs: true` when the key is missing.
 - Contact: server caps messages at 750 chars, the current textarea allows 1000 (plan Task 12 fixes it).
 - City and time zone (`[City]`, `Europe/Bratislava`) are placeholders until the owner confirms.
