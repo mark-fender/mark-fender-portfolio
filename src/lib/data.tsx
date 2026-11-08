@@ -49,6 +49,7 @@ export const siteMeta = {
   timeZone: 'Europe/Bratislava',
   currentRole: 'Front-End Developer @ Indra Avitech',
   availability: '[Availability status]',
+  experienceYears: 7,
 } as const;
 
 export const nowItems = [

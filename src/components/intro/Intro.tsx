@@ -6,7 +6,9 @@ import StatusLine from '@/components/intro/StatusLine';
 import { Button } from '@/components/ui/button';
 import { siteMeta, socialLinks } from '@/lib/data';
 
+const ROLE = 'frontend developer';
 const FOCUS_WORDS = ['ReactJS.', 'NextJS.', 'Angular.'];
+const FOCUS = FOCUS_WORDS.map((w) => w.replace(/\.$/, '')).join(' · ');
 // CSS rise, no fade: it starts at first paint, and an opacity fade on the LCP text would delay LCP until it ends.
 const RISE = 'animate-in duration-700 ease-out-strong slide-in-from-bottom-[14px]';
 
@@ -33,8 +35,9 @@ const Intro = () => (
           </h1>
           <p
             className={`${RISE} max-w-[620px] text-lead text-muted-foreground max-[919px]:order-4`}>
-            I am a <Strong>frontend developer</Strong> with <Strong>7 years</Strong> of professional
-            experience in web development. I specialize in building <Strong>responsive</Strong>,{' '}
+            I am a <Strong>{ROLE}</Strong> with{' '}
+            <Strong>{`${siteMeta.experienceYears} years`}</Strong> of professional experience in web
+            development. I specialize in building <Strong>responsive</Strong>,{' '}
             <Strong>high-performance</Strong> user interfaces with a strong focus on{' '}
             <Strong>usability</Strong> and <Strong>attention to detail</Strong>. My main focus is on{' '}
             <RotatingWord words={FOCUS_WORDS} />
@@ -64,11 +67,11 @@ const Intro = () => (
         <PortraitCard className='max-[919px]:order-3 max-[919px]:max-w-[420px] min-[920px]:max-w-[380px] min-[920px]:flex-[1_1_300px]'>
           <dl className='grid grid-cols-[56px_1fr] gap-y-2 text-label'>
             <dt className='font-mono text-syntax-keyword'>role</dt>
-            <dd className='text-foreground'>{siteMeta.currentRole}</dd>
+            <dd className='text-foreground'>{ROLE.charAt(0).toUpperCase() + ROLE.slice(1)}</dd>
             <dt className='font-mono text-syntax-keyword'>years</dt>
-            <dd className='font-mono text-syntax-number'>[placeholder]</dd>
+            <dd className='font-mono text-syntax-number'>{siteMeta.experienceYears}</dd>
             <dt className='font-mono text-syntax-keyword'>focus</dt>
-            <dd className='text-foreground'>[placeholder]</dd>
+            <dd className='text-foreground'>{FOCUS}</dd>
           </dl>
         </PortraitCard>
       </div>

@@ -73,3 +73,13 @@ test('desktop keeps the portrait beside the text, inside the 1200px container', 
   expect(portrait.x).toBeGreaterThan(h1.x + h1.width);
   expect(portrait.x + portrait.width).toBeLessThanOrEqual(1320);
 });
+
+test('spec panel reuses the intro copy', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#home figcaption dd')).toHaveText([
+    'Frontend developer',
+    '7',
+    'ReactJS · NextJS · Angular',
+  ]);
+  await expect(page.locator('#home p').first()).toContainText('frontend developer with 7 years');
+});
