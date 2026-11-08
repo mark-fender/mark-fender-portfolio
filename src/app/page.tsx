@@ -1,4 +1,5 @@
 import Intro from '@/components/intro/Intro';
+import Marquee from '@/components/Marquee';
 import ProjectList from '@/components/projects/ProjectList';
 import Skills from '@/components/Skills';
 import About from '@/components/About';
@@ -11,6 +12,7 @@ const Home = () => {
   return (
     <main className='flex flex-col'>
       <Intro />
+      <Marquee />
       <div className='main'>
         <SectionDivider />
         <About />
