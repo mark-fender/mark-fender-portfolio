@@ -1,7 +1,7 @@
 'use client';
 
 import SectionHeading from '@/components/SectionHeading';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import SubmitButton from '@/components/SubmitButton';
 import useContact from './hooks/useContact';
 

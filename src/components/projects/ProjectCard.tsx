@@ -1,7 +1,7 @@
 'use client';
 
 import { projectsData } from '@/lib/data';
-import { motion, MotionValue, useTransform } from 'framer-motion';
+import { motion, MotionValue, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
 type ProjectProps = (typeof projectsData)[number] & {

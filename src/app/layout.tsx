@@ -5,7 +5,7 @@ import '@/app/globals.css';
 import Header from '@/components/Header';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Aurora from '@/components/Aurora';
 

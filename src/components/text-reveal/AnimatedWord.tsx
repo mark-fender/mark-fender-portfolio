@@ -1,7 +1,7 @@
 'use client';
 
-import type { MotionValue } from 'framer-motion';
-import { motion, useTransform } from 'framer-motion';
+import type { MotionValue } from 'motion/react';
+import { motion, useTransform } from 'motion/react';
 
 export type AnimatedWordProps = {
   word: string;

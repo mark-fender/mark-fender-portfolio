@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import SectionHeading from '@/components/SectionHeading';
 import TextRevealOnScroll from '@/components/text-reveal/TextRevealOnScroll';
 import useSectionInView from '@/hooks/useSectionInView';

@@ -4,7 +4,7 @@ import React from 'react';
 import SectionHeading from '@/components/SectionHeading';
 import { experiencesData } from '@/lib/data';
 import PositionDetail from '@/components/experience/PositionDetail';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import useExperience from './hooks/useExperience';
 
 const Experience = () => {

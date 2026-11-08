@@ -1,6 +1,6 @@
 import useIsMobile from '@/hooks/useIsMobile';
 import useSectionInView from '@/hooks/useSectionInView';
-import { useScroll } from 'framer-motion';
+import { useScroll } from 'motion/react';
 import { useRef } from 'react';
 
 const useExperience = () => {
