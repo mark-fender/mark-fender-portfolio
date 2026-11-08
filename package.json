@@ -6,10 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "typecheck": "node node_modules/typescript-7/bin/tsc --noEmit"
+    "typecheck": "node node_modules/typescript-7/bin/tsc --noEmit",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",
@@ -32,18 +34,16 @@
     "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.39.5",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.51.0",
-    "@typescript-eslint/parser": "^8.62.1",
-    "eslint": "^10.2.1",
-    "eslint-config-next": "^16.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-unused-imports": "^4.4.1",
     "husky": "^9.1.7",
-    "prettier": "^3.9.4",
+    "prettier": "^3.9.10",
     "typescript": "~6.0.3",
     "typescript-7": "npm:typescript@^7.0.2"
   },

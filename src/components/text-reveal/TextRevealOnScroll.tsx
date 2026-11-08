@@ -9,6 +9,9 @@ type TextRevealOnScrollProps = {
   className?: string;
 };
 
+const countWords = (paragraphs: string[][]) =>
+  paragraphs.reduce((sum, words) => sum + words.length, 0);
+
 const TextRevealOnScroll = ({ paragraphs, className }: TextRevealOnScrollProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -16,18 +19,14 @@ const TextRevealOnScroll = ({ paragraphs, className }: TextRevealOnScrollProps) 
     offset: ['start end', 'end start'],
   });
 
-  let totalWords = 0;
-  const wordsByParagraph = paragraphs.map((paragraph) => {
-    const words = paragraph.split(' ');
-    const wordOffset = totalWords;
-    totalWords += words.length;
-    return { words, wordOffset };
-  });
+  const wordsByParagraph = paragraphs.map((paragraph) => paragraph.split(' '));
+  const totalWords = countWords(wordsByParagraph);
   const totalGroups = Math.ceil(totalWords / 2);
 
   return (
     <div ref={ref} className={className}>
-      {wordsByParagraph.map(({ words, wordOffset }, pIndex) => {
+      {wordsByParagraph.map((words, pIndex) => {
+        const wordOffset = countWords(wordsByParagraph.slice(0, pIndex));
         const content = words.map((word, index) => {
           const globalIndex = wordOffset + index;
           return (

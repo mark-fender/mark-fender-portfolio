@@ -120,7 +120,9 @@ type AuroraProps = {
 const Aurora = (props: AuroraProps) => {
   const { colorStops, amplitude, blend } = props;
   const propsRef = useRef<AuroraProps>(props);
-  propsRef.current = props;
+  useEffect(() => {
+    propsRef.current = props;
+  });
 
   const ctnDom = useRef<HTMLDivElement>(null);
 
@@ -139,8 +141,6 @@ const Aurora = (props: AuroraProps) => {
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
 
-    let program: Program | undefined;
-
     const resize = () => {
       if (!ctn) return;
       const width = ctn.offsetWidth;
@@ -154,7 +154,7 @@ const Aurora = (props: AuroraProps) => {
 
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) {
-      delete (geometry.attributes as any).uv;
+      delete geometry.attributes.uv;
     }
 
     const colorStopsArray = colorStops.map((hex) => {
@@ -162,7 +162,7 @@ const Aurora = (props: AuroraProps) => {
       return [c.r, c.g, c.b];
     });
 
-    program = new Program(gl, {
+    const program = new Program(gl, {
       vertex: VERT,
       fragment: FRAG,
       uniforms: {

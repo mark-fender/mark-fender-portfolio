@@ -1,0 +1,6 @@
+design/reference/
+package-lock.json
+.next/
+playwright-report/
+test-results/
+.superpowers/
