@@ -51,6 +51,37 @@ test('pins follow layout changes above the deck', async ({ page }) => {
   await expect.poll(() => scaleOf(page, 0)).toBeCloseTo(DECK_MIN_SCALE, 2);
 });
 
+test('a stationary resize re-runs the scales with the new pins', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'desktop resize');
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  // Park where card 1 is halfway over card 0, so card 0 is mid-scale.
+  await page.evaluate(() => {
+    const [first, second] = document.querySelectorAll<HTMLElement>('#projects [data-deck-card]');
+    window.scrollTo({
+      top: first!.parentElement!.getBoundingClientRect().top + scrollY - innerHeight,
+      behavior: 'instant',
+    });
+    const pinAt = parseFloat(getComputedStyle(second!).getPropertyValue('--sticky-top'));
+    const travel = second!.getBoundingClientRect().top - pinAt;
+    const firstPin = parseFloat(getComputedStyle(first!).getPropertyValue('--sticky-top'));
+    const firstTravel = first!.getBoundingClientRect().top - firstPin;
+    window.scrollTo({ top: scrollY + (firstTravel + travel) / 2, behavior: 'instant' });
+  });
+  await expect.poll(() => scaleOf(page, 0)).toBeLessThan(0.999);
+  expect(await scaleOf(page, 0)).toBeGreaterThan(0.941);
+  // Height only: nothing reflows or scrolls, but the tall-card bound (innerHeight − cardHeight) moves the pins.
+  await page.setViewportSize({ width: 1440, height: 600 });
+  await page.waitForTimeout(300);
+  const afterResize = await scaleOf(page, 0);
+  await page.evaluate(() => {
+    window.scrollBy({ top: 1, behavior: 'instant' });
+    window.scrollBy({ top: -1, behavior: 'instant' });
+  });
+  await page.waitForTimeout(300);
+  expect(afterResize).toBeCloseTo(await scaleOf(page, 0), 3);
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 

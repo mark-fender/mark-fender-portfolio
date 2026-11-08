@@ -1,5 +1,5 @@
 'use client';
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
+import { motion, useScroll, useTransform, type MotionValue } from 'motion/react';
 import { useEffect, useRef, type RefObject } from 'react';
 import ProjectCard from '@/components/projects/ProjectCard';
 import { DECK_MIN_SCALE } from '@/design-system/motion';
@@ -28,18 +28,21 @@ const DeckCard = ({
   wrapperRef: (el: HTMLDivElement | null) => void;
   cardRef: (el: HTMLDivElement | null) => void;
 }) => {
-  const reduceMotion = useReducedMotion();
   // Scales only between this card pinning and the next card pinning over it.
   const scale = useTransform(scrollY, (y) => {
     const pin = pins.current[index];
-    if (reduceMotion || !pin || pin.end <= pin.start) return 1;
+    if (!pin || pin.end <= pin.start) return 1;
     const t = Math.min(1, Math.max(0, (y - pin.start) / (pin.end - pin.start)));
     return 1 - t * (1 - DECK_MIN_SCALE);
   });
 
   return (
     <div ref={wrapperRef} data-deck-card className='sticky top-(--sticky-top)'>
-      <motion.div ref={cardRef} style={{ scale }} className='origin-top'>
+      {/* Reduced motion: CSS beats the inline transform, so markup and hydration don't change. */}
+      <motion.div
+        ref={cardRef}
+        style={{ scale }}
+        className='origin-top motion-reduce:transform-none!'>
         <ProjectCard {...project} index={index} total={total} />
       </motion.div>
     </div>
@@ -61,19 +64,21 @@ const ProjectDeck = ({ projects }: { projects: readonly Project[] }) => {
       if (!first) return;
       // Flow positions are summed from heights; sticky wrappers can't be measured in place.
       let flowTop = first.parentElement!.getBoundingClientRect().top + window.scrollY;
-      const starts = cards.current.map((card, i) => {
-        const height = card?.offsetHeight ?? 0; // offsetHeight ignores the scale transform
-        const top = Math.min(
-          header + EDGE_PX + i * STACK_GAP_PX,
-          window.innerHeight - height - EDGE_PX,
-        );
-        wrappers.current[i]?.style.setProperty('--sticky-top', `${top}px`);
-        const start = flowTop - top;
+      // Read every height first, then write every top: interleaving would force a layout per card.
+      const heights = cards.current.map((card) => card?.offsetHeight ?? 0); // ignores the scale
+      const tops = heights.map((height, i) =>
+        Math.min(header + EDGE_PX + i * STACK_GAP_PX, window.innerHeight - height - EDGE_PX),
+      );
+      const starts = heights.map((height, i) => {
+        const start = flowTop - tops[i]!;
         flowTop += height + CARD_GAP_PX;
         return start;
       });
+      tops.forEach((top, i) => wrappers.current[i]?.style.setProperty('--sticky-top', `${top}px`));
       pins.current = starts.map((start, i) => ({ start, end: starts[i + 1] ?? start }));
-      scrollY.set(window.scrollY); // re-run the scale transforms with the new pins
+      // Re-run the scale transforms with the new pins; set() alone skips an unchanged value.
+      scrollY.set(window.scrollY);
+      scrollY.dirty();
     };
     measure();
     const observer = new ResizeObserver(measure);
