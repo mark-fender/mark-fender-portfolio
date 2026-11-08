@@ -104,3 +104,14 @@ test('theme defaults to dark, toggles, and survives a reload without a flash', a
   await page.reload({ waitUntil: 'domcontentloaded' });
   expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe('light');
 });
+
+test('a section outside the nav highlights the nav section before it', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'pill nav is desktop');
+  await page.goto('/#off-the-clock');
+  await expect(
+    page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Projects' }),
+  ).toHaveAttribute('aria-current', 'true');
+});

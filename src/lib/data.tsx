@@ -37,6 +37,16 @@ export const navBarLinks = [
     .map((s) => ({ name: s.label, hash: `#${s.id}` as const })),
 ] as const;
 
+// Scroll-spy targets: every section, each mapped to the nav item to highlight. A section that
+// isn't in the nav highlights the nav section before it (off-the-clock → projects).
+export const spySections = [
+  { id: 'home', nav: 'home' },
+  ...sections.map((s, i) => ({
+    id: s.id,
+    nav: [...sections.slice(0, i + 1)].reverse().find((p) => p.nav)?.id ?? 'home',
+  })),
+];
+
 export const socialLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/marek-lipčák', icon: BsLinkedin },
   { label: 'Instagram', href: 'https://www.instagram.com/marek.lipcak/', icon: BsInstagram },

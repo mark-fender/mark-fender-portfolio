@@ -1,17 +1,19 @@
 'use client';
 import { motion, useMotionValueEvent, useScroll } from 'motion/react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import MobileNav from '@/components/MobileNav';
 import ThemeToggle from '@/components/ThemeToggle';
 import { spring } from '@/design-system/motion';
 import useActiveSection from '@/hooks/useActiveSection';
 import { cn } from '@/lib/utils';
 
-type Props = { links: readonly { name: string; hash: string }[] };
+type Props = {
+  links: readonly { name: string; hash: string }[];
+  spy: readonly { id: string; nav: string }[];
+};
 
-const Header = ({ links }: Props) => {
-  const ids = useMemo(() => links.map((l) => l.hash.slice(1)), [links]);
-  const [active, setActive] = useActiveSection(ids);
+const Header = ({ links, spy }: Props) => {
+  const [active, setActive] = useActiveSection(spy);
 
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();

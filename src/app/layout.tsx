@@ -5,7 +5,7 @@ import '@/app/globals.css';
 import Header from '@/components/Header';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
-import { navBarLinks } from '@/lib/data';
+import { navBarLinks, spySections } from '@/lib/data';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -69,7 +69,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
     suppressHydrationWarning>
     <body className='flex min-h-dvh flex-col overscroll-none'>
       <Providers>
-        <Header links={navBarLinks} />
+        <Header links={navBarLinks} spy={spySections} />
         {children}
         <Toaster position='top-right' />
       </Providers>
