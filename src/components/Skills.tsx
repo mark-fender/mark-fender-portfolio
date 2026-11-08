@@ -1,10 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import useSectionInView from '@/hooks/useSectionInView';
 import { skillsData } from '@/lib/data';
 import SectionHeading from '@/components/SectionHeading';
-import useIsMobile from '@/hooks/useIsMobile';
 
 const fadeInAnimationVariants = {
   initial: {
@@ -21,14 +19,8 @@ const fadeInAnimationVariants = {
 };
 
 const Skills = () => {
-  const { isMobile } = useIsMobile();
-  const { sectionRef } = useSectionInView({
-    sectionName: 'Skills',
-    threshold: isMobile ? 0.5 : 0.9,
-  });
-
   return (
-    <section ref={sectionRef} className='max-w-[53rem] scroll-mt-36 text-center' id='skills'>
+    <section className='max-w-[53rem] scroll-mt-36 text-center' id='skills'>
       <SectionHeading>My skills</SectionHeading>
       <ul className='skills-list'>
         {skillsData.map(({ name, icon: Icon }, index) => (

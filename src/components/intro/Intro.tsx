@@ -4,17 +4,11 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import { BsArrowRight, BsGithub, BsInstagram, BsLinkedin } from 'react-icons/bs';
 import { TypeAnimation } from 'react-type-animation';
-import useIntro from './hooks/useIntro';
 import TiltedCard from '../TiltedCard';
 
 const Intro = () => {
-  const { isMobile, sectionRef, mounted } = useIntro();
-
   return (
-    <section
-      ref={sectionRef}
-      className='mt-8 max-w-[75rem] text-center sm:mb-0 scroll-mt-36'
-      id='home'>
+    <section className='mt-8 max-w-[75rem] text-center sm:mb-0 scroll-mt-36' id='home'>
       <div className='flex items-center justify-center pt-2'>
         <motion.div
           className='mb-8'
@@ -35,18 +29,14 @@ const Intro = () => {
         <span className='font-bold'>high-performance</span> user interfaces with a strong focus on{' '}
         <span className='font-bold'>usability</span> and{' '}
         <span className='font-bold'>attention to detail</span>. My main focus is on{' '}
-        {mounted && isMobile ? (
-          <span className='font-bold'>ReactJS</span>
-        ) : (
-          <TypeAnimation
-            className='font-bold'
-            sequence={['ReactJS.', 2000, 'NextJS.', 2000, 'Angular.', 2000]}
-            speed={50}
-            deletionSpeed={50}
-            repeat={Infinity}
-            style={{ fontSize: '1.5rem' }}
-          />
-        )}
+        <TypeAnimation
+          className='font-bold'
+          sequence={['ReactJS.', 2000, 'NextJS.', 2000, 'Angular.', 2000]}
+          speed={50}
+          deletionSpeed={50}
+          repeat={Infinity}
+          style={{ fontSize: '1.5rem' }}
+        />
       </motion.h1>
       <motion.div
         className='mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 px-4 tex-lg font-medium'

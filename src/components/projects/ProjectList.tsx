@@ -3,13 +3,15 @@
 import SectionHeading from '@/components/SectionHeading';
 import ProjectCard from '@/components/projects/ProjectCard';
 import { projectsData } from '@/lib/data';
-import useProjectList from './hooks/useProjectList';
+import { useScroll } from 'motion/react';
+import { useRef } from 'react';
 
 const ProjectList = () => {
-  const { sectionRef, projectsRef, scrollYProgress } = useProjectList();
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: projectsRef, offset: ['start end', 'end end'] });
 
   return (
-    <section ref={sectionRef} id='projects' className='scroll-mt-36 mb-16'>
+    <section id='projects' className='scroll-mt-36 mb-16'>
       <div ref={projectsRef}>
         <SectionHeading>My Projects</SectionHeading>
         {projectsData.map((project, index) => {

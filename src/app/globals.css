@@ -2,12 +2,6 @@
 @import '../design-system/tokens.css';
 @import 'tw-animate-css';
 
-@layer components {
-  .fixed-header {
-    @apply fixed top-0 left-1/2 h-[4.5rem] w-full rounded-none border border-white/15 bg-slate-800/75 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] sm:top-6 sm:h-[3.25rem] sm:w-[36rem] sm:rounded-full;
-  }
-}
-
 @utility section-divider {
   @apply bg-gray-300 my-16 h-1 rounded-full sm:my-24 lg:my-32;
 }
@@ -121,5 +115,23 @@
     &:hover::after {
       opacity: 1;
     }
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: var(--ease-out-strong);
+}
+.theme-icon {
+  view-transition-name: theme-icon;
+}
+::view-transition-new(theme-icon) {
+  animation: theme-icon-in 200ms var(--ease-out-strong);
+}
+@keyframes theme-icon-in {
+  from {
+    opacity: 0;
+    rotate: -90deg;
   }
 }

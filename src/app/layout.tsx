@@ -6,6 +6,7 @@ import Grain from '@/components/Grain';
 import Header from '@/components/Header';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
+import { navBarLinks } from '@/lib/data';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -63,11 +64,11 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => (
   <html
     lang='en'
-    className={`${inter.variable} ${jetbrainsMono.variable} motion-safe:scroll-smooth`}
+    className={`${inter.variable} ${jetbrainsMono.variable} motion-safe:scroll-smooth scroll-pt-24`}
     suppressHydrationWarning>
-    <body className='flex min-h-dvh flex-col overscroll-none pt-28 sm:pt-36'>
+    <body className='flex min-h-dvh flex-col overscroll-none'>
       <Providers>
-        <Header />
+        <Header links={navBarLinks} />
         {children}
         <Toaster position='top-right' />
       </Providers>

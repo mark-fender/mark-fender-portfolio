@@ -1,17 +1,17 @@
 'use client';
 
-import React from 'react';
+import { useRef } from 'react';
 import SectionHeading from '@/components/SectionHeading';
 import { experiencesData } from '@/lib/data';
 import PositionDetail from '@/components/experience/PositionDetail';
-import { motion } from 'motion/react';
-import useExperience from './hooks/useExperience';
+import { motion, useScroll } from 'motion/react';
 
 const Experience = () => {
-  const { sectionRef, experienceListRef, scrollYProgress } = useExperience();
+  const experienceListRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: experienceListRef, offset: ['0 1', '1.33 1'] });
 
   return (
-    <section ref={sectionRef} id='experience'>
+    <section id='experience'>
       <SectionHeading>My Experience</SectionHeading>
       <div ref={experienceListRef} className='relative w-[75%] mx-auto'>
         <motion.div
