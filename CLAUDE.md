@@ -1,15 +1,15 @@
 # Portfolio — working notes for Claude
 
-Personal portfolio of Marek Lipčák (markfender.dev). Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, framer-motion 12. Single page: `src/app/page.tsx` composes the sections in `src/components/`.
+Personal portfolio of Marek Lipčák (markfender.dev). Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, motion 14 (`motion/react`). Single page: `src/app/page.tsx` composes the sections in `src/components/`.
 
-## Redesign in progress (v2)
+## Redesign in progress (v3)
 
 The site is being redesigned. Design is approved direction, not yet implemented.
 
 - **Spec (source of truth):** `src/design-system/README.md`. Tokens: `src/design-system/tokens.css`. Motion presets: `src/design-system/motion.ts`. Read the README before touching UI.
 - **Designs:** claude.ai canvas "Portfolio Redesign v1" (https://claude.ai/artifact/BcLq4qiR6WAUc5DvQ9VCd8), page "v3 — new baseline" is current; "v2 — saved" is the previous approved version. Figma file "Portfolio Redesign v2" (https://www.figma.com/design/Ff9ADInh4UyLs4Kr7o9vo2) still shows v2. The canvas is the newest.
 - **Rejected ideas (don't reintroduce):** a serif italic accent on the hero name; a fixed waypoint/trail nav on the left edge.
-- **Implementation plan:** `docs/superpowers/plans/2026-11-08-portfolio-redesign-v3.md` — tasks 0–13, follow in order.
+- **Implementation plan:** `docs/superpowers/plans/2026-11-08-portfolio-redesign-v3.md` — implement only what plan §5 "Cleared to implement" names, and stop at the gate it names.
 - **Visual reference (in repo):** `design/reference/home-{dark,light}-1440.{html,jpg}` and `home-mobile-390.*`. Static renders of the v3 canvas; compare against them, never ship their markup.
 - **Branch:** `design/redesign-v2-tokens`.
 - `src/design-system/` is not imported anywhere yet; the live site still runs the old styles until implementation starts.
@@ -32,8 +32,9 @@ The site is being redesigned. Design is approved direction, not yet implemented.
 
 - **Version ceilings (don't "fix" these):**
   - `typescript` stays on 6.0.x: Next and typescript-eslint need its compiler API, which the TS 7 package lacks. TS 7 is installed as `typescript-7` and runs `npm run typecheck`. Lift when typescript-eslint and Next support TS 7.
-  - `eslint` / `@eslint/js` stay on 9.x: `eslint-plugin-react` (via `eslint-config-next`) peers end at ESLint 9.7. Lift when `eslint-config-next` supports ESLint 10.
+  - `eslint` stays on 9.x: `eslint-plugin-react` (via `eslint-config-next`) peers end at ESLint 9.7. Lift when `eslint-config-next` supports ESLint 10.
   - `@types/node` matches the Node major in `engines` (24.x).
+- `vite` is a declared devDependency on purpose (Vitest's peer). Without it npm treats vite/rolldown as peer-only and drops the `@rolldown/binding-*` packages on the next install, and Vitest can't start (npm/cli#4828).
 - `tsconfig.json` sets `"allowJs": false` on purpose: `next build` re-adds `allowJs: true` when the key is missing.
 - Contact: server caps messages at 750 chars, the current textarea allows 1000 (plan Task 12 fixes it).
 - City and time zone (`[City]`, `Europe/Bratislava`) are placeholders until the owner confirms.

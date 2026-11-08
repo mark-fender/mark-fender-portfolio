@@ -205,7 +205,7 @@ The page is statically generated, so anything computed from "now" during render 
 
 ### 2.8 Performance budget
 
-- Record the baseline `next build` "First Load JS" for `/` in T0d. The final build must not be bigger. Removing Aurora/ogl, react-type-animation and react-hot-toast should pay for shadcn.
+- Baseline recorded at Gate 0 (Next 16 no longer prints First Load JS): `/` loads 10 scripts, **840.0 kB raw / 270.3 kB gzip** (old site, `478f76f`). T13 measures the same way (sum of JS responses for `/` on the production build) and must not be bigger. Removing Aurora/ogl, react-type-animation and react-hot-toast should pay for shadcn.
 - The portrait uses `next/image` with `preload` (Next 16 renamed `priority`; check against the installed version), explicit `sizes`, and no fade from `opacity: 0` (it's the likely LCP element).
 - Lighthouse mobile on the production build: LCP ≤ 2.5 s, CLS ≤ 0.05.
 - Grain (fixed full-screen blend layer) is a known paint cost. Check scroll smoothness on a throttled mobile profile in T13. If it janks, hide it below `md` and tell the reviewer.
@@ -293,12 +293,12 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
 | `eslint` / `@eslint/js` stay on **9.x**                                                                                                                       | `eslint-plugin-react` peer range ends at 9.7 | `eslint-config-next` ships a plugin that supports ESLint 10 |
 | `@types/node` matches the Node major in `engines` (D8)                                                                                                        | types must describe the runtime              | Node major changes                                          |
 
-### T0a: Upgrade dependencies
+### T0a: Upgrade dependencies (approved)
 
 **Files:** `package.json`, `package-lock.json`, any source the upgrades force to change
 
-- [ ] **1.** `nvm use 24` (D8). Set `"engines": { "node": "24.x" }`, then `npm ci` so you start from the lockfile.
-- [ ] **2.** Runtime packages to latest:
+- [x] **1.** `nvm use 24` (D8). Set `"engines": { "node": "24.x" }`, then `npm ci` so you start from the lockfile.
+- [x] **2.** Runtime packages to latest:
   ```sh
   npm i next@latest react@latest react-dom@latest motion@latest resend@latest \
     @vercel/analytics@latest @vercel/speed-insights@latest react-icons@latest \
@@ -309,29 +309,29 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   npm update ogl react-type-animation react-hot-toast react-intersection-observer clsx
   ```
   `postcss` loses its exact pin. `@types/*` move from `dependencies` to `devDependencies`.
-- [ ] **3.** framer-motion 12 → motion 14 crosses two majors. Read the 13.0 and 14.0 breaking changes (the `CHANGELOG.md` in `node_modules/motion`, or the GitHub releases) and list in the task report each API this repo uses and whether it changed. The APIs: `motion.*`, `useScroll`, `useTransform`, `useSpring`, `useMotionValue`, `useInView`/`whileInView`, `AnimatePresence`, `layoutId`, `MotionConfig`, `useReducedMotion`, `useMotionTemplate`, `useMotionValueEvent`, `Variants`, `SpringOptions`. Rewrite every import from `'framer-motion'` to `'motion/react'`, including `src/design-system/motion.ts`.
-- [ ] **4.** `@vercel/analytics` 1→2 and `@vercel/speed-insights` 1→2: check their READMEs for changed import paths (e.g. `@vercel/analytics/next`) and update `layout.tsx`.
-- [ ] **5.** Resend 6.37: confirm the send options still use `replyTo` (T12 depends on it).
-- [ ] **6.** `npm run build` passes and `npm run dev` renders the **current** site unchanged: hero tilt, About reveal, experience rail, project deck and contact form all work. `npm ls` shows no peer-dependency errors except the documented ceilings.
-- [ ] **7.** Commit `chore(deps): upgrade to latest (motion 14, next 16.4, react 19.3, node 24)`.
+- [x] **3.** framer-motion 12 → motion 14 crosses two majors. Read the 13.0 and 14.0 breaking changes (the `CHANGELOG.md` in `node_modules/motion`, or the GitHub releases) and list in the task report each API this repo uses and whether it changed. The APIs: `motion.*`, `useScroll`, `useTransform`, `useSpring`, `useMotionValue`, `useInView`/`whileInView`, `AnimatePresence`, `layoutId`, `MotionConfig`, `useReducedMotion`, `useMotionTemplate`, `useMotionValueEvent`, `Variants`, `SpringOptions`. Rewrite every import from `'framer-motion'` to `'motion/react'`, including `src/design-system/motion.ts`.
+- [x] **4.** `@vercel/analytics` 1→2 and `@vercel/speed-insights` 1→2: check their READMEs for changed import paths (e.g. `@vercel/analytics/next`) and update `layout.tsx`.
+- [x] **5.** Resend 6.37: confirm the send options still use `replyTo` (T12 depends on it).
+- [x] **6.** `npm run build` passes and `npm run dev` renders the **current** site unchanged: hero tilt, About reveal, experience rail, project deck and contact form all work. `npm ls` shows no peer-dependency errors except the documented ceilings.
+- [x] **7.** Commit `chore(deps): upgrade to latest (motion 14, next 16.4, react 19.3, node 24)`.
 
-### T0b: TypeScript 7
+### T0b: TypeScript 7 (approved)
 
 **Files:** `package.json`, `tsconfig.json`, `src/types/global.d.ts`, source where the new checks flag real errors
 
-- [ ] **1.** `npm i -D typescript@~6.0.3 typescript-7@npm:typescript@^7.0.2`. Tested: `node_modules/.bin/tsc` and `require('typescript')` both resolve to 6.0.3, and TS 7 runs from `node_modules/typescript-7/bin/tsc`. Scripts must call TS 7 by that path.
-- [ ] **2.** `tsconfig.json` for TS 7 (both versions accept it): `"target": "ES2022"`, `"module": "esnext"`, `"moduleResolution": "bundler"`, `"lib": ["dom", "dom.iterable", "es2022"]`. Remove `allowJs` (no JS sources). Keep `strict`, `paths`, `plugins: [{ "name": "next" }]` and the `.next/types` includes. Add `"noUncheckedIndexedAccess": true`, then fix what it flags, which is mostly the `data.tsx` index access.
-- [ ] **3.** TS 6+ checks side-effect imports, and Next doesn't declare `*.css`, so `import '@/app/globals.css'` errors. Add `src/types/global.d.ts`: `declare module '*.css';`.
-- [ ] **4.** Scripts: `"typecheck": "node node_modules/typescript-7/bin/tsc --noEmit"`. `rm -rf .next && npm run typecheck` and `npm run build` (which type-checks with TS 6) must both be clean.
-- [ ] **5.** VS Code: add `.vscode/settings.json` with `"typescript.tsdk": "node_modules/typescript/lib"` so the editor uses the project's TS 6 language service. (A TS 7 editor extension is optional and personal.)
-- [ ] **6.** Commit `chore: typescript 7 typecheck, typescript 6 for tooling`.
+- [x] **1.** `npm i -D typescript@~6.0.3 typescript-7@npm:typescript@^7.0.2`. Tested: `node_modules/.bin/tsc` and `require('typescript')` both resolve to 6.0.3, and TS 7 runs from `node_modules/typescript-7/bin/tsc`. Scripts must call TS 7 by that path.
+- [x] **2.** `tsconfig.json` for TS 7 (both versions accept it): `"target": "ES2022"`, `"module": "esnext"`, `"moduleResolution": "bundler"`, `"lib": ["dom", "dom.iterable", "es2022"]`. Remove `allowJs` (no JS sources). Keep `strict`, `paths`, `plugins: [{ "name": "next" }]` and the `.next/types` includes. Add `"noUncheckedIndexedAccess": true`, then fix what it flags, which is mostly the `data.tsx` index access.
+- [x] **3.** TS 6+ checks side-effect imports, and Next doesn't declare `*.css`, so `import '@/app/globals.css'` errors. Add `src/types/global.d.ts`: `declare module '*.css';`.
+- [x] **4.** Scripts: `"typecheck": "node node_modules/typescript-7/bin/tsc --noEmit"`. `rm -rf .next && npm run typecheck` and `npm run build` (which type-checks with TS 6) must both be clean.
+- [x] **5.** VS Code: add `.vscode/settings.json` with `"typescript.tsdk": "node_modules/typescript/lib"` so the editor uses the project's TS 6 language service. (A TS 7 editor extension is optional and personal.)
+- [x] **6.** Commit `chore: typescript 7 typecheck, typescript 6 for tooling`.
 
-### T0c: Lint, format, hooks
+### T0c: Lint, format, hooks (approved)
 
 **Files:** `eslint.config.mjs`, `package.json`, `.prettierignore`, `.husky/pre-commit`
 
-- [ ] **1.** `npm i -D eslint@^9 @eslint/js@^9 eslint-config-next@latest eslint-config-prettier@latest eslint-plugin-unused-imports@latest prettier@latest husky@latest`, then `npm uninstall @typescript-eslint/eslint-plugin @typescript-eslint/parser`. `eslint-config-next/typescript` brings typescript-eslint itself, and nothing imports either package directly any more.
-- [ ] **2.** Rewrite `eslint.config.mjs` as flat config without `FlatCompat` (so `@eslint/eslintrc` isn't needed):
+- [x] **1.** `npm i -D eslint@^9 @eslint/js@^9 eslint-config-next@latest eslint-config-prettier@latest eslint-plugin-unused-imports@latest prettier@latest husky@latest`, then `npm uninstall @typescript-eslint/eslint-plugin @typescript-eslint/parser`. `eslint-config-next/typescript` brings typescript-eslint itself, and nothing imports either package directly any more.
+- [x] **2.** Rewrite `eslint.config.mjs` as flat config without `FlatCompat` (so `@eslint/eslintrc` isn't needed):
 
   ```js
   import { defineConfig, globalIgnores } from 'eslint/config';
@@ -359,16 +359,16 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
 
   `"lint": "eslint ."`, `"lint:fix": "eslint . --fix"`. Lint covers `src`, `e2e` and the config files.
 
-- [ ] **3.** `.prettierignore`: `design/reference/`, `package-lock.json`, `.next/`, `playwright-report/`, `test-results/`. Scripts `"format": "prettier --write ."` and `"format:check": "prettier --check ."`. Run `npm run format` once and commit **that alone** (`style: prettier pass`), so later diffs stay readable.
-- [ ] **4.** Husky is installed but has no hook. `npx husky init` (adds `"prepare": "husky"`), then set `.husky/pre-commit` to `npm run lint && npm run format:check && npm run typecheck`. That's fast enough on this repo, and there's no lint-staged dependency.
-- [ ] **5.** `npm run lint` must finish with **0 errors**. Fix the existing code; don't disable rules to get there. Warnings are listed in the task report.
-- [ ] **6.** Commit `chore: eslint 9 flat config, prettier check, pre-commit hook`.
+- [x] **3.** `.prettierignore`: `design/reference/`, `package-lock.json`, `.next/`, `playwright-report/`, `test-results/`. Scripts `"format": "prettier --write ."` and `"format:check": "prettier --check ."`. Run `npm run format` once and commit **that alone** (`style: prettier pass`), so later diffs stay readable.
+- [x] **4.** Husky is installed but has no hook. `npx husky init` (adds `"prepare": "husky"`), then set `.husky/pre-commit` to `npm run lint && npm run format:check && npm run typecheck`. That's fast enough on this repo, and there's no lint-staged dependency.
+- [x] **5.** `npm run lint` must finish with **0 errors**. Fix the existing code; don't disable rules to get there. Warnings are listed in the task report.
+- [x] **6.** Commit `chore: eslint 9 flat config, prettier check, pre-commit hook`.
 
-### T0d: Test harness (unit + e2e) and baseline
+### T0d: Test harness (unit + e2e) and baseline (approved)
 
 **Files:** `vitest.config.ts`, `playwright.config.ts`, `e2e/smoke.spec.ts`, `e2e/screenshots.spec.ts`, `package.json`, `.gitignore`, `CLAUDE.md`
 
-- [ ] **1.** `npm i -D vitest@latest`, `vitest.config.ts`:
+- [x] **1.** `npm i -D vitest@latest`, `vitest.config.ts`:
   ```ts
   import { defineConfig } from 'vitest/config';
   import { fileURLToPath } from 'node:url';
@@ -378,7 +378,7 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   });
   ```
   Script `"test": "vitest run"`.
-- [ ] **2.** `npm i -D @playwright/test@latest && npx playwright install chromium`. `playwright.config.ts`:
+- [x] **2.** `npm i -D @playwright/test@latest && npx playwright install chromium`. `playwright.config.ts`:
   ```ts
   import { defineConfig, devices } from '@playwright/test';
   export default defineConfig({
@@ -404,13 +404,13 @@ Rule for this phase: a package goes to its `latest` unless it's on the ceiling l
   });
   ```
   Add `playwright-report/` and `test-results/` to `.gitignore`.
-- [ ] **3.** `e2e/smoke.spec.ts` (the shared fixture other specs reuse): load `/`, fail the test on any `console.error` / `pageerror` (catches hydration mismatches), and assert `document.documentElement.scrollWidth <= window.innerWidth`.
-- [ ] **4.** `e2e/screenshots.spec.ts`, tagged `@screenshots` and excluded from the default run (`grepInvert`). Full-page screenshots at 1440 dark, 1440 light and 390 dark, with `reducedMotion: 'reduce'`, the clock masked, written to `test-results/screens/`. Script `"screenshots": "playwright test --grep @screenshots"`. These are what the reviewer compares with `design/reference/*.jpg`.
-- [ ] **5.** Scripts `"test:e2e": "playwright test"` and `"check": "npm run lint && npm run format:check && npm run typecheck && npm test && npm run build && npm run test:e2e"`.
-- [ ] **6.** Run `npm run check` (green), then `npm run screenshots` of the **old** site, and write the `/` First Load JS from the build output in the task report (baseline for §2.8).
-- [ ] **7.** `CLAUDE.md`: change the canvas page name to "v3 — new baseline", replace the lint/tsc known issues with the ceiling list above, and add the scripts. Update the "v2" headers in `tokens.css` / `motion.ts` to v3. Commit the spec files (`src/design-system/`, `design/`, `docs/`, `CLAUDE.md`) plus the harness: `chore: vitest, playwright e2e harness, design spec`.
+- [x] **3.** `e2e/smoke.spec.ts` (the shared fixture other specs reuse): load `/`, fail the test on any `console.error` / `pageerror` (catches hydration mismatches), and assert `document.documentElement.scrollWidth <= window.innerWidth`.
+- [x] **4.** `e2e/screenshots.spec.ts`, tagged `@screenshots` and excluded from the default run (`grepInvert`). Full-page screenshots at 1440 dark, 1440 light and 390 dark, with `reducedMotion: 'reduce'`, the clock masked, written to `test-results/screens/`. Script `"screenshots": "playwright test --grep @screenshots"`. These are what the reviewer compares with `design/reference/*.jpg`.
+- [x] **5.** Scripts `"test:e2e": "playwright test"` and `"check": "npm run lint && npm run format:check && npm run typecheck && npm test && npm run build && npm run test:e2e"`.
+- [x] **6.** Run `npm run check` (green), then `npm run screenshots` of the **old** site, and write the `/` First Load JS from the build output in the task report (baseline for §2.8).
+- [x] **7.** `CLAUDE.md`: change the canvas page name to "v3 — new baseline", replace the lint/tsc known issues with the ceiling list above, and add the scripts. Update the "v2" headers in `tokens.css` / `motion.ts` to v3. Commit the spec files (`src/design-system/`, `design/`, `docs/`, `CLAUDE.md`) plus the harness: `chore: vitest, playwright e2e harness, design spec`.
 
-> **Review gate 0**: status PENDING (see §5). Redesign work starts only after this gate is approved.
+> **Review gate 0**: APPROVED 2026-11-08 @ `478f76f` (see §5).
 
 ### T1: Foundation (tokens, fonts, theme, shadcn, headers)
 
@@ -760,6 +760,13 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 - [ ] **2.** Keep the sticky stacking and `useTransform` scale, with the floor at `DECK_MIN_SCALE`.
   - Fix the existing bug: the per-card `top` offset sits on the inner `section`, which isn't sticky. Move it to the sticky wrapper and account for the sticky header height (D1).
   - Reduced motion: scale stays 1.
+  - **Tall cards must never hide content** (added at Gate 0, reviewer + Codex). At 390 × 844 the Cat AI Assistant card is about 900–1,050px, more than the ~780px below the header. Use **height-aware sticky offsets**:
+    - The sticky element is an untransformed wrapper; scale only the inner card.
+    - Each wrapper sets `top: var(--sticky-top)`.
+    - A `ResizeObserver` (`borderBoxSize`, so the animated scale isn't measured) plus a viewport resize listener sets `--sticky-top = min(headerHeight + index * stackGap, innerHeight - cardHeight - 16)px`. A tall card scrolls until its bottom is visible and only then pins.
+    - Scaling starts only after a card reaches its sticky position.
+    - No fixed card heights, no negative margins.
+    - E2E (mobile project): for every card, while the next card starts covering it, the covered card's bottom edge is already inside the viewport.
 - [ ] **3.** Card per README:
   - `rounded-2xl`, with `shadow-card` on the front card only.
   - Index derived from position (`01 / 04`).
@@ -952,11 +959,37 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ## 5. Review log
 
-**Cleared to implement:** T0a, T0b, T0c, T0d (Phase 0). Stop at Review gate 0. Nothing from T1 on is cleared.
+**Cleared to implement:** first the Gate 0 follow-ups R0.1–R0.5 (one commit, `chore: gate 0 follow-ups`), then R0.6 (its own commit), then **T1, T2, T3** in order. Stop at **Review gate A**. Nothing from T4 on is cleared.
 
 ### Gate 0: Upgrades (T0a–T0d)
 
-Status: PENDING. The implementer writes `READY FOR REVIEW: gate 0 @ <sha>` here when Phase 0 is done.
+Status: **APPROVED 2026-11-08 @ `478f76f`**, with follow-ups R0.1–R0.6, which must land before T1 and are checked at Gate A.
+
+READY FOR REVIEW: gate 0 @ 478f76f
+
+**Reviewer verified** (clean `.next`, Node 24.4.1):
+
+- `npm run check` passes: lint has 0 errors and 0 warnings, Prettier is clean, the TS 7 typecheck is clean, `next build` (TS 6) succeeds with `/` static, and e2e smoke passes on desktop and mobile.
+- `npm ls` shows no peer or missing errors.
+- The lockfile contains the Linux optional binaries (`@next/swc-linux-x64-gnu`, Tailwind oxide, lightningcss, rolldown, TS 7, sharp), so a Vercel `npm ci` will work.
+- `npm run screenshots` captures the full old site in all three shots.
+- motion 13/14 breaking changes don't touch any API used here.
+- The ceilings are documented in `CLAUDE.md`.
+- The implementer's Codex P2 on the screenshot fixture was fixed in `478f76f`. Its other P2 (a long description overflowing the old mobile card) is handled by the new T10 requirement, not by patching the old card.
+
+**Follow-ups.** These aren't blockers; they land before T1 and are checked at Gate A.
+
+- [ ] **R0.1** should-fix, `vitest.config.ts:1`: Vitest warns "ESM syntax in a file loaded as CommonJS" on every run, and a future Vite major will reject it. Rename to `vitest.config.mts`. Don't add `"type": "module"`, because `next.config.js` is CommonJS.
+- [ ] **R0.2** should-fix, `e2e/screenshots.spec.ts`: give screenshot runs `deviceScaleFactor: 1`. The mobile capture is currently 1024 × 29193 px (10 MB) at the Pixel 7 DPR. The references are 390 / 1440 px wide at 1×, so 1× captures compare directly and are 7× smaller.
+- [ ] **R0.3** should-fix, plan §4: tick the completed `- [ ]` steps of T0a–T0d. All 26 are still unticked, and the plan is the progress record.
+- [ ] **R0.4** nit, `package.json`: remove the unused `@eslint/js` devDependency (nothing imports it; `eslint` ships its own), and drop it from the ceiling line in `CLAUDE.md`.
+- [ ] **R0.5** nit, `CLAUDE.md`: the intro still says "framer-motion 12" (it's now `motion` 14) and the heading says "Redesign in progress (v2)". Make the "follow in order" line point to plan §5 "Cleared to implement".
+- [ ] **R0.6** `src/lib/data.tsx` holds the owner-requested "Cat AI Assistant" project (draft copy, added 2026-11-08), which is still uncommitted. Commit it on its own as `content: add Cat AI Assistant project (draft copy)`, with the text unchanged.
+
+**Plan amendments from this review:**
+
+- T10 now requires height-aware sticky offsets, so tall cards never hide content (second opinion: Codex agreed on option (d)).
+- §2.8 now records the bundle baseline and how it was measured.
 
 ### Gate A: Foundation (T1–T3)
 

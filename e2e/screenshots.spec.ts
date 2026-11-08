@@ -34,6 +34,8 @@ for (const shot of shots) {
       ...shot.device,
       viewport: { width: shot.width, height: shot.height },
       reducedMotion: 'reduce',
+      // 1x so captures match the 1x references in design/reference/.
+      deviceScaleFactor: 1,
     });
 
     test(shot.name, async ({ page }, testInfo) => {
