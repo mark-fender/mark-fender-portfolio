@@ -77,6 +77,12 @@ export const experiencesData = [
 
 export const projectsData = [
   {
+    title: 'Cat AI Assistant',
+    description:
+      'Cat AI Assistant is Caterpillar’s customer-facing AI assistant. Equipment owners, fleet managers and technicians ask questions in plain language and get answers drawn from manuals, service docs, parts catalogs and their own fleet data, instead of digging through half a dozen separate tools. It ships as a micro-frontend that other Caterpillar apps embed and as a standalone app at cat.ai. As a frontend developer on the team, I built the core of the response experience. That included LLM response streaming and the reveal animations that make answers read smoothly as they arrive, text-to-speech playback of responses, and rendering of images returned by the model. Alongside feature work, I refactored existing code and contributed to architecture discussions.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Zustand', 'TanStack Query'],
+  },
+  {
     title: 'Imaginify',
     description: (
       <>
