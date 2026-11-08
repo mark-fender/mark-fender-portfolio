@@ -14,9 +14,8 @@ const Home = () => {
       <Intro />
       <Marquee />
       <About />
+      <Skills />
       <div className='main'>
-        <Skills />
-        <SectionDivider />
         <Experience />
         <SectionDivider />
         <ProjectList />

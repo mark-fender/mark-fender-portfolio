@@ -169,7 +169,8 @@ export const projectsData: readonly Project[] = [
   },
 ];
 
-export const skillsData = [
+// Icon registry that skillGroups picks from; not exported (Gate A).
+const skillsData = [
   { name: 'HTML5', icon: FaHtml5 },
   { name: 'CSS3', icon: FaCss3Alt },
   { name: 'JavaScript', icon: FaJs },

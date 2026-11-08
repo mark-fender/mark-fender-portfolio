@@ -22,14 +22,6 @@
   @apply relative flex flex-col justify-between bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-white/15 p-6 sm:p-8 rounded-lg shadow-lg shadow-black/[0.10] text-xl sm:text-lg;
 }
 
-@utility skills-list {
-  @apply flex flex-wrap justify-center gap-2 text-xl text-gray-50 sm:text-2xl;
-}
-
-@utility skill-item {
-  @apply bg-gradient-to-br from-gray-800 via-black to-slate-900 border border-white/15 rounded-xl px-5 py-3 shadow-md shadow-black/[0.10] text-lg sm:text-xl;
-}
-
 @utility contact-form {
   @apply mt-4 flex flex-col;
 }
