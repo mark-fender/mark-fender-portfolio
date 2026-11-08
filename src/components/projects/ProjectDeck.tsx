@@ -78,6 +78,8 @@ const ProjectDeck = ({ projects }: { projects: readonly Project[] }) => {
     measure();
     const observer = new ResizeObserver(measure);
     cards.current.forEach((card) => card && observer.observe(card));
+    // Content above the deck (e.g. the experience accordion) moves it without resizing a card.
+    observer.observe(document.body);
     window.addEventListener('resize', measure);
     return () => {
       observer.disconnect();

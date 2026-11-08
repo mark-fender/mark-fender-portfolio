@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { DECK_MIN_SCALE } from '@/design-system/motion';
 import { projectsData } from '@/lib/data';
 import { expect, test } from './fixtures';
 
@@ -25,6 +26,27 @@ test('covered cards shrink at the end of the deck', async ({ page }) => {
   await page.goto('/');
   await scrollToDeckEnd(page);
   await expect.poll(() => scaleOf(page, 0)).toBeLessThan(1);
+});
+
+test('pins follow layout changes above the deck', async ({ page }) => {
+  await page.goto('/');
+  // Collapsing the open experience item moves the deck up without resizing its cards.
+  await page.locator('#experience button[aria-expanded="true"]').click();
+  await expect(page.locator('#experience button[aria-expanded="true"]')).toHaveCount(0);
+  // Scroll to the moment card 1 pins over card 0: card 0 must be fully scaled by then.
+  await page.evaluate(() => {
+    const [first, second] = document.querySelectorAll<HTMLElement>('#projects [data-deck-card]');
+    window.scrollTo({
+      top: first!.parentElement!.getBoundingClientRect().top + scrollY - innerHeight,
+      behavior: 'instant',
+    });
+    const pinAt = parseFloat(getComputedStyle(second!).getPropertyValue('--sticky-top'));
+    window.scrollTo({
+      top: scrollY + second!.getBoundingClientRect().top - pinAt + 2,
+      behavior: 'instant',
+    });
+  });
+  await expect.poll(() => scaleOf(page, 0)).toBeCloseTo(DECK_MIN_SCALE, 2);
 });
 
 test.describe('reduced motion', () => {
