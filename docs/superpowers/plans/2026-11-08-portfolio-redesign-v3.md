@@ -592,7 +592,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 > **Review gate A**: APPROVED 2026-11-08 @ `cacf53f` (see §5).
 
-### T4: Header, scroll-spy, theme toggle, mobile nav
+### T4: Header, scroll-spy, theme toggle, mobile nav (approved)
 
 **Files:** `Header.tsx`, `ThemeToggle.tsx`, `MobileNav.tsx`, `hooks/useActiveSection.ts`, `providers.tsx`, `layout.tsx`, `globals.css`, all section hooks
 **Delete:** `context/activeSectionContext.tsx`, `hooks/useSectionInView.ts`, `types.ts`, `intro/hooks/useIntro.ts`. Inline what's left of `experience/hooks` and `projects/hooks` into their components.
@@ -656,7 +656,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   - Keyboard: Tab from the top reaches every nav link and the toggle in order; Esc closes the sheet.
 - [x] **6.** Commit `feat: header, scroll-spy, theme toggle, mobile sheet`.
 
-### T5: Hero
+### T5: Hero (approved)
 
 **Files:** `intro/Intro.tsx` (server), `Contours.tsx`, `RotatingWord.tsx`, `PortraitCard.tsx` (replaces `TiltedCard.tsx`; delete the old file), `StatusLine.tsx` (server). Remove the `contact-button` / `intro-image` utilities once unused.
 
@@ -696,14 +696,14 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 - [x] **8.** Commit `feat: hero with contours, portrait card, status line`.
 
-### T6: Skills marquee
+### T6: Skills marquee (approved)
 
 **Files:** `Marquee.tsx` (server), `page.tsx`
 
 - [x] **1.** Two copies of `skillGroups.flatMap(g => g.items)` in one `flex w-max animate-marquee hover:[animation-play-state:paused]` strip, separators `bg-accent-decorative`, wrapper `overflow-hidden`.
 - [x] **2.** No horizontal page scroll at 320px. Commit `feat: skills marquee`.
 
-### T7: About
+### T7: About (approved)
 
 **Files:** `About.tsx` (server), `text-reveal/TextRevealOnScroll.tsx`, `AnimatedWord.tsx`. Remove the `about-text` utility.
 
@@ -725,7 +725,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
   Commit `feat: about section`.
 
-> **Review gate B1**: CHANGES REQUESTED 2026-11-08 @ `062ff1b` (see §5).
+> **Review gate B1**: APPROVED 2026-11-08 @ `bcf18c3` after one round of changes (see §5).
 
 ### T8: Skills bento
 
@@ -966,7 +966,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ## 5. Review log
 
-**Cleared to implement:** **only the Gate B1 findings RB.1–RB.4** (RB.5–RB.8 are optional nits; one commit each or one `fix: gate B1 findings` commit), including their e2e/screenshot updates. Then add a new `READY FOR REVIEW: gate B1 @ <sha>` line and stop. **T8 and later are not cleared.**
+**Cleared to implement:** first the Gate B1 follow-ups RB.9–RB.11 (one commit, `chore: gate B1 follow-ups`), then **T8, T9, T10, T11** in order. Stop at **Review gate B2**. Nothing from T12 on is cleared. At B2, report Lighthouse mobile LCP and name the LCP element.
 
 ### Gate 0: Upgrades (T0a–T0d)
 
@@ -1044,9 +1044,11 @@ READY FOR REVIEW: gate A @ cacf53f
 
 ### Gate B1: Top of page (T4–T7)
 
-Status: **CHANGES REQUESTED 2026-11-08 @ `062ff1b`**. Fix RB.1–RB.4, then add a new `READY FOR REVIEW: gate B1 @ <sha>` line below and stop.
+Status: **APPROVED 2026-11-08 @ `bcf18c3`** (round 1 @ `062ff1b`: changes requested; round 2: approved), with follow-ups RB.9–RB.11, which land before T8 and are checked at Gate B2.
 
 READY FOR REVIEW: gate B1 @ 062ff1b
+
+READY FOR REVIEW: gate B1 @ bcf18c3
 
 **Reviewer verified** (clean `.next`):
 
@@ -1081,8 +1083,8 @@ READY FOR REVIEW: gate B1 @ 062ff1b
 
 **Findings.** RB.1–RB.3 are blockers, because T8–T11 build on the container and the section rhythm.
 
-- [ ] **RB.1** blocker, `src/app/globals.css` `page-container`: content is 1152px wide, but the spec and the reference have **1200px of content** plus gutters. That's my plan's mistake: `max-w-content` included the padding. The reference also uses **16px gutters on mobile**. Change to `@apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;`. Afterwards, header and hero content start at x = 120 at 1440, matching the reference.
-- [ ] **RB.2** blocker, hero on mobile (`design/reference/home-mobile-390.*`). The stacked order must be **chip → h1 → portrait card → intro → CTAs → status line**; today the portrait comes after the CTAs. The desktop two-column layout stays as it is.
+- [x] **RB.1** (5f43576) blocker, `src/app/globals.css` `page-container`: content is 1152px wide, but the spec and the reference have **1200px of content** plus gutters. That's my plan's mistake: `max-w-content` included the padding. The reference also uses **16px gutters on mobile**. Change to `@apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;`. Afterwards, header and hero content start at x = 120 at 1440, matching the reference.
+- [x] **RB.2** (cd351ef) blocker, hero on mobile (`design/reference/home-mobile-390.*`). The stacked order must be **chip → h1 → portrait card → intro → CTAs → status line**; today the portrait comes after the CTAs. The desktop two-column layout stays as it is.
   - Use one set of markup, with CSS grid areas on the hero wrapper; don't duplicate markup or use JS. Where the columns stop fitting (≈ 920px, the README's stack point), the text column's children become grid items in that order. Move the CSS rise onto the text items.
   - Also below that width:
     - The `<br>` in the h1 is hidden, so it reads "Hi, my name is / Marek." like the reference.
@@ -1091,18 +1093,38 @@ READY FOR REVIEW: gate B1 @ 062ff1b
     - The status line is a `grid-cols-[84px_1fr]` label/value list.
     - "Contact me" is `flex-1`.
   - Keep all three social icons. The mobile reference drops Instagram, but that's a content change nobody asked for.
-- [ ] **RB.3** blocker, section rhythm (reference values):
+- [x] **RB.3** (91e32b1) blocker, section rhythm (reference values):
   - Desktop: hero `88 / 56`, About `pt-34 pb-34`, every later section `pt-10 pb-34`.
   - Mobile: every section `pt-18 pb-0`, the last section `pb-18`, hero as in RB.2.
   - Apply it to About now. §2.3 and T13 step 2 now say this for T8–T13.
-- [ ] **RB.4** should-fix, the portrait spec panel (corrects D5). The reference shows values that already exist in the copy, so no placeholders are needed: `role: Frontend developer`, `years: 7`, `focus: ReactJS · NextJS · Angular`.
+- [x] **RB.4** (96fd2f8) should-fix, the portrait spec panel (corrects D5). The reference shows values that already exist in the copy, so no placeholders are needed: `role: Frontend developer`, `years: 7`, `focus: ReactJS · NextJS · Angular`.
   - One source each: add `siteMeta.experienceYears = 7` and use it for both the intro's "7 years" and the panel.
   - Derive `focus` from the rotating words (strip the trailing dots).
   - `role` comes from the intro's "frontend developer", capitalised.
-- [ ] **RB.5** nit: the "Contact me" icon is `ArrowRight` in the reference, not a chevron.
-- [ ] **RB.6** nit, `AnimatedWord.tsx`: write the separator as `' '`. The literal NBSP is invisible in review, and someone will "fix" it into a normal space, which collapses inside `inline-block`.
-- [ ] **RB.7** nit, `Contours.tsx`: give the breathe animation `[animation-fill-mode:backwards]`, so each ring doesn't snap from opacity 1 to 0.55 when its breathe starts. The reference has the same snap, so this is optional polish.
-- [ ] **RB.8** nit, `Marquee.tsx`: `aria-label` on a plain `div` does nothing (an element without a role can't be named). Drop it.
+- [x] **RB.5** (0ceae35) nit: the "Contact me" icon is `ArrowRight` in the reference, not a chevron.
+- [x] **RB.6** (0ceae35) nit, `AnimatedWord.tsx`: write the separator as `' '`. The literal NBSP is invisible in review, and someone will "fix" it into a normal space, which collapses inside `inline-block`.
+- [x] **RB.7** (0ceae35) nit, `Contours.tsx`: give the breathe animation `[animation-fill-mode:backwards]`, so each ring doesn't snap from opacity 1 to 0.55 when its breathe starts. The reference has the same snap, so this is optional polish.
+- [x] **RB.8** (0ceae35) nit, `Marquee.tsx`: `aria-label` on a plain `div` does nothing (an element without a role can't be named). Drop it.
+
+**Round 2 @ `bcf18c3`: APPROVED 2026-11-08.**
+
+- `npm run check` passes: Vitest 13/13, e2e 34 passed (14 project-specific skips), build ok. Screenshots 3/3.
+- Design comparison:
+  - Mobile 390 now matches the reference structure: chip → h1 ("Hi, my name is / Marek.") → square portrait with the right panel values → intro → wide Contact button + socials → stacked status grid, with 16px gutters and the reference section spacing.
+  - Desktop 1440 content starts at x = 120, as in the reference.
+  - The About paragraph is fully revealed in the screenshots only because they run with reduced motion.
+- Accepted:
+  - the 920px stack point for the section rhythm
+  - the 420px cap on the stacked portrait (the reference uses `max-width: 420px` too)
+  - the `display: contents` + `order` reorder
+  - `bcf18c3`'s breakpoint fix. In Tailwind v4, `max-[N]` is `width < N`, so the hero and header ranges now meet exactly. Good catch from the Codex review.
+- RB.6 isn't really done. Prettier with this repo's config **keeps** `' '` (verified), so the escape was turned into a literal character by the editing tool, not by Prettier. The same thing happened to this plan's RB.6 text. See RB.10.
+
+**Follow-ups.** These aren't blockers; they land before T8 as one commit, `chore: gate B1 follow-ups`, and are checked at B2.
+
+- [ ] **RB.9** should-fix, About heading column: the reference is `flex: 1 1 260px; max-width: 320px`. The README says `basis-[300px]`, and the code followed the README, so the paragraph starts about 40px further right than in the reference and wraps differently. Use `flex-[1_1_260px] max-w-[320px]` in About, and correct the README "Layout → Two-column sections" line to match the reference. Experience (T9) uses the same columns.
+- [ ] **RB.10** nit, `AnimatedWord.tsx`: use the JSX entity `{!isLast && <>&nbsp;</>}`. It's ASCII, so no editor or tool can silently turn it into an invisible character.
+- [ ] **RB.11** nit, `src/design-system/README.md`: remove `aria-label="Technologies"` from the Skills marquee row (D6, RB.8).
 
 ### Gate B2: Middle (T8–T11)
 

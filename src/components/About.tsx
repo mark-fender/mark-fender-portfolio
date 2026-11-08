@@ -13,7 +13,7 @@ const About = () => (
       <SectionRule id='about' />
     </div>
     <div className='flex flex-wrap gap-x-14 gap-y-[18px]'>
-      <div className='max-w-[320px] basis-[300px]'>
+      <div className='max-w-[320px] flex-[1_1_260px]'>
         <h2 className='text-section'>About me</h2>
       </div>
       <TextRevealOnScroll
