@@ -8,6 +8,9 @@ import Contact from '@/components/contact/Contact';
 import SectionDivider from '@/components/SectionDivider';
 
 // Rebuilt sections sit directly in <main>; the legacy ones keep the old centred wrapper until rebuilt.
+// Tenure ("3 yrs 7 mos") is computed on the server; rebuild daily so it stays current (§2.5).
+export const revalidate = 86400;
+
 const Home = () => {
   return (
     <main className='flex flex-col'>
@@ -15,9 +18,8 @@ const Home = () => {
       <Marquee />
       <About />
       <Skills />
+      <Experience />
       <div className='main'>
-        <Experience />
-        <SectionDivider />
         <ProjectList />
         <SectionDivider />
         <Contact />
