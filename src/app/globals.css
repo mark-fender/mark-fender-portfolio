@@ -2,10 +2,6 @@
 @import '../design-system/tokens.css';
 @import 'tw-animate-css';
 
-@utility section-divider {
-  @apply bg-gray-300 my-16 h-1 rounded-full sm:my-24 lg:my-32;
-}
-
 @utility section-heading {
   @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
 }
@@ -16,10 +12,6 @@
 
 @utility custom-toast {
   @apply max-w-md w-full bg-gray-900 shadow-lg rounded-lg pointer-events-auto flex text-gray-50 text-lg;
-}
-
-@utility project-card {
-  @apply relative flex flex-col justify-between bg-gradient-to-br from-slate-800 via-gray-900 to-slate-900 max-w-[60rem] transition h-[45rem] sm:max-h-[25rem] mb-8 border border-white/15 p-6 sm:p-8 rounded-lg shadow-lg shadow-black/[0.10] text-xl sm:text-lg;
 }
 
 @utility contact-form {

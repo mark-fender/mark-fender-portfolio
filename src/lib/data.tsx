@@ -101,7 +101,7 @@ export const experiencesData: readonly {
   },
 ];
 
-type Project = {
+export type Project = {
   title: string;
   description: string;
   tags: readonly string[];
