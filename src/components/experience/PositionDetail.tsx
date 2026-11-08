@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { experiencesData } from '@/lib/data';
+import { formatRange } from '@/lib/time';
 
 const fadeInAnimationVariants = {
   initial: {
@@ -18,7 +19,7 @@ const fadeInAnimationVariants = {
 
 type PositionDetailProps = (typeof experiencesData)[number] & { index: number };
 
-const PositionDetail = ({ title, company, description, date, index }: PositionDetailProps) => (
+const PositionDetail = ({ title, company, description, from, to, index }: PositionDetailProps) => (
   <motion.li
     className='mb-16 last:mb-0 w-full mx-auto flex flex-col items-left justify-between'
     variants={fadeInAnimationVariants}
@@ -29,7 +30,7 @@ const PositionDetail = ({ title, company, description, date, index }: PositionDe
     <h3 className='text-xl font-semibold'>
       {title} at {company}
     </h3>
-    <span className='font-medium my-2 text-white/55'>{date}</span>
+    <span className='font-medium my-2 text-white/55'>{formatRange(from, to)}</span>
     <p className='w-full'>{description}</p>
   </motion.li>
 );

@@ -16,110 +16,102 @@ import {
 } from 'react-icons/si';
 import { GiBearFace } from 'react-icons/gi';
 import { TbApi } from 'react-icons/tb';
+import type { YearMonth } from '@/lib/time';
 
-export const navBarLinks = [
-  {
-    name: 'Home',
-    hash: '#home',
-  },
-  {
-    name: 'About',
-    hash: '#about',
-  },
-  {
-    name: 'Skills',
-    hash: '#skills',
-  },
-  {
-    name: 'Experience',
-    hash: '#experience',
-  },
-  {
-    name: 'Projects',
-    hash: '#projects',
-  },
-  {
-    name: 'Contact',
-    hash: '#contact',
-  },
+export const sections = [
+  { id: 'about', label: 'About', nav: true },
+  { id: 'skills', label: 'Skills', nav: true },
+  { id: 'experience', label: 'Experience', nav: true },
+  { id: 'projects', label: 'Projects', nav: true },
+  { id: 'off-the-clock', label: '[Off the clock]', nav: false },
+  { id: 'contact', label: 'Contact', nav: true },
 ] as const;
 
-export const experiencesData = [
+type NavSection = Extract<(typeof sections)[number], { nav: true }>;
+
+export const navBarLinks = [
+  { name: 'Home', hash: '#home' },
+  ...sections
+    .filter((s): s is NavSection => s.nav)
+    .map((s) => ({ name: s.label, hash: `#${s.id}` as const })),
+] as const;
+
+export const socialLinks = [
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/marek-lipčák' },
+  { label: 'Instagram', href: 'https://www.instagram.com/marek.lipcak/' },
+  { label: 'GitHub', href: 'https://github.com/mark-fender' },
+] as const;
+
+export const siteMeta = {
+  city: '[City]',
+  country: 'SK',
+  timeZone: 'Europe/Bratislava',
+  currentRole: 'Front-End Developer @ Indra Avitech',
+  availability: '[Availability status]',
+} as const;
+
+export const nowItems = [
+  { label: 'Building', value: '[placeholder]' },
+  { label: 'Learning', value: '[placeholder]' },
+  { label: 'Reading', value: '[placeholder]' },
+  { label: 'Listening', value: '[placeholder]' },
+  { label: 'Last hike', value: '[placeholder]' },
+] as const;
+
+export const experiencesData: readonly {
+  title: string;
+  company: string;
+  description: string;
+  from: YearMonth;
+  to: YearMonth | null;
+}[] = [
   {
     title: 'Front-End Developer',
     company: 'Indra Avitech',
     description:
       'Part of a development team responsible for development and testing of frontend of applications used by employees in aviation sector where I greatly contributed to improving visual design and usability of developed products and increasing test coverage of the codebase. In this team we were solving challenges like dynamically generating forms based on complex data models, designing and implementing layouts with multiple content panels enabling users to effectively edit forms and maps at the same time and utilizing best coding practices and architecture design to transform large nested objects of data into shortend, easily readable messages encoded according to domain rules also known as digital NOTAMs.',
-    date: 'May 2023 - present',
+    from: { year: 2023, month: 5 },
+    to: null,
   },
   {
     title: 'Front-End Developer',
     company: ' Global Logic',
     description:
       'Lead the development of user interface for controlling sample registration module that processes samples of patients tissue in medical environment. As a single frontend developer I was responsible for designing architecture, implementing authentication, authorization and user management and using WebSockets to provide real time updates on processing state.',
-    date: 'November 2022 - April 2023',
+    from: { year: 2022, month: 11 },
+    to: { year: 2023, month: 4 },
   },
   {
     title: 'Front-End Developer',
     company: 'Workflows',
     description:
       'Part of a development team responsible for development, testing and maintenance of frontend projects, mostly for Austrian client NTS Retail. In this position I started out as a junior developer and after acquiring lots of experience I was able to built several projects from scratch and helped to refactor and improve code quality in legacy codebase.',
-    date: 'September 2018 - October 2022',
+    from: { year: 2018, month: 9 },
+    to: { year: 2022, month: 10 },
   },
   {
     title: 'Software Engineer',
     company: 'Software AG',
     description:
       'Part time position I started as a student where my main tasks included testing software features using JUnit and Selenium and development of internal tools. Managed to optimize stability and execution times of existing test suites.',
-    date: 'September 2017 - September 2018',
+    from: { year: 2017, month: 9 },
+    to: { year: 2018, month: 9 },
   },
-] as const;
+];
 
-export const projectsData = [
+type Project = {
+  title: string;
+  description: string;
+  tags: readonly string[];
+  url?: string; // drives the "Live preview ↗" button
+};
+
+export const projectsData: readonly Project[] = [
   {
     title: 'Cat AI Assistant',
     description:
       'Cat AI Assistant is Caterpillar’s customer-facing AI assistant. Equipment owners, fleet managers and technicians ask questions in plain language and get answers drawn from manuals, service docs, parts catalogs and their own fleet data, instead of digging through half a dozen separate tools. It ships as a micro-frontend that other Caterpillar apps embed and as a standalone app at cat.ai. As a frontend developer on the team, I built the core of the response experience. That included LLM response streaming and the reveal animations that make answers read smoothly as they arrive, text-to-speech playback of responses, and rendering of images returned by the model. Alongside feature work, I refactored existing code and contributed to architecture discussions.',
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Zustand', 'TanStack Query'],
-  },
-  {
-    title: 'Imaginify',
-    description: (
-      <>
-        An online SaaS platform enabling users to edit photos using AI. It is possible to restore
-        images in poor quality, generative fill image surroundings, remove or recolor objects or
-        remove image background. Each edit costs one credit and credits can be purchased via Stripe
-        payment gateway. Each user can view their edited images in their profile and all of the
-        edits in homepage. Used for learning and based on design and resources provided by{' '}
-        <a
-          style={{ textDecoration: 'underline' }}
-          href='https://www.jsmastery.pro/'
-          target='_blank'>
-          Javascript Mastery
-        </a>
-        . Live preview available{' '}
-        <a
-          style={{ textDecoration: 'underline' }}
-          href='https://imaginify-amber-omega.vercel.app/'
-          target='_blank'>
-          here
-        </a>
-        .
-      </>
-    ),
-    tags: [
-      'ReactJS',
-      'NextJS',
-      'TypeScript',
-      'Tailwind',
-      'Shadcn UI',
-      'React Hook Form',
-      'Zod',
-      'Cloudinary AI',
-      'Clerk Auth',
-      'Stripe',
-      'MongoDB',
-    ],
   },
   {
     title: 'AIXM Editor & Digital NOTAM management',
@@ -173,7 +165,7 @@ export const projectsData = [
       'Docker',
     ],
   },
-] as const;
+];
 
 export const skillsData = [
   { name: 'HTML5', icon: FaHtml5 },
@@ -199,3 +191,20 @@ export const skillsData = [
   { name: 'Webpack', icon: SiWebpack },
   { name: 'Docker', icon: FaDocker },
 ] as const;
+
+type SkillName = (typeof skillsData)[number]['name'];
+// Keeps the icons in one place; SkillName makes a misspelt name a type error.
+const pick = (...names: SkillName[]) =>
+  names.map((name) => skillsData.find((skill) => skill.name === name)!);
+
+export const skillGroups = [
+  { name: 'Languages', items: pick('HTML5', 'CSS3', 'JavaScript', 'TypeScript') },
+  { name: 'Frameworks', items: pick('ReactJS', 'NextJS', 'Angular') },
+  { name: 'Styling & motion', items: pick('Tailwind', 'Styled Components', 'Framer Motion') },
+  {
+    name: 'State & data',
+    wide: true,
+    items: pick('Redux', 'Zustand', 'Tanstack Query', 'RxJs', 'Zod', 'REST', 'WebSocket'),
+  },
+  { name: 'Tooling & testing', items: pick('Jest', 'Git', 'Vite', 'Webpack', 'Docker') },
+];
