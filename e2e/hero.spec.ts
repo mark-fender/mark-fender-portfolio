@@ -37,3 +37,39 @@ test.describe('reduced motion', () => {
     expect(states.every((s) => s === 'finished')).toBe(true);
   });
 });
+
+test('mobile stacks chip, h1, portrait, intro, CTAs, status in that order', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, 'stacked layout');
+  await page.goto('/');
+  const hero = page.locator('#home');
+  const tops = await Promise.all(
+    [
+      hero.getByText('[Availability status]'),
+      hero.getByRole('heading', { level: 1 }),
+      hero.getByRole('img', { name: 'Portrait of Marek Lipčák' }),
+      hero.getByText(/^I am a/),
+      hero.getByRole('link', { name: 'Contact me' }),
+      hero.getByText('Local time'),
+    ].map(async (l) => (await l.boundingBox())!.y),
+  );
+  expect(tops).toEqual([...tops].sort((a, b) => a - b));
+  await expect(hero.getByRole('heading', { level: 1 })).toHaveText('Hi, my name is Marek.');
+});
+
+test('desktop keeps the portrait beside the text, inside the 1200px container', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'two-column layout');
+  await page.goto('/');
+  const h1 = (await page.locator('#home h1').boundingBox())!;
+  const portrait = (await page
+    .getByRole('img', { name: 'Portrait of Marek Lipčák' })
+    .boundingBox())!;
+  expect(h1.x).toBe(120);
+  expect(portrait.x).toBeGreaterThan(h1.x + h1.width);
+  expect(portrait.x + portrait.width).toBeLessThanOrEqual(1320);
+});

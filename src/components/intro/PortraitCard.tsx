@@ -3,11 +3,12 @@ import { motion, useReducedMotion, useSpring } from 'motion/react';
 import Image from 'next/image';
 import type { PointerEvent, ReactNode } from 'react';
 import { ease, spring, TILT_MAX_DEG } from '@/design-system/motion';
+import { cn } from '@/lib/utils';
 
 const HOVER_SCALE = 1.02;
 
 // Tilt follows a mouse pointer only; touch and reduced motion get a still card.
-const PortraitCard = ({ children }: { children: ReactNode }) => {
+const PortraitCard = ({ children, className }: { children: ReactNode; className?: string }) => {
   const reduceMotion = useReducedMotion();
   const rotateX = useSpring(0, spring.tilt);
   const rotateY = useSpring(0, spring.tilt);
@@ -32,7 +33,7 @@ const PortraitCard = ({ children }: { children: ReactNode }) => {
       initial={{ y: 14 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.7, ease: ease.out, delay: 0.08 }}
-      className='max-w-[380px] flex-[1_1_300px] perspective-[800px]'
+      className={cn('perspective-[800px]', className)}
       onPointerMove={onMove}
       onPointerLeave={reset}>
       <motion.figure
@@ -44,8 +45,8 @@ const PortraitCard = ({ children }: { children: ReactNode }) => {
           width={800}
           height={800}
           preload
-          sizes='(max-width: 420px) 90vw, 380px'
-          className='aspect-[4/5] w-full rounded-lg object-cover object-[50%_28%] saturate-[.55] contrast-[1.04]'
+          sizes='(max-width: 452px) 100vw, 420px'
+          className='aspect-square w-full min-[920px]:aspect-[4/5] rounded-lg object-cover object-[50%_28%] saturate-[.55] contrast-[1.04]'
         />
         <figcaption className='px-2 pt-3.5 pb-1'>{children}</figcaption>
       </motion.figure>
