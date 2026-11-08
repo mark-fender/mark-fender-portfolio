@@ -25,16 +25,16 @@ const Intro = () => (
       <div className='relative z-10 flex flex-col gap-[22px] min-[920px]:flex-row min-[920px]:items-center min-[920px]:gap-18'>
         <div className='contents min-[920px]:flex min-[920px]:min-w-0 min-[920px]:flex-[999_1_560px] min-[920px]:flex-col min-[920px]:gap-7'>
           <span
-            className={`${RISE} max-[919px]:order-1 inline-flex items-center gap-2.5 self-start rounded-full border border-border bg-card px-3 py-[7px] font-mono text-caption text-muted-foreground`}>
+            className={`${RISE} max-[920px]:order-1 inline-flex items-center gap-2.5 self-start rounded-full border border-border bg-card px-3 py-[7px] font-mono text-caption text-muted-foreground`}>
             <span className='size-[7px] animate-now-ring rounded-full bg-primary' />
             {siteMeta.availability}
           </span>
-          <h1 className={`${RISE} text-display max-[919px]:order-2`}>
-            Hi, my name <br className='max-[919px]:hidden' />
+          <h1 className={`${RISE} text-display max-[920px]:order-2`}>
+            Hi, my name <br className='max-[920px]:hidden' />
             is Marek.
           </h1>
           <p
-            className={`${RISE} max-w-[620px] text-lead text-muted-foreground max-[919px]:order-4`}>
+            className={`${RISE} max-w-[620px] text-lead text-muted-foreground max-[920px]:order-4`}>
             I am a <Strong>{ROLE}</Strong> with{' '}
             <Strong>{`${siteMeta.experienceYears} years`}</Strong> of professional experience in web
             development. I specialize in building <Strong>responsive</Strong>,{' '}
@@ -42,10 +42,10 @@ const Intro = () => (
             <Strong>usability</Strong> and <Strong>attention to detail</Strong>. My main focus is on{' '}
             <RotatingWord words={FOCUS_WORDS} />
           </p>
-          <div className={`${RISE} flex flex-wrap items-center gap-2.5 max-[919px]:order-5`}>
+          <div className={`${RISE} flex flex-wrap items-center gap-2.5 max-[920px]:order-5`}>
             <Button
               asChild
-              className='h-[50px] gap-2.5 rounded-full px-[22px] text-base active:scale-[.97] max-[919px]:flex-1'>
+              className='h-[50px] gap-2.5 rounded-full px-[22px] text-base active:scale-[.97] max-[920px]:flex-1'>
               <a href='#contact'>
                 Contact me
                 <ArrowRight className='size-[18px]' strokeWidth={1.75} aria-hidden />
@@ -64,7 +64,7 @@ const Intro = () => (
             ))}
           </div>
         </div>
-        <PortraitCard className='max-[919px]:order-3 max-[919px]:max-w-[420px] min-[920px]:max-w-[380px] min-[920px]:flex-[1_1_300px]'>
+        <PortraitCard className='max-[920px]:order-3 max-[920px]:max-w-[420px] min-[920px]:max-w-[380px] min-[920px]:flex-[1_1_300px]'>
           <dl className='grid grid-cols-[56px_1fr] gap-y-2 text-label'>
             <dt className='font-mono text-syntax-keyword'>role</dt>
             <dd className='text-foreground'>{ROLE.charAt(0).toUpperCase() + ROLE.slice(1)}</dd>

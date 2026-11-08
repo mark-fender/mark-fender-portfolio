@@ -83,3 +83,21 @@ test('spec panel reuses the intro copy', async ({ page }) => {
   ]);
   await expect(page.locator('#home p').first()).toContainText('frontend developer with 7 years');
 });
+
+test('919px still gets the stacked order (max-/min- breakpoints meet at 920)', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'explicit width');
+  await page.setViewportSize({ width: 919, height: 900 });
+  await page.goto('/');
+  const hero = page.locator('#home');
+  const h1 = (await hero.getByRole('heading', { level: 1 }).boundingBox())!;
+  const portrait = (await hero
+    .getByRole('img', { name: 'Portrait of Marek Lipčák' })
+    .boundingBox())!;
+  const intro = (await hero.getByText(/^I am a/).boundingBox())!;
+  expect(h1.y).toBeLessThan(portrait.y);
+  expect(portrait.y).toBeLessThan(intro.y);
+  expect(portrait.width).toBeLessThanOrEqual(420);
+});

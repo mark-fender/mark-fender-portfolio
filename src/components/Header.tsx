@@ -35,11 +35,11 @@ const Header = ({ links }: Props) => {
           <span className='inline-flex size-9 items-center justify-center rounded-[10px] border border-primary font-mono text-label font-medium text-primary'>
             ML
           </span>
-          <span className='text-[15px] font-medium max-[799px]:hidden'>Marek Lipčák</span>
+          <span className='text-[15px] font-medium max-[800px]:hidden'>Marek Lipčák</span>
         </a>
 
         <div className='flex shrink-0 flex-nowrap items-center gap-2'>
-          <nav aria-label='Primary' className='max-[679px]:hidden'>
+          <nav aria-label='Primary' className='max-[680px]:hidden'>
             <ul className='flex flex-nowrap gap-0.5 rounded-full border border-border bg-card p-1 text-sm'>
               {links.map(({ name, hash }) => {
                 const id = hash.slice(1);
