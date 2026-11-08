@@ -8,11 +8,11 @@ const paragraphs = [
 ];
 
 const About = () => (
-  <section id='about' className='page-container py-34'>
-    <div className='mb-6'>
+  <section id='about' className='page-container pt-18 pb-0 min-[920px]:py-34'>
+    <div className='mb-[18px] min-[920px]:mb-6'>
       <SectionRule id='about' />
     </div>
-    <div className='flex flex-wrap gap-14'>
+    <div className='flex flex-wrap gap-x-14 gap-y-[18px]'>
       <div className='max-w-[320px] basis-[300px]'>
         <h2 className='text-section'>About me</h2>
       </div>
