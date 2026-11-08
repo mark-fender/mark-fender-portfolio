@@ -1,4 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+// shortcut: no CSP; next-themes' inline script and framer inline styles need a nonce, which forces dynamic rendering. Revisit if the site gains third-party scripts.
+const securityHeaders = [
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+];
 
-module.exports = nextConfig;
+/** @type {import('next').NextConfig} */
+module.exports = {
+  poweredByHeader: false,
+  headers: async () => [{ source: '/:path*', headers: securityHeaders }],
+};

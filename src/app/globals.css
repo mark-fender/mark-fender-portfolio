@@ -1,33 +1,6 @@
 @import 'tailwindcss';
-
-@property --aurora-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes aurora-rotate {
-  to {
-    --aurora-angle: 360deg;
-  }
-}
-
-@theme {
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-}
-
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
+@import '../design-system/tokens.css';
+@import 'tw-animate-css';
 
 @layer components {
   .fixed-header {
@@ -43,20 +16,12 @@
   @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
 }
 
-@utility aurora-outline {
-  @apply relative outline-hidden border border-transparent;
-  background:
-    linear-gradient(#030712, #030712) padding-box,
-    conic-gradient(from var(--aurora-angle), #7dd3fc, #c084fc, #7dd3fc) border-box;
-  animation: aurora-rotate 12s linear infinite;
-}
-
 @utility submit-button {
-  @apply aurora-outline flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
+  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
 }
 
 @utility contact-button {
-  @apply aurora-outline bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
+  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
 }
 
 @utility custom-toast {
@@ -121,10 +86,14 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 text-gray-50 text-lg sm:text-xl;
+    @apply text-lg sm:text-xl;
   }
 
   .main {
     @apply flex flex-col items-center px-8 relative;
   }
+}
+
+@utility page-container {
+  @apply mx-auto w-full max-w-content px-6;
 }

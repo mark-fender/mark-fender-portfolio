@@ -1,4 +1,4 @@
-import localFont from 'next/font/local';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 import '@/app/globals.css';
@@ -7,29 +7,18 @@ import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import Aurora from '@/components/Aurora';
 
-const satoshi = localFont({
-  src: [
-    {
-      path: './fonts/Satoshi-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: './fonts/Satoshi-Italic.ttf',
-      weight: '400',
-      style: 'italic',
-    },
-    {
-      path: './fonts/Satoshi-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+const inter = Inter({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
 });
 
-const auroraColors = ['#2d95eb', '#9737C3', '#08d1bd'];
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.markfender.dev/';
 
 export const metadata: Metadata = {
@@ -71,10 +60,11 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: PropsWithChildren) => (
-  <html lang='en' className='scroll-smooth!' suppressHydrationWarning>
-    <body
-      className={`${satoshi.className} text-gray-50 text-opacity-900 relative pt-28 sm:pt-36 overscroll-none bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800`}>
-      <Aurora colorStops={auroraColors} blend={0.75} amplitude={0.75} speed={0.5} />
+  <html
+    lang='en'
+    className={`${inter.variable} ${jetbrainsMono.variable} motion-safe:scroll-smooth`}
+    suppressHydrationWarning>
+    <body className='flex min-h-dvh flex-col overscroll-none pt-28 sm:pt-36'>
       <Providers>
         <Header />
         {children}
