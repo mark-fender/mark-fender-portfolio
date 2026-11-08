@@ -1,28 +1,27 @@
-'use client';
-
-import { motion } from 'motion/react';
-import SectionHeading from '@/components/SectionHeading';
+import SectionRule from '@/components/SectionRule';
 import TextRevealOnScroll from '@/components/text-reveal/TextRevealOnScroll';
 
-const About = () => {
-  return (
-    <motion.section
-      className='max-w-[45rem] text-center leading-8 scroll-mt-36'
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.25 }}
-      id='about'>
-      <SectionHeading>About me</SectionHeading>
+const paragraphs = [
+  'I build interfaces that feel effortless to use and memorable to look at. Frontend development, for me, is the sweet spot where logical problem-solving meets creative expression — transforming ideas into smooth, intuitive, and visually engaging experiences.',
+  'I focus on writing clean, well-structured code and crafting designs that are both functional and delightful to interact with. I enjoy working with modern tools and frameworks to deliver software that is robust, elegant, and built to last. Beyond writing code, I pay attention to the small details that make a big difference, from subtle animations to polished interaction flows.',
+  "I'm endlessly curious, always exploring new technologies, experimenting with UI animations, and refining interaction details that elevate the user experience. My goal isn't just to deliver features, but to craft software that people genuinely enjoy using. When I'm not coding, you'll find me hiking, reading, or tinkering with side projects—always learning, always building.",
+];
+
+const About = () => (
+  <section id='about' className='page-container py-34'>
+    <div className='mb-6'>
+      <SectionRule id='about' />
+    </div>
+    <div className='flex flex-wrap gap-14'>
+      <div className='max-w-[320px] basis-[300px]'>
+        <h2 className='text-section'>About me</h2>
+      </div>
       <TextRevealOnScroll
-        className='about-text space-y-8 sm:space-y-12 lg:space-y-16'
-        paragraphs={[
-          'I build interfaces that feel effortless to use and memorable to look at. Frontend development, for me, is the sweet spot where logical problem-solving meets creative expression — transforming ideas into smooth, intuitive, and visually engaging experiences.',
-          'I focus on writing clean, well-structured code and crafting designs that are both functional and delightful to interact with. I enjoy working with modern tools and frameworks to deliver software that is robust, elegant, and built to last. Beyond writing code, I pay attention to the small details that make a big difference, from subtle animations to polished interaction flows.',
-          "I'm endlessly curious, always exploring new technologies, experimenting with UI animations, and refining interaction details that elevate the user experience. My goal isn't just to deliver features, but to craft software that people genuinely enjoy using. When I'm not coding, you'll find me hiking, reading, or tinkering with side projects—always learning, always building.",
-        ]}
+        className='flex min-w-0 flex-[999_1_560px] flex-col gap-9 text-reveal'
+        paragraphs={paragraphs}
       />
-    </motion.section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default About;

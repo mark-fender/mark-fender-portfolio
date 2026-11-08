@@ -58,10 +58,6 @@
   @apply text-base sm:text-lg;
 }
 
-@utility about-text {
-  @apply text-xl tracking-wide leading-relaxed sm:text-2xl lg:text-3xl;
-}
-
 @utility collaboration-text {
   @apply text-xl font-bold tracking-tight text-white sm:text-2xl;
 }

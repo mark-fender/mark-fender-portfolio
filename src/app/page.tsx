@@ -13,10 +13,8 @@ const Home = () => {
     <main className='flex flex-col'>
       <Intro />
       <Marquee />
+      <About />
       <div className='main'>
-        <SectionDivider />
-        <About />
-        <SectionDivider />
         <Skills />
         <SectionDivider />
         <Experience />
