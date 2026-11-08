@@ -10,7 +10,8 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
-  subsets: ['latin', 'latin-ext'],
+  // Preload latin only; the latin-ext @font-face (for "č") is still emitted and loads on demand.
+  subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
