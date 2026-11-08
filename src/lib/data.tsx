@@ -14,6 +14,7 @@ import {
   SiWebpack,
   SiZod,
 } from 'react-icons/si';
+import { BsGithub, BsInstagram, BsLinkedin } from 'react-icons/bs';
 import { GiBearFace } from 'react-icons/gi';
 import { TbApi } from 'react-icons/tb';
 import type { YearMonth } from '@/lib/time';
@@ -37,9 +38,9 @@ export const navBarLinks = [
 ] as const;
 
 export const socialLinks = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/marek-lipčák' },
-  { label: 'Instagram', href: 'https://www.instagram.com/marek.lipcak/' },
-  { label: 'GitHub', href: 'https://github.com/mark-fender' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/marek-lipčák', icon: BsLinkedin },
+  { label: 'Instagram', href: 'https://www.instagram.com/marek.lipcak/', icon: BsInstagram },
+  { label: 'GitHub', href: 'https://github.com/mark-fender', icon: BsGithub },
 ] as const;
 
 export const siteMeta = {

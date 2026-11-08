@@ -6,20 +6,23 @@ import Experience from '@/components/experience/Experience';
 import Contact from '@/components/contact/Contact';
 import SectionDivider from '@/components/SectionDivider';
 
+// Rebuilt sections sit directly in <main>; the legacy ones keep the old centred wrapper until rebuilt.
 const Home = () => {
   return (
-    <main className='main'>
+    <main className='flex flex-col'>
       <Intro />
-      <SectionDivider />
-      <About />
-      <SectionDivider />
-      <Skills />
-      <SectionDivider />
-      <Experience />
-      <SectionDivider />
-      <ProjectList />
-      <SectionDivider />
-      <Contact />
+      <div className='main'>
+        <SectionDivider />
+        <About />
+        <SectionDivider />
+        <Skills />
+        <SectionDivider />
+        <Experience />
+        <SectionDivider />
+        <ProjectList />
+        <SectionDivider />
+        <Contact />
+      </div>
     </main>
   );
 };

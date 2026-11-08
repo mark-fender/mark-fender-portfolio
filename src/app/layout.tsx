@@ -18,6 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
+  // Mono is only small labels; not preloading it keeps it from competing with the LCP text.
+  preload: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.markfender.dev/';

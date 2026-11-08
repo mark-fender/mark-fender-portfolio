@@ -14,16 +14,8 @@
   @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
 }
 
-@utility contact-button {
-  @apply bg-gray-950 text-white px-7 py-3 flex items-center gap-2 rounded-full focus:scale-105 hover:scale-105 active:scale-105 transition text-base;
-}
-
 @utility custom-toast {
   @apply max-w-md w-full bg-gray-900 shadow-lg rounded-lg pointer-events-auto flex text-gray-50 text-lg;
-}
-
-@utility intro-image {
-  @apply rounded-full border-[0.15rem] border-gray-200 shadow-xl;
 }
 
 @utility project-card {
