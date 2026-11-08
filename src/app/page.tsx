@@ -1,4 +1,5 @@
 import Intro from '@/components/intro/Intro';
+import OffTheClock from '@/components/OffTheClock';
 import Marquee from '@/components/Marquee';
 import ProjectsSection from '@/components/projects/ProjectsSection';
 import Skills from '@/components/Skills';
@@ -19,6 +20,7 @@ const Home = () => {
       <Skills />
       <Experience />
       <ProjectsSection />
+      <OffTheClock />
       <div className='main'>
         <Contact />
       </div>
