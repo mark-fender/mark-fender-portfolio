@@ -2,6 +2,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 import '@/app/globals.css';
+import Grain from '@/components/Grain';
 import Header from '@/components/Header';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/app/providers';
@@ -70,6 +71,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
         {children}
         <Toaster position='top-right' />
       </Providers>
+      <Grain />
       <Analytics />
       <SpeedInsights />
     </body>

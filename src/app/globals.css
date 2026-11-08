@@ -97,3 +97,29 @@
 @utility page-container {
   @apply mx-auto w-full max-w-content px-6;
 }
+
+@utility card-light {
+  --card-light: color-mix(in srgb, var(--foreground) 7%, transparent);
+  [data-theme='light'] & {
+    --card-light: color-mix(in srgb, var(--foreground) 5%, transparent);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      var(--card-light),
+      transparent 60%
+    );
+    transition: opacity 240ms var(--ease-out-strong);
+  }
+  @media (hover: hover) {
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+}
