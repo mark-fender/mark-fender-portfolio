@@ -15,7 +15,7 @@ const Copy = ({ hidden }: { hidden?: boolean }) => (
 );
 
 const Marquee = () => (
-  <div aria-label='Technologies' className='overflow-hidden border-y border-border py-[18px]'>
+  <div className='overflow-hidden border-y border-border py-[18px]'>
     <div className='flex w-max animate-marquee font-mono text-sm whitespace-nowrap text-muted-foreground hover:[animation-play-state:paused]'>
       <Copy />
       <Copy hidden />

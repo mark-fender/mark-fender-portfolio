@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Contours from '@/components/intro/Contours';
 import PortraitCard from '@/components/intro/PortraitCard';
 import RotatingWord from '@/components/intro/RotatingWord';
@@ -48,7 +48,7 @@ const Intro = () => (
               className='h-[50px] gap-2.5 rounded-full px-[22px] text-base active:scale-[.97] max-[919px]:flex-1'>
               <a href='#contact'>
                 Contact me
-                <ChevronRight className='size-[18px]' strokeWidth={1.75} aria-hidden />
+                <ArrowRight className='size-[18px]' strokeWidth={1.75} aria-hidden />
               </a>
             </Button>
             {socialLinks.map(({ label, href, icon: Icon }) => (

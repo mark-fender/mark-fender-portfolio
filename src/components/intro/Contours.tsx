@@ -59,7 +59,7 @@ const Contours = () => {
           {CONTOUR_PATHS.map((d, i) => (
             <g
               key={d}
-              className='origin-center animate-contour-breathe [transform-box:fill-box] motion-reduce:animate-none'
+              className='origin-center animate-contour-breathe [animation-fill-mode:backwards] [transform-box:fill-box] motion-reduce:animate-none'
               style={{ animationDelay: `${DRAW_S - i * BREATHE_STAGGER_S}s` }}>
               <path
                 d={d}

@@ -31,7 +31,7 @@ const AnimatedWord = ({
     // Under reduced motion the !important class beats the inline colour, so markup stays the same.
     <motion.span style={{ color }} className='inline-block motion-reduce:text-foreground!'>
       {word}
-      {!isLast && ' '}
+      {!isLast && '\u00A0'}
     </motion.span>
   );
 };
