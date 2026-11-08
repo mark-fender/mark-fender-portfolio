@@ -8,7 +8,7 @@ The site is being redesigned. Design is approved direction, not yet implemented.
 
 - **Spec (source of truth):** `src/design-system/README.md`. Tokens: `src/design-system/tokens.css`. Motion presets: `src/design-system/motion.ts`. Read the README before touching UI.
 - **Designs:** claude.ai canvas "Portfolio Redesign v1" (https://claude.ai/artifact/BcLq4qiR6WAUc5DvQ9VCd8), page "v3 — new baseline" is current; "v2 — saved" is the previous approved version. Figma file "Portfolio Redesign v2" (https://www.figma.com/design/Ff9ADInh4UyLs4Kr7o9vo2) still shows v2. The canvas is the newest.
-- **Rejected ideas (don't reintroduce):** a serif italic accent on the hero name; a fixed waypoint/trail nav on the left edge.
+- **Rejected ideas (don't reintroduce):** a serif italic accent on the hero name; a fixed waypoint/trail nav on the left edge; the film-grain overlay (owner removed it 2026-11-08, after it cost ~6 s of mobile main-thread time).
 - **Implementation plan:** `docs/superpowers/plans/2026-11-08-portfolio-redesign-v3.md` — implement only what plan §5 "Cleared to implement" names, and stop at the gate it names.
 - **Visual reference (in repo):** `design/reference/home-{dark,light}-1440.{html,jpg}` and `home-mobile-390.*`. Static renders of the v3 canvas; compare against them, never ship their markup.
 - **Branch:** `design/redesign-v2-tokens`.
