@@ -20,12 +20,14 @@
 | D2  | Theme toggle animation                                                                                                        | **Decided: colours cross-fade** (200 ms, View Transitions API) and the icon rotates in.                                                                                                                                                                                                                     | T4               |
 | D3  | Footer wordmark colour: README/tokens say `subtle-foreground`, the old plan said `surface-raised`.                            | Default **`subtle-foreground`** (tokens comment)                                                                                                                                                                                                                                                            | T13              |
 | D4  | Projects                                                                                                                      | **Decided: Imaginify is removed.** New recent projects replace it. "Cat AI Assistant" is added first (draft copy); more follow as the owner writes them.                                                                                                                                                    | T2, T10          |
-| D5  | Portrait spec panel (`role / years / focus`) is new content.                                                                  | Default: `role` = `siteMeta.currentRole`; `years` and `focus` = `[placeholder]`                                                                                                                                                                                                                             | T5               |
+| D5  | Portrait spec panel (`role / years / focus`)                                                                                  | **Corrected at Gate B1:** values from copy already on the page, as in the reference: `Frontend developer` / `siteMeta.experienceYears` (7) / the rotating words joined with `·`.                                                                                                                            | T5               |
 | D6  | Screen-reader work                                                                                                            | **Decided: out of scope.** No sr-only copies, live regions, VoiceOver pass or a11y score target. What stays costs one attribute and also serves keyboard and sighted users: `alt`, `aria-label` on icon-only buttons, `aria-current` (the e2e tests use it), visible focus, keyboard operability, contrast. | T4, T5, T12, T13 |
 | D7  | The README has the skill-card count turning `primary` on hover, but the card isn't an action, so that breaks the accent rule. | Default **`foreground`** on hover. Owner may override.                                                                                                                                                                                                                                                      | T8               |
 | D8  | Node runtime: `engines` says 22.x, local is 24, `@types/node` is on 25.                                                       | Default **24.x** (LTS) for `engines` and `@types/node`. Use 26 only if the Vercel project settings offer it.                                                                                                                                                                                                | T0a              |
 | D9  | More new projects?                                                                                                            | Each one is a single data entry, appended in order of recency.                                                                                                                                                                                                                                              | T2               |
 | D10 | Rate limiting                                                                                                                 | **Decided: in code.** Honeypot + in-memory per-IP limiter on the server + cooldown after a send on the client. A Vercel WAF rule stays an optional extra.                                                                                                                                                   | T12              |
+| D11 | Rotating hero word colour                                                                                                     | **Decided at Gate B1: `text-primary`**, as in the approved design. It's the current ("now") focus.                                                                                                                                                                                                          | T5               |
+| D12 | Film grain                                                                                                                    | **Decided by the owner: removed.** It cost 6,000 ms of mobile TBT.                                                                                                                                                                                                                                          | T3, T5           |
 
 ---
 
@@ -66,6 +68,7 @@
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `page.tsx`, `layout.tsx`, `Footer`, `Intro`, `StatusLine`, `About`, `Skills`, `Marquee`, `Experience`, `ProjectsSection`, `OffTheClock`, `Contact`, `SectionRule`, `Grain` | `Providers`, `Header` (+`MobileNav`, `ThemeToggle`), `LocalTime`, `RotatingWord`, `Contours`, `PortraitCard`, `TextRevealOnScroll`/`AnimatedWord`, `SurfaceCard`, `ExperienceRail`, `ProjectDeck`/`ProjectCard`, `ContactForm` |
 
+- Props from a Server Component to a motion component must be serialisable. Variants with function values (e.g. `enterRise.visible`) break the build, so server components use plain-object animations or a CSS entrance (tw-animate-css `animate-in`) (Gate B1).
 - Client components import from `motion/react`. Simple entrance or in-view animations inside a server component use `import * as m from 'motion/react-client'` (`<m.div whileInView …>`). You don't need a client wrapper for that. Nothing imports `framer-motion` after T0a.
 - shadcn `ui/*` components are client components already. Server components can render them directly with server children (e.g. `Accordion` in `Experience`).
 
@@ -81,6 +84,7 @@
 
 - Colours, type, radius and animation come **only** from tokens (`bg-card`, `text-section`, `rounded-xl`, `animate-marquee`). Tailwind's built-in neutrals (`gray-*`, `slate-*`, `white/…`) are banned in new code.
 - Final `globals.css` = `@import 'tailwindcss'; @import 'tw-animate-css'; @import '../design-system/tokens.css';` plus the two utilities this plan introduces (`page-container`, `card-light`). Nothing else.
+- **Section rhythm** (from the references, Gate B1). Desktop: hero `pt-22 pb-14`, About `py-34`, every later section `pt-10 pb-34`. Mobile: hero `pt-10 pb-12`, every section `pt-18 pb-0`, the last section `pb-18`. Container: `page-container` = 1200px of content + 24px gutters (16px on mobile).
 - **`cn()` must know the custom font sizes.** Out of the box, tailwind-merge treats `text-section` as a colour and drops it when it sees `text-muted-foreground`. `src/lib/utils.ts`:
 
   ```ts
@@ -593,14 +597,14 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 **Files:** `Header.tsx`, `ThemeToggle.tsx`, `MobileNav.tsx`, `hooks/useActiveSection.ts`, `providers.tsx`, `layout.tsx`, `globals.css`, all section hooks
 **Delete:** `context/activeSectionContext.tsx`, `hooks/useSectionInView.ts`, `types.ts`, `intro/hooks/useIntro.ts`. Inline what's left of `experience/hooks` and `projects/hooks` into their components.
 
-- [ ] **1.** `useActiveSection` as in §2.4. Remove the context provider and every `useSectionInView` call. Sections keep their `id`s, and Intro keeps `id='home'`.
-- [ ] **2.** Header per README:
+- [x] **1.** `useActiveSection` as in §2.4. Remove the context provider and every `useSectionInView` call. Sections keep their `id`s, and Intro keeps `id='home'`.
+- [x] **2.** Header per README:
   - D1 default: `sticky top-0 z-40 bg-background`, with `border-b border-transparent` turning `border-border` once scrolled. Use `useScroll` → `useMotionValueEvent`, with a boolean state that flips only at the threshold (not every frame).
   - `flex-nowrap whitespace-nowrap`.
   - Name `max-[799px]:hidden`; pill nav `max-[679px]:hidden`; active pill `<motion.span layoutId='nav-pill' transition={spring.navPill} />`.
   - Links get `aria-current={active === id ? 'true' : undefined}`.
   - Remove the `fixed-header` utility from `globals.css` and the body `pt-28 sm:pt-36` from `layout.tsx`.
-- [ ] **3.** `ThemeToggle` (D2): a 44px button with the constant `aria-label='Toggle theme'`. The server can't know the saved theme, so the icons are CSS-switched and the markup is the same on server and client: `<Sun className='light:hidden' /><Moon className='hidden light:block' />`.
+- [x] **3.** `ThemeToggle` (D2): a 44px button with the constant `aria-label='Toggle theme'`. The server can't know the saved theme, so the icons are CSS-switched and the markup is the same on server and client: `<Sun className='light:hidden' /><Moon className='hidden light:block' />`.
 
   Colours cross-fade through the View Transitions API. It's one snapshot cross-fade on the compositor, cheaper and cleaner than transitioning `color` on every element. Keep `disableTransitionOnChange` in `Providers` so CSS transitions don't fight it.
 
@@ -642,47 +646,47 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
   The icon wrapper gets `className='theme-icon'`. Browsers without the API switch instantly, and that's fine.
 
-- [ ] **4.** `MobileNav`: shadcn `Sheet` (right side), 44px trigger with `aria-label='Open menu'`, visible below 680px. Same links; the sheet closes on link click (controlled `open`). Check that focus goes back to the trigger (the Radix default).
-- [ ] **5.** E2E `e2e/header.spec.ts`:
+- [x] **4.** `MobileNav`: shadcn `Sheet` (right side), 44px trigger with `aria-label='Open menu'`, visible below 680px. Same links; the sheet closes on link click (controlled `open`). Check that focus goes back to the trigger (the Radix default).
+- [x] **5.** E2E `e2e/header.spec.ts`:
   - At 320, 375, 600, 760, 800 and 1440: header height ≤ 72px (one line), no horizontal overflow, name hidden below 800, pill nav hidden and menu button visible below 680.
   - The header is still in the viewport after scrolling to `#contact`.
   - Scroll-spy: scroll `#experience` into the middle and its link has `aria-current='true'`; click "Projects" and the active link becomes Projects.
   - Mobile: open the menu, click "Contact", the sheet closes and the URL hash is `#contact`.
   - Theme: the default is `data-theme='dark'`; click the toggle → `light`; reload → `light` at `domcontentloaded` (no flash); no console errors throughout.
   - Keyboard: Tab from the top reaches every nav link and the toggle in order; Esc closes the sheet.
-- [ ] **6.** Commit `feat: header, scroll-spy, theme toggle, mobile sheet`.
+- [x] **6.** Commit `feat: header, scroll-spy, theme toggle, mobile sheet`.
 
 ### T5: Hero
 
 **Files:** `intro/Intro.tsx` (server), `Contours.tsx`, `RotatingWord.tsx`, `PortraitCard.tsx` (replaces `TiltedCard.tsx`; delete the old file), `StatusLine.tsx` (server). Remove the `contact-button` / `intro-image` utilities once unused.
 
-- [ ] **1.** `Contours` (client):
+- [x] **1.** `Contours` (client):
   - Copy the 8 `<path d>` from `design/reference/home-dark-1440.html` (`svg.topo`) and add `pathLength='1'` and `strokeDasharray='1'`.
   - Wrapper per README, `aria-hidden`, `pointer-events-none`.
   - Draw and breathe delays go in inline `style={{ animationDelay }}`, computed from `CONTOUR_DRAW_STAGGER` (no magic numbers).
   - Pointer drift: add one `window` `pointermove` listener (`{ passive: true }`) in `useEffect`, and only if `matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches`. It writes to `useMotionValue` → `useSpring`, clamped to ±`CONTOUR_POINTER_DRIFT_PX`.
   - The hero section gets `relative overflow-hidden`.
-- [ ] **2.** Left column (server):
+- [x] **2.** Left column (server):
   - Availability chip: an `animate-now-ring` dot plus `siteMeta.availability`.
   - h1 `text-display` with the existing copy.
   - Intro `text-lead text-muted-foreground`, with today's bold phrases as `font-medium text-foreground`.
   - Entrance: `<m.div variants={enterRise} initial='hidden' animate='visible'>` from `motion/react-client`.
-- [ ] **3.** `RotatingWord` (client):
+- [x] **3.** `RotatingWord` (client):
   - Animation: `AnimatePresence mode='wait'` + `wordSwap`, `setInterval(WORD_HOLD_MS)` in an effect, caret `animate-caret`.
   - Words arrive as a prop (`['ReactJS.', 'NextJS.', 'Angular.']`), and the server render shows the first word.
   - This replaces `react-type-animation`.
-- [ ] **4.** CTAs:
+- [x] **4.** CTAs:
   - Primary: `Button` `asChild` wrapping `<Link href='#contact'>`.
   - Social icon buttons come from `socialLinks`: `variant='outline'`, `size-[50px] rounded-full`, `aria-label` = the network name, `rel='noopener noreferrer'`.
-- [ ] **5.** `PortraitCard` (client):
+- [x] **5.** `PortraitCard` (client):
   - Keep the tilt logic, with `TILT_MAX_DEG`, scale 1.02 and `spring.tilt`.
   - Drop the figcaption velocity code: it calls `setState` on every mousemove and is never rendered.
   - Use pointer events. The handler skips tilt when `e.pointerType !== 'mouse'` or reduced motion is on.
   - Image: `next/image` (`/assets/photo.jpeg`, `alt='Portrait of Marek Lipčák'`, `preload`, `sizes`).
   - The card enters with `y` only, never from `opacity: 0`.
   - Below the image: a `dl` spec panel per D5.
-- [ ] **6.** `StatusLine` (server) with a `<LocalTime timeZone={siteMeta.timeZone} />` leaf.
-- [ ] **7.** E2E `e2e/hero.spec.ts`:
+- [x] **6.** `StatusLine` (server) with a `<LocalTime timeZone={siteMeta.timeZone} />` leaf.
+- [x] **7.** E2E `e2e/hero.spec.ts`:
   - The rotating word changes within 3 s.
   - The status-line clock matches `/^\d{2}:\d{2} CES?T$/` after load, and the server HTML (`request.get('/')`) contains `--:--`.
   - With `reducedMotion: 'reduce'`, the contour group's `getAnimations()` is empty or finished.
@@ -690,21 +694,21 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
   Then compare `npm run screenshots` with the reference at 1440 and 390, and check Lighthouse LCP on the production build.
 
-- [ ] **8.** Commit `feat: hero with contours, portrait card, status line`.
+- [x] **8.** Commit `feat: hero with contours, portrait card, status line`.
 
 ### T6: Skills marquee
 
 **Files:** `Marquee.tsx` (server), `page.tsx`
 
-- [ ] **1.** Two copies of `skillGroups.flatMap(g => g.items)` in one `flex w-max animate-marquee hover:[animation-play-state:paused]` strip, separators `bg-accent-decorative`, wrapper `overflow-hidden`.
-- [ ] **2.** No horizontal page scroll at 320px. Commit `feat: skills marquee`.
+- [x] **1.** Two copies of `skillGroups.flatMap(g => g.items)` in one `flex w-max animate-marquee hover:[animation-play-state:paused]` strip, separators `bg-accent-decorative`, wrapper `overflow-hidden`.
+- [x] **2.** No horizontal page scroll at 320px. Commit `feat: skills marquee`.
 
 ### T7: About
 
 **Files:** `About.tsx` (server), `text-reveal/TextRevealOnScroll.tsx`, `AnimatedWord.tsx`. Remove the `about-text` utility.
 
-- [ ] **1.** `SectionRule id='about'` above a two-column layout per README. Paragraphs are passed as props (unchanged text).
-- [ ] **2.** `AnimatedWord`: framer can't interpolate between `var(--…)` strings (it jumps), so animate a number and let CSS mix the colours. That stays correct across theme toggles:
+- [x] **1.** `SectionRule id='about'` above a two-column layout per README. Paragraphs are passed as props (unchanged text).
+- [x] **2.** `AnimatedWord`: framer can't interpolate between `var(--…)` strings (it jumps), so animate a number and let CSS mix the colours. That stays correct across theme toggles:
   ```tsx
   const mix = useTransform(scrollYProgress, [start, end], [0, 100]);
   const color = useMotionTemplate`color-mix(in srgb, var(--foreground) ${mix}%, var(--subtle-foreground))`;
@@ -715,13 +719,13 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   );
   ```
   The `!important` class beats the inline style under reduced motion, so the markup doesn't change and nothing mismatches. Drop the old opacity transform and `text-white`.
-- [ ] **3.** E2E `e2e/about.spec.ts`:
+- [x] **3.** E2E `e2e/about.spec.ts`:
   - Scroll the About section halfway: the first word's computed colour equals `--foreground`, and the last word's doesn't. Check this in both themes.
   - With `reducedMotion: 'reduce'`, every word's colour equals `--foreground`.
 
   Commit `feat: about section`.
 
-> **Review gate B1**: status NOT STARTED (see §5).
+> **Review gate B1**: CHANGES REQUESTED 2026-11-08 @ `062ff1b` (see §5).
 
 ### T8: Skills bento
 
@@ -930,7 +934,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   - Meta row: `© {new Date().getFullYear()}` (server, safe under `revalidate`), `[City] · <LocalTime/>`, "Back to top ↑" (`href='#home'`).
   - Wordmark per README in `subtle-foreground` (D3), `aria-hidden`.
   - The footer sits at the bottom via `mt-auto`.
-- [ ] **2.** `page.tsx`: sections in order, with `export const revalidate = 86400`. Every section uses `page-container` and `py-34` with a `scroll-mt-*` equal to the header height.
+- [ ] **2.** `page.tsx`: sections in order, with `export const revalidate = 86400`. Every section uses `page-container` and the §2.3 section rhythm (no `scroll-mt-*` needed; `html` has `scroll-pt-24`).
 - [ ] **3.** Remove these, checking each with `grep -rn <name> src` first:
   - Dependencies: `react-type-animation`, `react-intersection-observer`.
   - Components and hooks: `SectionHeading`, `SectionDivider`, `useIsMobile`.
@@ -962,7 +966,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ## 5. Review log
 
-**Cleared to implement:** first the Gate A follow-ups RA.1–RA.4 (one commit, `chore: gate A follow-ups`), then **T4, T5, T6, T7** in order. Stop at **Review gate B1**. Nothing from T8 on is cleared.
+**Cleared to implement:** **only the Gate B1 findings RB.1–RB.4** (RB.5–RB.8 are optional nits; one commit each or one `fix: gate B1 findings` commit), including their e2e/screenshot updates. Then add a new `READY FOR REVIEW: gate B1 @ <sha>` line and stop. **T8 and later are not cleared.**
 
 ### Gate 0: Upgrades (T0a–T0d)
 
@@ -1023,12 +1027,12 @@ READY FOR REVIEW: gate A @ cacf53f
 
 **Follow-ups.** These aren't blockers; they land before T4 as one commit, `chore: gate A follow-ups`.
 
-- [ ] **RA.1** should-fix, `src/components/ui/{input,textarea,button}.tsx`: remove `shadow-xs`. In the spec, depth comes from surface steps, and only the portrait card and the front project card get a shadow (`shadow-card`). While there, tidy what the earlier strip left behind: the empty `''` argument and trailing spaces in the class strings.
-- [ ] **RA.2** nit, `src/components/ui/button.tsx`: delete the `destructive` variant. There's no approved error colour, it uses `text-white`, and nothing should reach for it.
-- [ ] **RA.3** should-fix, `CLAUDE.md` → Known issues: record the shadcn CLI gotchas (they're only in a commit message right now). After any `shadcn add`:
+- [x] **RA.1** (183eac0) should-fix, `src/components/ui/{input,textarea,button}.tsx`: remove `shadow-xs`. In the spec, depth comes from surface steps, and only the portrait card and the front project card get a shadow (`shadow-card`). While there, tidy what the earlier strip left behind: the empty `''` argument and trailing spaces in the class strings.
+- [x] **RA.2** (183eac0) nit, `src/components/ui/button.tsx`: delete the `destructive` variant. There's no approved error colour, it uses `text-white`, and nothing should reach for it.
+- [x] **RA.3** (183eac0) should-fix, `CLAUDE.md` → Known issues: record the shadcn CLI gotchas (they're only in a commit message right now). After any `shadcn add`:
   - point the `cn` import from the npm package `cn` to `@/lib/utils` and uninstall that package
   - strip `dark:` overrides, `outline-none` / `focus-visible:ring-*` and `shadow-xs` (plan §2.3)
-- [ ] **RA.4** nit, `src/lib/data.tsx`: `company: ' Global Logic'` has a leading space (pre-existing). Trim it. Whitespace isn't content, and the new layout puts the company on its own line.
+- [x] **RA.4** (183eac0) nit, `src/lib/data.tsx`: `company: ' Global Logic'` has a leading space (pre-existing). Trim it. Whitespace isn't content, and the new layout puts the company on its own line.
 
 **Accepted interim state (T4–T12):** from T4 the theme toggle makes light mode reachable. Sections that haven't been rebuilt yet hard-code white text, so they're unreadable in light. That's accepted on this branch: don't patch legacy sections for light. Dark (the default) must stay usable at every commit, and each section must work in both themes from the task that rebuilds it. Gate C checks the whole page in both themes.
 
@@ -1040,7 +1044,65 @@ READY FOR REVIEW: gate A @ cacf53f
 
 ### Gate B1: Top of page (T4–T7)
 
-Status: NOT STARTED
+Status: **CHANGES REQUESTED 2026-11-08 @ `062ff1b`**. Fix RB.1–RB.4, then add a new `READY FOR REVIEW: gate B1 @ <sha>` line below and stop.
+
+READY FOR REVIEW: gate B1 @ 062ff1b
+
+**Reviewer verified** (clean `.next`):
+
+- `npm run check` passes: lint clean, TS 7 clean, Vitest 13/13, build ok, e2e 29 passed (11 project-specific skips). Screenshots 3/3.
+- Code read for T4–T7:
+  - The server/client split matches §2.1. Header takes its links as a prop.
+  - No `setState` per frame (the scroll border flips at the threshold; drift and tilt use motion values).
+  - The theme toggle is CSS-switched, with the View Transition cross-fade.
+  - The sheet jumps to the section only after it has closed, and focus returns to the trigger.
+  - Reduced-motion paths don't change markup.
+  - The e2e specs cover the behaviour T4–T7 asked for.
+- Gate A follow-ups RA.1–RA.4 are done and confirmed.
+- **Design comparison** (`npm run screenshots` vs `design/reference/*.jpg`):
+  - At 1440, dark and light, the header, hero, portrait card, contours, status line, marquee, section rule and About typography match the reference closely.
+  - The differences are RB.1 and RB.4, plus several mobile layout differences (RB.2, RB.3).
+
+**Owner and implementer decisions recorded:**
+
+- Rulings 1–9 are accepted:
+  - header height ≤ 88px
+  - links passed as a prop
+  - jump after the sheet closes
+  - `scroll-pt-24`
+  - CSS rise instead of a server-side `enterRise`
+  - no fade on the hero text
+  - JetBrains Mono `preload: false`
+  - `motion-reduce:animate-none` on the contours
+  - `socialLinks.icon`
+- **D11 (ruling 10): the rotating word stays `text-primary`.** The approved design shows it olive, and "my main focus is on …" reads as the current ("now") state.
+- **D12: grain removed** (owner decision, relayed by the implementer). Lighthouse mobile TBT was 6,000 ms with it and 150 ms without. Recorded in `CLAUDE.md` under rejected ideas.
+- **Mobile LCP is 3.3–3.7 s simulated, against the 2.5 s budget.** It's tracked, not blocking: the legacy client sections are still on the page. Re-measure at B2 and name the LCP element. It must be ≤ 2.5 s at Gate C.
+
+**Findings.** RB.1–RB.3 are blockers, because T8–T11 build on the container and the section rhythm.
+
+- [ ] **RB.1** blocker, `src/app/globals.css` `page-container`: content is 1152px wide, but the spec and the reference have **1200px of content** plus gutters. That's my plan's mistake: `max-w-content` included the padding. The reference also uses **16px gutters on mobile**. Change to `@apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;`. Afterwards, header and hero content start at x = 120 at 1440, matching the reference.
+- [ ] **RB.2** blocker, hero on mobile (`design/reference/home-mobile-390.*`). The stacked order must be **chip → h1 → portrait card → intro → CTAs → status line**; today the portrait comes after the CTAs. The desktop two-column layout stays as it is.
+  - Use one set of markup, with CSS grid areas on the hero wrapper; don't duplicate markup or use JS. Where the columns stop fitting (≈ 920px, the README's stack point), the text column's children become grid items in that order. Move the CSS rise onto the text items.
+  - Also below that width:
+    - The `<br>` in the h1 is hidden, so it reads "Hi, my name is / Marek." like the reference.
+    - The portrait image is `aspect-square`; it stays `4/5` above.
+    - Hero padding is `pt-10 pb-12` (40/48px) with a 22px gap between stacked items.
+    - The status line is a `grid-cols-[84px_1fr]` label/value list.
+    - "Contact me" is `flex-1`.
+  - Keep all three social icons. The mobile reference drops Instagram, but that's a content change nobody asked for.
+- [ ] **RB.3** blocker, section rhythm (reference values):
+  - Desktop: hero `88 / 56`, About `pt-34 pb-34`, every later section `pt-10 pb-34`.
+  - Mobile: every section `pt-18 pb-0`, the last section `pb-18`, hero as in RB.2.
+  - Apply it to About now. §2.3 and T13 step 2 now say this for T8–T13.
+- [ ] **RB.4** should-fix, the portrait spec panel (corrects D5). The reference shows values that already exist in the copy, so no placeholders are needed: `role: Frontend developer`, `years: 7`, `focus: ReactJS · NextJS · Angular`.
+  - One source each: add `siteMeta.experienceYears = 7` and use it for both the intro's "7 years" and the panel.
+  - Derive `focus` from the rotating words (strip the trailing dots).
+  - `role` comes from the intro's "frontend developer", capitalised.
+- [ ] **RB.5** nit: the "Contact me" icon is `ArrowRight` in the reference, not a chevron.
+- [ ] **RB.6** nit, `AnimatedWord.tsx`: write the separator as `' '`. The literal NBSP is invisible in review, and someone will "fix" it into a normal space, which collapses inside `inline-block`.
+- [ ] **RB.7** nit, `Contours.tsx`: give the breathe animation `[animation-fill-mode:backwards]`, so each ring doesn't snap from opacity 1 to 0.55 when its breathe starts. The reference has the same snap, so this is optional polish.
+- [ ] **RB.8** nit, `Marquee.tsx`: `aria-label` on a plain `div` does nothing (an element without a role can't be named). Drop it.
 
 ### Gate B2: Middle (T8–T11)
 

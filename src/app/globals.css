@@ -77,7 +77,7 @@
 }
 
 @utility page-container {
-  @apply mx-auto w-full max-w-content px-6;
+  @apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;
 }
 
 @utility card-light {
