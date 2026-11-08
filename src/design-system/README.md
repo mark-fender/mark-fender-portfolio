@@ -88,7 +88,7 @@ Inline emphasis in the hero intro: `font-medium text-foreground` inside `text-mu
 
 - Container: `max-w-content mx-auto px-6` (1200px + 24px gutters).
 - Section rhythm: `py-34` (136px) between sections; section header block `mb-10`.
-- Two-column sections (About, Experience): heading column `flex-[1_1_260px] max-w-[320px]`, content `flex-[999_1_560px]`, `gap-14`. They stack below ~920px.
+- Two-column sections (About, Experience): heading column `max-w-[320px]` with `flex-[1_1_260px]` (About) / `flex-[1_1_300px]` (Experience), content `flex-[999_1_560px]`, `gap-14`. They stack below ~920px.
 - Bento: `flex flex-wrap gap-4`; cards `flex-[1_1_300px]`, wide card `flex-[2_1_620px]`. Tiles: `grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2`.
 - Footer sits at the very bottom: the page wrapper is `min-h-dvh flex flex-col`, footer `mt-auto`. Footer meta row: © year · `[City] · HH:MM CET` (same clock as the hero) · Back to top. The wordmark wrapper is `h-[0.78em] overflow-hidden leading-none`, which crops the bottom ~12% of the capitals (descenders go entirely) and stays readable.
 

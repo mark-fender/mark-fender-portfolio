@@ -13,11 +13,11 @@ export function formatTenure(from: YearMonth, to: YearMonth | null, now = new Da
 }
 
 const monthName = ({ year, month }: YearMonth) =>
-  new Date(Date.UTC(year, month - 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
+  new Date(Date.UTC(year, month - 1)).toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
 
 export function formatRange(from: YearMonth, to: YearMonth | null): string {
   const end = to ? `${monthName(to)} ${to.year}` : 'present';
-  return `${monthName(from)} ${from.year} - ${end}`;
+  return `${monthName(from)} ${from.year} — ${end}`;
 }
 
 export function formatClock(date: Date, timeZone: string): string {

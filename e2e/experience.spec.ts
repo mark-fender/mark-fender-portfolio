@@ -13,7 +13,19 @@ test('all four descriptions are in the server HTML', async ({ request }) => {
     expect(html).toContain(snippet);
 });
 
-test('first item is open; opening the second closes the first', async ({ page }) => {
+test('mobile starts with every row closed', async ({ page, isMobile }) => {
+  test.skip(!isMobile, '390px layout');
+  await page.goto('/');
+  await page.locator('#experience').scrollIntoViewIfNeeded();
+  await expect(page.locator('#experience button[aria-expanded="true"]')).toHaveCount(0);
+  await expect(page.locator('#experience button[aria-expanded="false"]')).toHaveCount(4);
+});
+
+test('desktop: first item is open; opening the second closes the first', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, '1440px layout');
   await page.goto('/');
   const triggers = page.locator('#experience button[aria-expanded]');
   await expect(triggers.nth(0)).toHaveAttribute('aria-expanded', 'true');

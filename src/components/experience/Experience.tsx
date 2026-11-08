@@ -2,7 +2,8 @@ import { Accordion as AccordionPrimitive } from 'radix-ui';
 import ExperienceRail from '@/components/experience/ExperienceRail';
 import SectionRule from '@/components/SectionRule';
 import SurfaceCard from '@/components/SurfaceCard';
-import { Accordion, AccordionContent, AccordionItem } from '@/components/ui/accordion';
+import ExperienceAccordion from '@/components/experience/ExperienceAccordion';
+import { AccordionContent, AccordionItem } from '@/components/ui/accordion';
 import { experiencesData } from '@/lib/data';
 import { formatRange, formatTenure } from '@/lib/time';
 import { cn } from '@/lib/utils';
@@ -18,9 +19,9 @@ const Experience = () => (
       <SectionRule id='experience' />
     </div>
     <div className='flex flex-wrap gap-x-14 gap-y-6'>
-      <div className='flex max-w-[320px] flex-[1_1_260px] flex-col gap-3.5 min-[920px]:gap-5'>
+      <div className='flex max-w-[320px] flex-[1_1_300px] flex-col gap-3.5 min-[920px]:gap-5'>
         <h2 className='text-section'>My experience</h2>
-        <p className='font-mono text-label text-muted-foreground'>
+        <p className='font-mono text-label text-muted-foreground max-[920px]:hidden'>
           {firstYear} → today · {companies} companies
         </p>
         <p className='flex items-center gap-2 font-mono text-caption text-muted-foreground min-[920px]:mt-2 min-[920px]:gap-2.5'>
@@ -29,7 +30,7 @@ const Experience = () => (
         </p>
       </div>
       <div className='min-w-0 flex-[999_1_560px]'>
-        <Accordion type='single' collapsible defaultValue='item-0' asChild>
+        <ExperienceAccordion>
           <ol className='flex flex-col gap-3.5'>
             {experiencesData.map((job, i) => {
               const current = job.to === null;
@@ -86,7 +87,7 @@ const Experience = () => (
               );
             })}
           </ol>
-        </Accordion>
+        </ExperienceAccordion>
       </div>
     </div>
   </section>

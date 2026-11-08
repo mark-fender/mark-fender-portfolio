@@ -22,12 +22,12 @@ describe('formatClock', () => {
 });
 
 describe('formatRange', () => {
-  it('reproduces the current experience dates exactly', () => {
+  it('uses short months and an em dash, as in the references', () => {
     expect(experiencesData.map((e) => formatRange(e.from, e.to))).toEqual([
-      'May 2023 - present',
-      'November 2022 - April 2023',
-      'September 2018 - October 2022',
-      'September 2017 - September 2018',
+      'May 2023 — present',
+      'Nov 2022 — Apr 2023',
+      'Sep 2018 — Oct 2022',
+      'Sep 2017 — Sep 2018',
     ]);
   });
 });

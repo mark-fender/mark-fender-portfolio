@@ -30,9 +30,11 @@ test('covered cards shrink at the end of the deck', async ({ page }) => {
 
 test('pins follow layout changes above the deck', async ({ page }) => {
   await page.goto('/');
-  // Collapsing the open experience item moves the deck up without resizing its cards.
-  await page.locator('#experience button[aria-expanded="true"]').click();
-  await expect(page.locator('#experience button[aria-expanded="true"]')).toHaveCount(0);
+  // Toggling an experience row moves the deck without resizing its cards.
+  const first = page.locator('#experience button[aria-expanded]').first();
+  const before = await first.getAttribute('aria-expanded');
+  await first.click();
+  await expect(first).not.toHaveAttribute('aria-expanded', before!);
   // Scroll to the moment card 1 pins over card 0: card 0 must be fully scaled by then.
   await page.evaluate(() => {
     const [first, second] = document.querySelectorAll<HTMLElement>('#projects [data-deck-card]');

@@ -28,6 +28,8 @@
 | D10 | Rate limiting                                                                                                                 | **Decided: in code.** Honeypot + in-memory per-IP limiter on the server + cooldown after a send on the client. A Vercel WAF rule stays an optional extra.                                                                                                                                                   | T12              |
 | D11 | Rotating hero word colour                                                                                                     | **Decided at Gate B1: `text-primary`**, as in the approved design. It's the current ("now") focus.                                                                                                                                                                                                          | T5               |
 | D12 | Film grain                                                                                                                    | **Decided by the owner: removed.** It cost 6,000 ms of mobile TBT.                                                                                                                                                                                                                                          | T3, T5           |
+| D13 | Project index colour                                                                                                          | **Decided at Gate B2: `text-primary`**, as in the approved design (`var(--acc)`). It marks the card on top.                                                                                                                                                                                                 | T10              |
+| D14 | Static project index row under the deck (reference: "01 Imaginify · 02 …")                                                    | **Owner question.** Default: not built. If wanted: a progress index that highlights the card on top.                                                                                                                                                                                                        | T10              |
 
 ---
 
@@ -211,8 +213,12 @@ The page is statically generated, so anything computed from "now" during render 
 
 - Baseline recorded at Gate 0 (Next 16 no longer prints First Load JS): `/` loads 10 scripts, **840.0 kB raw / 270.3 kB gzip** (old site, `478f76f`). T13 measures the same way (sum of JS responses for `/` on the production build) and must not be bigger. Removing Aurora/ogl, react-type-animation and react-hot-toast should pay for shadcn.
 - The portrait uses `next/image` with `preload` (Next 16 renamed `priority`; check against the installed version), explicit `sizes`, and no fade from `opacity: 0` (it's the likely LCP element).
-- Lighthouse mobile on the production build: LCP ≤ 2.5 s, CLS ≤ 0.05.
-- Grain (fixed full-screen blend layer) is a known paint cost. Check scroll smoothness on a throttled mobile profile in T13. If it janks, hide it below `md` and tell the reviewer.
+- Lighthouse mobile on the production build: LCP ≤ 2.5 s, CLS ≤ 0.05. **Gate C blocker** (Gate B2: 3.9–4.1 s simulated; LCP element = the portrait `<img>` on mobile, which shares throttled bandwidth with about 172 kB of preloaded Inter and about 240 kB of JS). Levers, in order; measure after each and keep only what helps:
+  1. **Font preload:** `subsets` in `next/font/google` only decides what's **preloaded** (Next docs, `node_modules/next/dist/docs/.../font.md`). Try Inter `subsets: ['latin']`. Keep it only if the built CSS still has the latin-ext `@font-face` (unicode-range including U+010D) and "Lipčák" renders in Inter (e2e: `document.fonts` has a loaded Inter face covering U+010D after load).
+  2. **Portrait bytes:** check what `/_next/image` serves at Lighthouse mobile (390 CSS px, DPR 1.75). `sizes` must not over-ask, and AVIF should be enabled (`images.formats: ['image/avif', 'image/webp']`). Consider `quality` 70–75.
+  3. **JS:** T12 removes react-hot-toast and makes Contact a server section with a client form; T13 removes the leftovers. Re-measure after them.
+  4. Only if still over: `fetchpriority` and the preload link are present (the e2e checks this); look at what else is render-blocking in the Lighthouse trace.
+- Grain: removed (D12).
 
 ### 2.9 Target tree (new and changed files only)
 
@@ -733,25 +739,25 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 `skillsData` stays as the **private** icon registry that `skillGroups` picks from (Gate A amendment). Remove its `export` and every outside import. Change `data.test.ts` to assert 22 unique skill names across the groups instead of comparing with `skillsData`.
 
-- [ ] **1.** `SectionRule id='skills'`, then a header row with the derived count.
-- [ ] **2.** Cards are `SurfaceCard interactive`: `flex-[1_1_300px]`, with `wide` cards `flex-[2_1_620px]`.
-- [ ] **3.** Tile grid per README. Icons are 22px `text-muted-foreground` with `aria-hidden` (the name is the label). Tiles get `group-hover/card:bg-card`.
-- [ ] **4.** Verify against the reference. Commit `feat: skills bento`.
+- [x] **1.** `SectionRule id='skills'`, then a header row with the derived count.
+- [x] **2.** Cards are `SurfaceCard interactive`: `flex-[1_1_300px]`, with `wide` cards `flex-[2_1_620px]`.
+- [x] **3.** Tile grid per README. Icons are 22px `text-muted-foreground` with `aria-hidden` (the name is the label). Tiles get `group-hover/card:bg-card`.
+- [x] **4.** Verify against the reference. Commit `feat: skills bento`.
 
 ### T9: Experience
 
 **Files:** `experience/Experience.tsx` (server), `ExperienceRail.tsx` (client). Delete `PositionDetail.tsx` and `hooks/`.
 
-- [ ] **1.** The server computes `range = formatRange(...)` and `tenure = formatTenure(from, to)` per item. Left column: heading, derived meta (`${firstYear} → today · ${count} companies`), legend.
-- [ ] **2.** shadcn `Accordion type='single' collapsible defaultValue='item-0'`.
+- [x] **1.** The server computes `range = formatRange(...)` and `tenure = formatTenure(from, to)` per item. Left column: heading, derived meta (`${firstYear} → today · ${count} companies`), legend.
+- [x] **2.** shadcn `Accordion type='single' collapsible defaultValue='item-0'`.
   - Each item is a `SurfaceCard interactive` with the title (`text-title`), company, date chip (current role: `border-primary text-primary`), tenure (mono caption) and a ± trigger with an `aria-label`.
   - **Descriptions must stay in the HTML when collapsed** (SEO and find-in-page). Use `hiddenUntilFound` on `AccordionContent` if the installed Radix supports it; otherwise `forceMount` + `data-[state=closed]:hidden`.
   - Animate with shadcn's own `animate-accordion-*` at 220ms, not `expand`.
-- [ ] **3.** `ExperienceRail` (client) wraps the list.
+- [x] **3.** `ExperienceRail` (client) wraps the list.
   - `useScroll({ target })` drives a `scaleY` per segment over `bg-border`.
   - Markers follow the README states.
   - Reduced motion: segments fully filled (choose the motion value, not markup).
-- [ ] **4.** E2E `e2e/experience.spec.ts`:
+- [x] **4.** E2E `e2e/experience.spec.ts`:
   - The server HTML (`request.get('/')`) contains all four descriptions.
   - The first item is open; opening the second closes the first.
   - Each card shows the tenure `/\d+ (yrs?|mos?)/`.
@@ -762,8 +768,8 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 **Files:** `projects/ProjectsSection.tsx` (server, new), `ProjectDeck.tsx` (client, from `ProjectList.tsx`), `ProjectCard.tsx`. Delete the `project-card` utility.
 
-- [ ] **1.** The server section renders `SectionRule` + header and passes `projectsData` to `ProjectDeck` as a prop (the JSX descriptions serialise fine).
-- [ ] **2.** Keep the sticky stacking and `useTransform` scale, with the floor at `DECK_MIN_SCALE`.
+- [x] **1.** The server section renders `SectionRule` + header and passes `projectsData` to `ProjectDeck` as a prop (the JSX descriptions serialise fine).
+- [x] **2.** Keep the sticky stacking and `useTransform` scale, with the floor at `DECK_MIN_SCALE`.
   - Fix the existing bug: the per-card `top` offset sits on the inner `section`, which isn't sticky. Move it to the sticky wrapper and account for the sticky header height (D1).
   - Reduced motion: scale stays 1.
   - **Tall cards must never hide content** (added at Gate 0, reviewer + Codex). At 390 × 844 the Cat AI Assistant card is about 900–1,050px, more than the ~780px below the header. Use **height-aware sticky offsets**:
@@ -773,13 +779,13 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
     - Scaling starts only after a card reaches its sticky position.
     - No fixed card heights, no negative margins.
     - E2E (mobile project): for every card, while the next card starts covering it, the covered card's bottom edge is already inside the viewport.
-- [ ] **3.** Card per README:
+- [x] **3.** Card per README:
   - `rounded-2xl`, with `shadow-card` on the front card only.
   - Index derived from position (`01 / 04`).
   - Mono outline tags.
   - Browser frame with a `[Project screenshot]` slot, `aspect-[16/10]`.
   - "Live preview ↗" only when the project has a `url`: `Button variant='outline' asChild` with `target='_blank' rel='noopener noreferrer'`.
-- [ ] **4.** E2E `e2e/projects.spec.ts`:
+- [x] **4.** E2E `e2e/projects.spec.ts`:
   - The page doesn't contain "Imaginify".
   - The card count equals `projectsData.length`.
   - After scrolling to the end of the deck, the first card's computed `transform` scale is < 1; with reduced motion it's 1.
@@ -790,13 +796,13 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 **Files:** `OffTheClock.tsx` (server), `page.tsx`
 
-- [ ] **1.** `SectionRule id='off-the-clock'` and placeholders per README.
+- [x] **1.** `SectionRule id='off-the-clock'` and placeholders per README.
   - The Now card is a `SurfaceCard interactive` built from `nowItems`.
   - Equaliser bars are `aria-hidden`, using `animate-eq` with staggered delays.
   - 3 photo slots, each a `SurfaceCard interactive`.
-- [ ] **2.** Commit `feat: off-the-clock placeholder section`.
+- [x] **2.** Commit `feat: off-the-clock placeholder section`.
 
-> **Review gate B2**: status NOT STARTED (see §5).
+> **Review gate B2**: CHANGES REQUESTED 2026-11-08 @ `e2741c1` (see §5).
 
 ### T12: Contact (security-critical)
 
@@ -966,7 +972,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 ## 5. Review log
 
-**Cleared to implement:** first the Gate B1 follow-ups RB.9–RB.11 (one commit, `chore: gate B1 follow-ups`), then **T8, T9, T10, T11** in order. Stop at **Review gate B2**. Nothing from T12 on is cleared. At B2, report Lighthouse mobile LCP and name the LCP element.
+**Cleared to implement:** **only the Gate B2 findings RB2.1–RB2.8** (RB2.9–RB2.11 are optional nits), each with its e2e/test update; one commit per finding or a few grouped `fix:` commits. Then add a new `READY FOR REVIEW: gate B2 @ <sha>` line and stop. **T12 and T13 are not cleared.**
 
 ### Gate 0: Upgrades (T0a–T0d)
 
@@ -1122,13 +1128,71 @@ READY FOR REVIEW: gate B1 @ bcf18c3
 
 **Follow-ups.** These aren't blockers; they land before T8 as one commit, `chore: gate B1 follow-ups`, and are checked at B2.
 
-- [ ] **RB.9** should-fix, About heading column: the reference is `flex: 1 1 260px; max-width: 320px`. The README says `basis-[300px]`, and the code followed the README, so the paragraph starts about 40px further right than in the reference and wraps differently. Use `flex-[1_1_260px] max-w-[320px]` in About, and correct the README "Layout → Two-column sections" line to match the reference. Experience (T9) uses the same columns.
-- [ ] **RB.10** nit, `AnimatedWord.tsx`: use the JSX entity `{!isLast && <>&nbsp;</>}`. It's ASCII, so no editor or tool can silently turn it into an invisible character.
-- [ ] **RB.11** nit, `src/design-system/README.md`: remove `aria-label="Technologies"` from the Skills marquee row (D6, RB.8).
+- [x] **RB.9** (fceb7d8) should-fix, About heading column: the reference is `flex: 1 1 260px; max-width: 320px`. The README says `basis-[300px]`, and the code followed the README, so the paragraph starts about 40px further right than in the reference and wraps differently. Use `flex-[1_1_260px] max-w-[320px]` in About, and correct the README "Layout → Two-column sections" line to match the reference. Experience (T9) uses the same columns.
+- [x] **RB.10** (fceb7d8) nit, `AnimatedWord.tsx`: use the JSX entity `{!isLast && <>&nbsp;</>}`. It's ASCII, so no editor or tool can silently turn it into an invisible character.
+- [x] **RB.11** (fceb7d8) nit, `src/design-system/README.md`: remove `aria-label="Technologies"` from the Skills marquee row (D6, RB.8).
 
 ### Gate B2: Middle (T8–T11)
 
-Status: NOT STARTED
+Status: **CHANGES REQUESTED 2026-11-08 @ `e2741c1`**. Fix RB2.1–RB2.8 (RB2.9–RB2.11 are optional nits), then add a new `READY FOR REVIEW: gate B2 @ <sha>` line below and stop.
+
+READY FOR REVIEW: gate B2 @ e2741c1
+
+**Reviewer verified** (clean `.next`):
+
+- `npm run check` passes: Vitest 13/13, e2e 51 passed (15 project-specific skips), build ok. Screenshots 3/3.
+- Gate B1 follow-ups RB.9–RB.11 are done and confirmed.
+- Code read:
+  - T8–T11 follow the server/client split.
+  - Experience is a server component (tenure on the server, `revalidate` in `page.tsx`). The accordion keeps every description in the HTML.
+  - The deck pins live in a ref and a CSS variable, with no React state per frame. The wrapper isn't transformed; only the inner card scales.
+  - The deck's tall-card e2e is real: it fails without the `min()`.
+  - The Codex fix in `e2741c1` (observe `document.body`) comes with a test that was red before the fix.
+- Design comparison:
+  - Desktop 1440: Skills matches the reference almost exactly. Projects matches the reference card. Off the clock matches.
+  - Mobile 390: Skills matches.
+  - The differences are RB2.1–RB2.3.
+- Second opinion (Codex, read-only, on `ProjectDeck`, `ProjectCard`, `ExperienceRail`, `Experience`): five findings. I checked all five against the code and agree; they're RB2.4–RB2.8.
+
+**Decisions:**
+
+- Rulings 1–10 are accepted:
+  - count line hidden on mobile
+  - whole header as the trigger
+  - `forceMount` + hidden in `ui/accordion` (collapse is instant)
+  - a rail leaf per row
+  - `revalidate` moved into `page.tsx`
+  - `shadow-card` on every deck card
+  - the static project list not built (see D14)
+  - deletions
+  - a snap strip on mobile
+- Ruling 5 (date format) is superseded by RB2.1. The long format only existed to keep the legacy display unchanged, and that display is gone.
+- **D13: the project index `01` stays `text-primary`.** The reference colours it `var(--acc)`, so it's the approved design (same reasoning as D11). It marks the card currently on top.
+- **D14 (owner question):** under the deck, the reference shows a mono index row: "01 Imaginify · 02 AIXM … · 03 … · 04 …", with the first item highlighted. The implementer read it as a placeholder for scrolling in a static render and didn't build it. **Default: not built.** If the owner wants it, it's a progress index that highlights the card currently on top.
+- The mobile ± button stays, although the mobile reference has none. Without it, nothing shows that a card expands.
+- **Mobile LCP got worse:** 3.9–4.1 s simulated, LCP element = the portrait `<img>` (on mobile it's the largest thing above the fold since RB.2). It's tracked and becomes a **Gate C blocker** at ≤ 2.5 s. §2.8 now lists the levers in order.
+
+**Findings:**
+
+- [ ] **RB2.1** should-fix, date chip format. Both references show **short months with an em dash**: `May 2023 — present`, `Nov 2022 — Apr 2023`, `Sep 2018 — Oct 2022`, `Sep 2017 — Sep 2018`. Change `formatRange` to that format (month `'short'`, `' — '`) and update its test to those four strings. On mobile this also keeps the chip and the tenure on one row.
+- [ ] **RB2.2** should-fix, Experience heading column: the reference is `flex: 1 1 300px; max-width: 320px`. About is 260, and my RB.9 note wrongly applied that to both. Use `flex-[1_1_300px]` in Experience, and make the README's two-column line give both values: About 260, Experience 300.
+- [ ] **RB2.3** should-fix, mobile Experience starts **collapsed**. In the 390 reference every row is closed, so the section is 655px tall against 1,438px now; desktop opens the current role. Do it without a hydration mismatch:
+  - Add a tiny client wrapper (`ExperienceAccordion`) that controls `value`. It starts at `'item-0'`, so the server HTML is unchanged, and in an effect sets it to `''` when `!matchMedia('(min-width: 920px)').matches`.
+  - The section is far below the fold, so no visible shift.
+  - Descriptions stay in the HTML (`forceMount`).
+  - E2E: at 390 every row is closed after load; at 1440 the first row is open.
+- [ ] **RB2.4** should-fix (Codex 1), `ProjectDeck.tsx:76`: `scrollY.set(window.scrollY)` doesn't notify when the value is unchanged. After a stationary resize or rotation, the cards keep their old scale until the next scroll. Force the transforms to re-run (Codex suggests `scrollY.dirty()`; check it exists in the installed `motion`, otherwise use another way that always notifies). E2E: resize while stationary, and the scales follow the new pins.
+- [ ] **RB2.5** should-fix (Codex 2), `ExperienceRail.tsx`: `useScroll({ target })` doesn't re-measure when a row's height changes, so the fills and passed markers are stale after opening or closing an item until the next scroll. Add `trackContentSize: true` (check the option in the installed `motion`).
+- [ ] **RB2.6** should-fix (Codex 3 + 4), reduced motion through CSS, not `useReducedMotion`. Today the rail's server HTML has `scaleY(0)` / `opacity: 0` while a reduced-motion client renders 1, which is a hydration style mismatch. And `useReducedMotion` snapshots once, so turning on reduced motion mid-session is ignored (deck and rail).
+  - Drop `useReducedMotion` from `ExperienceRail` and `ProjectDeck`.
+  - Rail: add `motion-reduce:transform-none!` on the fill and `motion-reduce:opacity-100!` on the passed dot.
+  - Deck: add `motion-reduce:transform-none!` on the scaled card.
+  - This is the same pattern as `AnimatedWord`. The existing reduced-motion e2e must still pass.
+- [ ] **RB2.7** nit (Codex 5), `ProjectDeck.tsx` `measure()`: it reads `offsetHeight` and then writes `--sticky-top` per card, which forces a layout on every iteration. During the accordion animation that runs every frame through the body observer. Read all heights first, then write all the tops.
+- [ ] **RB2.8** should-fix, known edge from the implementer: after a reload or jump that lands in Off the clock, the pill reads "Home". Observe the non-nav sections too, and map each to the nav section before it (`off-the-clock` → `projects`). Use `sections` from the data, not a hard-coded id. E2E: load `/#off-the-clock`, and the pill is Projects.
+- [ ] **RB2.9** nit: hide `2017 → today · 4 companies` below 920px (the mobile reference doesn't show it; same as ruling 1 for the skills count).
+- [ ] **RB2.10** nit, `nowItems`: use the reference's descriptive placeholders: `[Side project placeholder]`, `[Topic placeholder]`, `[Book placeholder]`, `[Now playing — artist · track]`, `[Trail placeholder]`. They tell the owner what to write.
+- [ ] **RB2.11** nit, ExperienceRail: the passed-marker threshold (`v > 0`) flips the moment a row's top crosses the middle. That's fine; just add a one-line comment saying it's intended.
 
 ### Gate C: Ship (T12–T13)
 
