@@ -2,36 +2,6 @@
 @import '../design-system/tokens.css';
 @import 'tw-animate-css';
 
-@utility section-heading {
-  @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
-}
-
-@utility body-text {
-  @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
-}
-
-@utility heading-text {
-  @apply text-2xl font-semibold sm:text-3xl lg:text-4xl;
-}
-
-@utility subheading-text {
-  @apply text-xl font-medium sm:text-2xl lg:text-3xl;
-}
-
-@utility small-text {
-  @apply text-base sm:text-lg;
-}
-
-@layer base {
-  body {
-    @apply text-lg sm:text-xl;
-  }
-
-  .main {
-    @apply flex flex-col items-center px-8 relative;
-  }
-}
-
 @utility page-container {
   @apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;
 }

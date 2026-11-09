@@ -9,9 +9,6 @@ export const ease = {
 } as const;
 
 export const duration = {
-  press: 0.16,
-  hover: 0.24,
-  toggle: 0.22,
   enter: 0.7,
 } as const;
 
@@ -34,12 +31,6 @@ export const enterRise: Variants = {
   }),
 };
 
-// Accordion body (experience cards).
-export const expand: Variants = {
-  collapsed: { height: 0, opacity: 0, transition: { duration: duration.toggle, ease: ease.out } },
-  open: { height: 'auto', opacity: 1, transition: { duration: duration.toggle, ease: ease.out } },
-};
-
 // Rotating hero word: ReactJS → NextJS → Angular.
 export const wordSwap: Variants = {
   initial: { opacity: 0, y: '40%', filter: 'blur(2px)' },
@@ -52,10 +43,6 @@ export const wordSwap: Variants = {
   },
 };
 export const WORD_HOLD_MS = 2500;
-
-// Card hover lift and press feedback (whileHover / whileTap).
-export const lift = { y: -3, transition: { duration: duration.hover, ease: ease.out } };
-export const press = { scale: 0.97, transition: { duration: duration.press, ease: ease.out } };
 
 // Project deck: each sticky card scales from 1 to this as the next one rises over it.
 export const DECK_MIN_SCALE = 0.94;

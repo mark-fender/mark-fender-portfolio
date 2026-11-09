@@ -808,7 +808,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 **Files:** `contact/Contact.tsx` (server), `ContactForm.tsx` (client), `SubmitButton.tsx`, `src/actions/sendEmail.ts` (+test), `src/lib/rateLimit.ts` (+test), `layout.tsx`, `globals.css`, `e2e/contact.spec.ts`. Delete `contact/hooks/`, `CustomToast.tsx`, and `utils/errorHandling.ts` if unused.
 
-- [ ] **1. Failing tests first.**
+- [x] **1. Failing tests first.**
 
   `rateLimit.test.ts`:
   - 3 hits from one key are allowed and the 4th is blocked.
@@ -823,7 +823,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   - `RESEND_API_KEY=''` → `'Email service not configured'` (today this **throws**)
   - success → `send` called with `replyTo: senderEmail`
 
-- [ ] **2. Rate limiter** (D10), `src/lib/rateLimit.ts`:
+- [x] **2. Rate limiter** (D10), `src/lib/rateLimit.ts`:
 
   ```ts
   // shortcut: in-memory and per server instance, so a distributed spammer gets more tries. Upgrade to Upstash/Vercel KV if spam gets through.
@@ -846,7 +846,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
   Export a `resetRateLimit()` for tests only if the tests need it.
 
-- [ ] **3. Server action:**
+- [x] **3. Server action:**
 
   ```ts
   'use server';
@@ -891,13 +891,13 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   };
   ```
 
-- [ ] **4. Form** (`ContactForm`, client):
+- [x] **4. Form** (`ContactForm`, client):
   - Fields per README, with `maxLength` from the constants.
   - A live counter `{message.length} / {MESSAGE_MAX_LENGTH}`.
   - A hidden honeypot: `<input name='website' tabIndex={-1} autoComplete='off' className='hidden' />`.
   - Errors per README "No red": text + alert icon + 2px foreground border.
   - **Client cooldown** (D10): after a successful send, keep the submit button disabled for 60 s with the label "Sent" (a `cooldownUntil` state cleared by a `setTimeout` in the success branch). It isn't persisted; the server limit is the real guard.
-- [ ] **5. Don't lose the message on failure.** React 19 resets uncontrolled forms after an `action` completes, whatever the result, so a failed send would wipe the user's text. Use `onSubmit`:
+- [x] **5. Don't lose the message on failure.** React 19 resets uncontrolled forms after an `action` completes, whatever the result, so a failed send would wipe the user's text. Use `onSubmit`:
   ```tsx
   const [pending, startTransition] = useTransition();
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -913,17 +913,18 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   };
   ```
   `SubmitButton` takes `pending` and `disabled` as props (no `useFormStatus`) and shows a spinner while pending.
-- [ ] **6. Toast swap, in this same commit:**
+- [x] **6. Toast swap, in this same commit:**
   - `toast` from `sonner`.
   - `layout.tsx` swaps react-hot-toast's `<Toaster>` for `@/components/ui/sonner`, rendered inside `Providers` so it follows the theme.
   - `npm uninstall react-hot-toast`.
   - Delete the `custom-toast`, `contact-*`, `submit-button` and `collaboration-*` utilities.
   - `ui/sonner.tsx` sets `'--border-radius': 'var(--radius)'`, but `tokens.css` defines no `--radius`. Use `var(--radius-md)` (added at Gate A).
-- [ ] **7. Section** (server):
+- [x] **7. Section** (server):
   - Headline `text-statement`, with "collaboration" in `text-primary` (it's the call to action).
   - Left column: intro + `socialLinks` (`justify-between`).
   - No email address shown.
 - [ ] **8. E2E** `e2e/contact.spec.ts`, `test.describe.configure({ mode: 'serial' })`. The limiter is shared server state, so the limit test goes last.
+  - **Skipped by owner (2026-11-09):** no new Playwright e2e tests. Covered instead by `sendEmail.test.ts` (Vitest) and a one-off browser check: 800 chars → 750 and `750 / 750`, field errors in the page, "Email service not configured" keeps the message, the 4th send is rate-limited.
   - Typing 800 chars leaves 750 in the field, and the counter reads `750 / 750`.
   - A bad email shows "Invalid email" (fill `a@b` and remove the `type=email` constraint in the test, or check the server message through the toast).
   - A valid submit (the env is empty in e2e) → toast "Email service not configured", and **the message is still in the field**.
@@ -936,17 +937,18 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 
 **Files:** `Footer.tsx` (server), `page.tsx`, `layout.tsx`, `globals.css`, `package.json`, `motion.ts`
 
-- [ ] **1.** Footer:
+- [x] **1.** Footer:
   - Meta row: `© {new Date().getFullYear()}` (server, safe under `revalidate`), `[City] · <LocalTime/>`, "Back to top ↑" (`href='#home'`).
   - Wordmark per README in `subtle-foreground` (D3), `aria-hidden`.
   - The footer sits at the bottom via `mt-auto`.
-- [ ] **2.** `page.tsx`: sections in order, with `export const revalidate = 86400`. Every section uses `page-container` and the §2.3 section rhythm (no `scroll-mt-*` needed; `html` has `scroll-pt-24`).
-- [ ] **3.** Remove these, checking each with `grep -rn <name> src` first:
+- [x] **2.** `page.tsx`: sections in order, with `export const revalidate = 86400`. Every section uses `page-container` and the §2.3 section rhythm (no `scroll-mt-*` needed; `html` has `scroll-pt-24`).
+- [x] **3.** Remove these, checking each with `grep -rn <name> src` first:
   - Dependencies: `react-type-animation`, `react-intersection-observer`.
   - Components and hooks: `SectionHeading`, `SectionDivider`, `useIsMobile`.
   - CSS: the remaining legacy utilities, `.main`, and the `@layer base { body { @apply text-lg sm:text-xl } }` kept since T1. `globals.css` should end as in §2.3.
   - `motion.ts`: the unused `lift`, `press`, `expand`. The `--animate-rule-draw` token can stay.
 - [ ] **4. E2E** `e2e/page.spec.ts`:
+  - **Skipped by owner (2026-11-09):** no new Playwright e2e tests. The existing suite (header, hero, experience, projects, about, smoke) still passes.
   - Reduced motion: every element's `getAnimations()` is finished or empty.
   - Widths 320, 375, 680, 800, 1024, 1440: no horizontal overflow (contours, marquee, wordmark).
   - Response headers include the four security headers and no `x-powered-by`.
@@ -1138,6 +1140,8 @@ Status: **CHANGES REQUESTED 2026-11-08 @ `e2741c1`**. Fix RB2.1–RB2.8 (RB2.9�
 
 READY FOR REVIEW: gate B2 @ e2741c1
 
+READY FOR REVIEW: gate B2 @ dd7c9b5
+
 **Reviewer verified** (clean `.next`):
 
 - `npm run check` passes: Vitest 13/13, e2e 51 passed (15 project-specific skips), build ok. Screenshots 3/3.
@@ -1174,25 +1178,25 @@ READY FOR REVIEW: gate B2 @ e2741c1
 
 **Findings:**
 
-- [ ] **RB2.1** should-fix, date chip format. Both references show **short months with an em dash**: `May 2023 — present`, `Nov 2022 — Apr 2023`, `Sep 2018 — Oct 2022`, `Sep 2017 — Sep 2018`. Change `formatRange` to that format (month `'short'`, `' — '`) and update its test to those four strings. On mobile this also keeps the chip and the tenure on one row.
-- [ ] **RB2.2** should-fix, Experience heading column: the reference is `flex: 1 1 300px; max-width: 320px`. About is 260, and my RB.9 note wrongly applied that to both. Use `flex-[1_1_300px]` in Experience, and make the README's two-column line give both values: About 260, Experience 300.
-- [ ] **RB2.3** should-fix, mobile Experience starts **collapsed**. In the 390 reference every row is closed, so the section is 655px tall against 1,438px now; desktop opens the current role. Do it without a hydration mismatch:
+- [x] **RB2.1** (e56f748) should-fix, date chip format. Both references show **short months with an em dash**: `May 2023 — present`, `Nov 2022 — Apr 2023`, `Sep 2018 — Oct 2022`, `Sep 2017 — Sep 2018`. Change `formatRange` to that format (month `'short'`, `' — '`) and update its test to those four strings. On mobile this also keeps the chip and the tenure on one row.
+- [x] **RB2.2** (e56f748) should-fix, Experience heading column: the reference is `flex: 1 1 300px; max-width: 320px`. About is 260, and my RB.9 note wrongly applied that to both. Use `flex-[1_1_300px]` in Experience, and make the README's two-column line give both values: About 260, Experience 300.
+- [x] **RB2.3** (e56f748) should-fix, mobile Experience starts **collapsed**. In the 390 reference every row is closed, so the section is 655px tall against 1,438px now; desktop opens the current role. Do it without a hydration mismatch:
   - Add a tiny client wrapper (`ExperienceAccordion`) that controls `value`. It starts at `'item-0'`, so the server HTML is unchanged, and in an effect sets it to `''` when `!matchMedia('(min-width: 920px)').matches`.
   - The section is far below the fold, so no visible shift.
   - Descriptions stay in the HTML (`forceMount`).
   - E2E: at 390 every row is closed after load; at 1440 the first row is open.
-- [ ] **RB2.4** should-fix (Codex 1), `ProjectDeck.tsx:76`: `scrollY.set(window.scrollY)` doesn't notify when the value is unchanged. After a stationary resize or rotation, the cards keep their old scale until the next scroll. Force the transforms to re-run (Codex suggests `scrollY.dirty()`; check it exists in the installed `motion`, otherwise use another way that always notifies). E2E: resize while stationary, and the scales follow the new pins.
-- [ ] **RB2.5** should-fix (Codex 2), `ExperienceRail.tsx`: `useScroll({ target })` doesn't re-measure when a row's height changes, so the fills and passed markers are stale after opening or closing an item until the next scroll. Add `trackContentSize: true` (check the option in the installed `motion`).
-- [ ] **RB2.6** should-fix (Codex 3 + 4), reduced motion through CSS, not `useReducedMotion`. Today the rail's server HTML has `scaleY(0)` / `opacity: 0` while a reduced-motion client renders 1, which is a hydration style mismatch. And `useReducedMotion` snapshots once, so turning on reduced motion mid-session is ignored (deck and rail).
+- [x] **RB2.4** (eecbb27) should-fix (Codex 1), `ProjectDeck.tsx:76`: `scrollY.set(window.scrollY)` doesn't notify when the value is unchanged. After a stationary resize or rotation, the cards keep their old scale until the next scroll. Force the transforms to re-run (Codex suggests `scrollY.dirty()`; check it exists in the installed `motion`, otherwise use another way that always notifies). E2E: resize while stationary, and the scales follow the new pins.
+- [x] **RB2.5** (eecbb27) should-fix (Codex 2), `ExperienceRail.tsx`: `useScroll({ target })` doesn't re-measure when a row's height changes, so the fills and passed markers are stale after opening or closing an item until the next scroll. Add `trackContentSize: true` (check the option in the installed `motion`).
+- [x] **RB2.6** (eecbb27) should-fix (Codex 3 + 4), reduced motion through CSS, not `useReducedMotion`. Today the rail's server HTML has `scaleY(0)` / `opacity: 0` while a reduced-motion client renders 1, which is a hydration style mismatch. And `useReducedMotion` snapshots once, so turning on reduced motion mid-session is ignored (deck and rail).
   - Drop `useReducedMotion` from `ExperienceRail` and `ProjectDeck`.
   - Rail: add `motion-reduce:transform-none!` on the fill and `motion-reduce:opacity-100!` on the passed dot.
   - Deck: add `motion-reduce:transform-none!` on the scaled card.
   - This is the same pattern as `AnimatedWord`. The existing reduced-motion e2e must still pass.
-- [ ] **RB2.7** nit (Codex 5), `ProjectDeck.tsx` `measure()`: it reads `offsetHeight` and then writes `--sticky-top` per card, which forces a layout on every iteration. During the accordion animation that runs every frame through the body observer. Read all heights first, then write all the tops.
-- [ ] **RB2.8** should-fix, known edge from the implementer: after a reload or jump that lands in Off the clock, the pill reads "Home". Observe the non-nav sections too, and map each to the nav section before it (`off-the-clock` → `projects`). Use `sections` from the data, not a hard-coded id. E2E: load `/#off-the-clock`, and the pill is Projects.
-- [ ] **RB2.9** nit: hide `2017 → today · 4 companies` below 920px (the mobile reference doesn't show it; same as ruling 1 for the skills count).
-- [ ] **RB2.10** nit, `nowItems`: use the reference's descriptive placeholders: `[Side project placeholder]`, `[Topic placeholder]`, `[Book placeholder]`, `[Now playing — artist · track]`, `[Trail placeholder]`. They tell the owner what to write.
-- [ ] **RB2.11** nit, ExperienceRail: the passed-marker threshold (`v > 0`) flips the moment a row's top crosses the middle. That's fine; just add a one-line comment saying it's intended.
+- [x] **RB2.7** (eecbb27) nit (Codex 5), `ProjectDeck.tsx` `measure()`: it reads `offsetHeight` and then writes `--sticky-top` per card, which forces a layout on every iteration. During the accordion animation that runs every frame through the body observer. Read all heights first, then write all the tops.
+- [x] **RB2.8** (f677819) should-fix, known edge from the implementer: after a reload or jump that lands in Off the clock, the pill reads "Home". Observe the non-nav sections too, and map each to the nav section before it (`off-the-clock` → `projects`). Use `sections` from the data, not a hard-coded id. E2E: load `/#off-the-clock`, and the pill is Projects.
+- [x] **RB2.9** (e56f748) nit: hide `2017 → today · 4 companies` below 920px (the mobile reference doesn't show it; same as ruling 1 for the skills count).
+- [x] **RB2.10** (6e93a9d) nit, `nowItems`: use the reference's descriptive placeholders: `[Side project placeholder]`, `[Topic placeholder]`, `[Book placeholder]`, `[Now playing — artist · track]`, `[Trail placeholder]`. They tell the owner what to write.
+- [x] **RB2.11** (eecbb27) nit, ExperienceRail: the passed-marker threshold (`v > 0`) flips the moment a row's top crosses the middle. That's fine; just add a one-line comment saying it's intended.
 
 ### Gate C: Ship (T12–T13)
 

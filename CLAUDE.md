@@ -4,7 +4,7 @@ Personal portfolio of Marek Lipčák (markfender.dev). Next.js 16 (App Router), 
 
 ## Redesign in progress (v3)
 
-The site is being redesigned. Design is approved direction, not yet implemented.
+The v3 redesign is implemented (T1–T13); final Gate C review is pending.
 
 - **Spec (source of truth):** `src/design-system/README.md`. Tokens: `src/design-system/tokens.css`. Motion presets: `src/design-system/motion.ts`. Read the README before touching UI.
 - **Designs:** claude.ai canvas "Portfolio Redesign v1" (https://claude.ai/artifact/BcLq4qiR6WAUc5DvQ9VCd8), page "v3 — new baseline" is current; "v2 — saved" is the previous approved version. Figma file "Portfolio Redesign v2" (https://www.figma.com/design/Ff9ADInh4UyLs4Kr7o9vo2) still shows v2. The canvas is the newest.
@@ -12,7 +12,7 @@ The site is being redesigned. Design is approved direction, not yet implemented.
 - **Implementation plan:** `docs/superpowers/plans/2026-11-08-portfolio-redesign-v3.md` — implement only what plan §5 "Cleared to implement" names, and stop at the gate it names.
 - **Visual reference (in repo):** `design/reference/home-{dark,light}-1440.{html,jpg}` and `home-mobile-390.*`. Static renders of the v3 canvas; compare against them, never ship their markup.
 - **Branch:** `design/redesign-v2-tokens`.
-- `src/design-system/` is not imported anywhere yet; the live site still runs the old styles until implementation starts.
+- `src/design-system/` is live: `globals.css` imports `tokens.css`, components use `motion.ts`.
 
 ## Rules decided with the owner
 
@@ -24,7 +24,7 @@ The site is being redesigned. Design is approved direction, not yet implemented.
 - **Header never wraps:** name hides below 800px (initials stay), pill nav becomes a menu button below 680px.
 - **Hover lives on cards, not on rows inside cards.**
 - **Keep:** hero portrait tilt, About scroll text reveal, experience scroll rail, sticky stacking project cards, the contour-line hero background.
-- **Remove when implementing:** `Aurora.tsx` + `ogl`, `react-type-animation`, Satoshi font files, `aurora-*` utilities in `globals.css`.
+- **Removed, don't bring back:** `Aurora.tsx` + `ogl`, `react-type-animation`, `react-hot-toast` (now `sonner`), Satoshi font files, the legacy `@utility` rules in `globals.css`.
 - **Library:** shadcn/ui on Tailwind v4 for primitives. Not Aceternity / Magic UI (too flashy for this direction).
 - **Tech icons:** from `react-icons` (as today), rendered in `currentColor`, never brand colours.
 
@@ -39,7 +39,6 @@ The site is being redesigned. Design is approved direction, not yet implemented.
   - the generated files import `cn` from the npm package `cn`. Point them at `@/lib/utils` and `npm uninstall cn`.
   - strip `dark:` overrides, `outline-none` / `focus-visible:ring-*` / `focus-visible:border-ring`, and `shadow-xs` (plan §2.3), so every control uses the `tokens.css` focus outline and depth comes from surface steps.
 - `tsconfig.json` sets `"allowJs": false` on purpose: `next build` re-adds `allowJs: true` when the key is missing.
-- Contact: server caps messages at 750 chars, the current textarea allows 1000 (plan Task 12 fixes it).
 - City and time zone (`[City]`, `Europe/Bratislava`) are placeholders until the owner confirms.
 - Figma: mobile frame's projects section may have an empty gap above the card (unverified). Starter plan allows one variable mode per collection, so themes are two collections, "Theme / Dark" and "Theme / Light".
 

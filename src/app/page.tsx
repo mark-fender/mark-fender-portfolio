@@ -7,7 +7,7 @@ import About from '@/components/About';
 import Experience from '@/components/experience/Experience';
 import Contact from '@/components/contact/Contact';
 
-// Tenure ("3 yrs 7 mos") is computed on the server; rebuild daily so it stays current (§2.5).
+// Tenure and the footer year are computed on the server; rebuild daily so they stay current (§2.5).
 export const revalidate = 86400;
 
 const Home = () => {

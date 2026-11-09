@@ -4,6 +4,7 @@ import type { PropsWithChildren } from 'react';
 import '@/app/globals.css';
 import Header from '@/components/Header';
 import { Toaster } from '@/components/ui/sonner';
+import Footer from '@/components/Footer';
 import Providers from '@/app/providers';
 import { navBarLinks, spySections } from '@/lib/data';
 import { Analytics } from '@vercel/analytics/next';
@@ -72,6 +73,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
       <Providers>
         <Header links={navBarLinks} spy={spySections} />
         {children}
+        <Footer />
         <Toaster position='top-right' />
       </Providers>
       <Analytics />
