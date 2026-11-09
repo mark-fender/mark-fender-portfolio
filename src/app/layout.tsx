@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 import '@/app/globals.css';
 import Header from '@/components/Header';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from '@/components/ui/sonner';
 import Providers from '@/app/providers';
 import { navBarLinks, spySections } from '@/lib/data';
 import { Analytics } from '@vercel/analytics/next';

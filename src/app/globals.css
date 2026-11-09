@@ -6,26 +6,6 @@
   @apply text-2xl font-medium capitalize mb-16 text-center sm:text-3xl lg:text-4xl;
 }
 
-@utility submit-button {
-  @apply flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-950 text-white rounded-full transition-all hover:scale-110 active:scale-105 disabled:scale-100 disabled:opacity-65 text-base;
-}
-
-@utility custom-toast {
-  @apply max-w-md w-full bg-gray-900 shadow-lg rounded-lg pointer-events-auto flex text-gray-50 text-lg;
-}
-
-@utility contact-form {
-  @apply mt-4 flex flex-col;
-}
-
-@utility contact-input {
-  @apply h-14 px-4 rounded-lg bg-slate-600 text-base;
-}
-
-@utility contact-textarea {
-  @apply h-52 p-4 my-3 rounded-lg resize-none bg-slate-600 text-base;
-}
-
 @utility body-text {
   @apply text-lg leading-relaxed sm:text-xl lg:text-2xl;
 }
@@ -40,14 +20,6 @@
 
 @utility small-text {
   @apply text-base sm:text-lg;
-}
-
-@utility collaboration-text {
-  @apply text-xl font-bold tracking-tight text-white sm:text-2xl;
-}
-
-@utility collaboration-subtitle {
-  @apply mt-4 text-base leading-8 text-gray-300 sm:text-lg;
 }
 
 @layer base {

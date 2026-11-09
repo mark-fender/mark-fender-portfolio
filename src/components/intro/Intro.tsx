@@ -43,9 +43,7 @@ const Intro = () => (
             <RotatingWord words={FOCUS_WORDS} />
           </p>
           <div className={`${RISE} flex flex-wrap items-center gap-2.5 max-[920px]:order-5`}>
-            <Button
-              asChild
-              className='h-[50px] gap-2.5 rounded-full px-[22px] text-base active:scale-[.97] max-[920px]:flex-1'>
+            <Button asChild size='cta' className='px-[22px] max-[920px]:flex-1'>
               <a href='#contact'>
                 Contact me
                 <ArrowRight className='size-[18px]' strokeWidth={1.75} aria-hidden />
