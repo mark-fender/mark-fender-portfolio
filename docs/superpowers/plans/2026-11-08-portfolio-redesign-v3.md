@@ -506,7 +506,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
   - Styling & motion: Tailwind, Styled Components, Framer Motion
   - State & data (`wide`): Redux, Zustand, Tanstack Query, RxJs, Zod, REST, WebSocket
   - Tooling & testing: Jest, Git, Vite, Webpack, Docker
-- `siteMeta = { city: '[City]', country: 'SK', timeZone: 'Europe/Bratislava', currentRole: 'Front-End Developer @ Indra Avitech', availability: '[Availability status]' }`
+- `siteMeta = { city: 'Košice', country: 'SK', timeZone: 'Europe/Bratislava', currentRole: 'Front-End Developer @ Indra Avitech', availability: 'Available' }`
 - `nowItems`: Building / Learning / Reading / Listening / Last hike, all `[placeholder]` values
 
 `projectsData` (D4): **delete Imaginify.** "Cat AI Assistant" is already first in the list (added 2026-11-08; the owner will revise its copy, so keep the text exactly as it is). Every project gets an optional `url?: string` that drives the "Live preview ↗" button. Set Cat AI Assistant's to `'https://cat.ai'` only after the owner confirms that's a public link. With Imaginify gone no description contains JSX, so descriptions become plain strings.
@@ -938,7 +938,7 @@ export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valu
 **Files:** `Footer.tsx` (server), `page.tsx`, `layout.tsx`, `globals.css`, `package.json`, `motion.ts`
 
 - [x] **1.** Footer:
-  - Meta row: `© {new Date().getFullYear()}` (server, safe under `revalidate`), `[City] · <LocalTime/>`, "Back to top ↑" (`href='#home'`).
+  - Meta row: `© {new Date().getFullYear()}` (server, safe under `revalidate`), `Košice · <LocalTime/>`, "Back to top ↑" (`href='#home'`).
   - Wordmark per README in `subtle-foreground` (D3), `aria-hidden`.
   - The footer sits at the bottom via `mt-auto`.
 - [x] **2.** `page.tsx`: sections in order, with `export const revalidate = 86400`. Every section uses `page-container` and the §2.3 section rhythm (no `scroll-mt-*` needed; `html` has `scroll-pt-24`).
@@ -1106,7 +1106,7 @@ READY FOR REVIEW: gate B1 @ bcf18c3
   - Mobile: every section `pt-18 pb-0`, the last section `pb-18`, hero as in RB.2.
   - Apply it to About now. §2.3 and T13 step 2 now say this for T8–T13.
 - [x] **RB.4** (96fd2f8) should-fix, the portrait spec panel (corrects D5). The reference shows values that already exist in the copy, so no placeholders are needed: `role: Frontend developer`, `years: 7`, `focus: ReactJS · NextJS · Angular`.
-  - One source each: add `siteMeta.experienceYears = 7` and use it for both the intro's "7 years" and the panel.
+  - One source each: add `siteMeta.experienceYears = 8` and use it for both the intro's "7 years" and the panel.
   - Derive `focus` from the rotating words (strip the trailing dots).
   - `role` comes from the intro's "frontend developer", capitalised.
 - [x] **RB.5** (0ceae35) nit: the "Contact me" icon is `ArrowRight` in the reference, not a chevron.

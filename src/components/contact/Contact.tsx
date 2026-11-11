@@ -10,16 +10,16 @@ const Contact = () => (
     <div className='mb-4.5 min-[920px]:mb-6'>
       <SectionRule id='contact' />
     </div>
-    <h2 className='mb-4.5 max-w-[900px] text-statement min-[920px]:mb-14'>
+    <h2 className='mb-4.5 max-w-225 text-statement min-[920px]:mb-14'>
       Let&apos;s talk about possible <span className='text-primary'>collaboration</span>
     </h2>
     <div className='flex flex-col gap-4.5 min-[920px]:flex-row min-[920px]:flex-wrap min-[920px]:gap-12'>
       <div className='contents min-[920px]:flex min-[920px]:flex-[1_1_340px] min-[920px]:flex-col min-[920px]:justify-between min-[920px]:gap-10'>
-        <p className='max-w-[420px] text-lead text-muted-foreground max-[920px]:hidden'>
+        <p className='max-w-105 text-lead text-muted-foreground max-[920px]:hidden'>
           Ready to bring your ideas to life? I&apos;m here to help create amazing digital
           experiences.
         </p>
-        <ul className='border-b border-border max-[920px]:order-1 min-[920px]:max-w-[420px]'>
+        <ul className='border-b border-border max-[920px]:order-1 min-[920px]:max-w-105'>
           {socialLinks.map(({ label, href }) => (
             <li key={label} className='border-t border-border'>
               <a
@@ -27,7 +27,7 @@ const Contact = () => (
                 target='_blank'
                 rel='noopener noreferrer'
                 className='group flex items-center justify-between py-3.5 text-[15px] min-[920px]:py-4 min-[920px]:text-base'>
-                <span className='flex flex-col gap-[3px]'>
+                <span className='flex flex-col gap-0.75'>
                   {label}
                   <HoverUnderline className='max-[920px]:hidden' />
                 </span>

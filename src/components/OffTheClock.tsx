@@ -11,7 +11,7 @@ const Equaliser = () => (
       <span
         key={delay}
         style={{ animationDelay: delay }}
-        className='h-3 w-[3px] origin-bottom animate-eq rounded-[1px] bg-muted-foreground'
+        className='h-3 w-0.75 origin-bottom animate-eq rounded-[1px] bg-muted-foreground'
       />
     ))}
   </span>
@@ -24,7 +24,7 @@ const OffTheClock = () => (
     <div className='mb-3.5 min-[920px]:mb-6'>
       <SectionRule id='off-the-clock' />
     </div>
-    <div className='mb-3.5 flex max-w-[560px] flex-col gap-3.5 min-[920px]:mb-10 min-[920px]:gap-5'>
+    <div className='mb-3.5 flex max-w-140 flex-col gap-3.5 min-[920px]:mb-10 min-[920px]:gap-5'>
       <h2 className='text-section'>{title}</h2>
       <p className='text-[17px]/[1.6] text-muted-foreground'>
         [Short intro placeholder — what you do and think about when you&apos;re not shipping.]
@@ -33,7 +33,7 @@ const OffTheClock = () => (
     <div className='flex flex-wrap gap-3.5 min-[920px]:gap-4'>
       <SurfaceCard
         interactive
-        className='flex min-w-0 flex-[1_1_320px] flex-col gap-3.5 p-[18px] min-[920px]:gap-5 min-[920px]:p-6'>
+        className='flex min-w-0 flex-[1_1_320px] flex-col gap-3.5 p-4.5 min-[920px]:gap-5 min-[920px]:p-6'>
         <header className='flex items-baseline justify-between gap-3'>
           <h3 className='text-base font-semibold tracking-[-0.01em] min-[920px]:text-lg'>Now</h3>
           <span className='font-mono text-caption text-muted-foreground'>[Updated month]</span>
@@ -57,9 +57,9 @@ const OffTheClock = () => (
           <SurfaceCard
             key={n}
             interactive
-            className='flex min-h-[220px] w-[70%] shrink-0 snap-start items-center justify-center overflow-hidden rounded-xl bg-surface-raised min-[920px]:min-h-[340px] min-[920px]:w-auto'>
+            className='flex min-h-55 w-[70%] shrink-0 snap-start items-center justify-center overflow-hidden rounded-xl bg-surface-raised min-[920px]:min-h-85 min-[920px]:w-auto'>
             <span className='font-mono text-caption text-muted-foreground'>[Photo {n}]</span>
-            <span className='absolute bottom-3 left-3 rounded-lg bg-background px-[9px] py-[5px] font-mono text-[11px] text-muted-foreground'>
+            <span className='absolute bottom-3 left-3 rounded-lg bg-background px-2.25 py-1.25 font-mono text-[11px] text-muted-foreground'>
               [Place · season]
             </span>
           </SurfaceCard>

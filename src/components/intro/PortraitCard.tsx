@@ -33,7 +33,7 @@ const PortraitCard = ({ children, className }: { children: ReactNode; className?
       initial={{ y: 14 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.7, ease: ease.out, delay: 0.08 }}
-      className={cn('perspective-[800px]', className)}
+      className={cn('perspective-midrange', className)}
       onPointerMove={onMove}
       onPointerLeave={reset}>
       <motion.figure
@@ -46,7 +46,7 @@ const PortraitCard = ({ children, className }: { children: ReactNode; className?
           height={800}
           preload
           sizes='(max-width: 452px) 100vw, 420px'
-          className='aspect-square w-full min-[920px]:aspect-[4/5] rounded-lg object-cover object-[50%_28%] saturate-[.55] contrast-[1.04]'
+          className='aspect-square w-full min-[920px]:aspect-4/5 rounded-lg object-cover object-[50%_28%] saturate-[.55] contrast-[1.04]'
         />
         <figcaption className='px-2 pt-3.5 pb-1'>{children}</figcaption>
       </motion.figure>

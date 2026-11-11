@@ -47,7 +47,7 @@ test('mobile stacks chip, h1, portrait, intro, CTAs, status in that order', asyn
   const hero = page.locator('#home');
   const tops = await Promise.all(
     [
-      hero.getByText('[Availability status]'),
+      hero.getByText('Available'),
       hero.getByRole('heading', { level: 1 }),
       hero.getByRole('img', { name: 'Portrait of Marek Lipčák' }),
       hero.getByText(/^I am a/),

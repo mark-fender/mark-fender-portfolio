@@ -54,12 +54,12 @@ export const socialLinks = [
 ] as const;
 
 export const siteMeta = {
-  city: '[City]',
+  city: 'Košice',
   country: 'SK',
   timeZone: 'Europe/Bratislava',
   currentRole: 'Front-End Developer @ Indra Avitech',
-  availability: '[Availability status]',
-  experienceYears: 7,
+  availability: 'Available',
+  experienceYears: 8,
 } as const;
 
 export const nowItems = [

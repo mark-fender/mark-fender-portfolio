@@ -22,7 +22,7 @@ const MobileNav = ({ links, active, onNavigate }: Props) => {
           type='button'
           aria-label='Open menu'
           className='inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground min-[680px]:hidden'>
-          <Equal className='size-[18px]' strokeWidth={1.75} aria-hidden />
+          <Equal className='size-4.5' strokeWidth={1.75} aria-hidden />
         </button>
       </SheetTrigger>
       <SheetContent

@@ -24,8 +24,8 @@ const ThemeToggle = () => {
       onClick={toggle}
       className='inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground'>
       <span className='theme-icon'>
-        <Sun className='size-[18px] light:hidden' strokeWidth={1.75} aria-hidden />
-        <Moon className='hidden size-[18px] light:block' strokeWidth={1.75} aria-hidden />
+        <Sun className='size-4.5 light:hidden' strokeWidth={1.75} aria-hidden />
+        <Moon className='hidden size-4.5 light:block' strokeWidth={1.75} aria-hidden />
       </span>
     </button>
   );

@@ -13,7 +13,6 @@ import { EMAIL_MAX_LENGTH, MESSAGE_MAX_LENGTH, NAME_MAX_LENGTH } from '@/utils/v
 const COOLDOWN_MS = 60_000;
 type Field = 'senderName' | 'senderEmail' | 'message';
 
-// "No red" (README): an error is foreground text and an alert icon; the primitives draw the 2px border.
 const FieldError = ({ name, error }: { name: Field; error?: string }) =>
   error ? (
     <p id={`${name}-error`} className='flex items-center gap-1.5 text-sm text-foreground'>
@@ -110,7 +109,7 @@ const ContactForm = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder='Tell me about your project...'
-          className='h-[172px] max-[920px]:h-[124px]'
+          className='h-43 max-[920px]:h-31'
         />
         <FieldError name='message' error={errors.message} />
       </div>

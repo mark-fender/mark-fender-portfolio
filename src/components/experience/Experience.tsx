@@ -15,11 +15,11 @@ const Experience = () => (
   <section
     id='experience'
     className='page-container pt-18 pb-0 min-[920px]:pt-10 min-[920px]:pb-34'>
-    <div className='mb-[18px] min-[920px]:mb-6'>
+    <div className='mb-4.5 min-[920px]:mb-6'>
       <SectionRule id='experience' />
     </div>
     <div className='flex flex-wrap gap-x-14 gap-y-6'>
-      <div className='flex max-w-[320px] flex-[1_1_300px] flex-col gap-3.5 min-[920px]:gap-5'>
+      <div className='flex max-w-80 flex-[1_1_300px] flex-col gap-3.5 min-[920px]:gap-5'>
         <h2 className='text-section'>My experience</h2>
         <p className='font-mono text-label text-muted-foreground max-[920px]:hidden'>
           {firstYear} → today · {companies} companies
@@ -37,7 +37,7 @@ const Experience = () => (
               return (
                 <li
                   key={`${job.company}-${job.from.year}`}
-                  className='relative pl-[30px] min-[920px]:pl-10'>
+                  className='relative pl-7.5 min-[920px]:pl-10'>
                   <ExperienceRail current={current} last={i === experiencesData.length - 1} />
                   <AccordionItem value={`item-${i}`} asChild className='border-0'>
                     <SurfaceCard
@@ -45,7 +45,7 @@ const Experience = () => (
                       className='overflow-hidden rounded-2xl min-[920px]:rounded-[18px]'>
                       <AccordionPrimitive.Header asChild>
                         <h3>
-                          <AccordionPrimitive.Trigger className='group relative flex w-full flex-wrap items-center gap-x-6 gap-y-2.5 px-[18px] py-4 text-left max-[920px]:gap-x-2.5 max-[920px]:pr-14 min-[920px]:px-6 min-[920px]:py-[22px]'>
+                          <AccordionPrimitive.Trigger className='group relative flex w-full flex-wrap items-center gap-x-6 gap-y-2.5 px-4.5 py-4 text-left max-[920px]:gap-x-2.5 max-[920px]:pr-14 min-[920px]:px-6 min-[920px]:py-5.5'>
                             <span className='flex flex-[1_1_280px] flex-col gap-0.5 min-[920px]:gap-1'>
                               <span className='text-lg font-semibold min-[920px]:text-title'>
                                 {job.title}
@@ -56,21 +56,21 @@ const Experience = () => (
                             </span>
                             <span
                               className={cn(
-                                'rounded-full border px-2.5 py-[5px] font-mono text-caption tabular-nums',
+                                'rounded-full border px-2.5 py-1.25 font-mono text-caption tabular-nums',
                                 current
                                   ? 'border-primary text-primary'
                                   : 'border-input text-muted-foreground',
                               )}>
                               {formatRange(job.from, job.to)}
                             </span>
-                            <span className='font-mono text-caption text-muted-foreground tabular-nums min-[920px]:min-w-[92px] min-[920px]:text-right'>
+                            <span className='font-mono text-caption text-muted-foreground tabular-nums min-[920px]:min-w-23 min-[920px]:text-right'>
                               {formatTenure(job.from, job.to)}
                             </span>
                             <span
                               aria-hidden
                               className='inline-flex size-8 items-center justify-center rounded-full border border-input font-mono text-base text-foreground max-[920px]:absolute max-[920px]:top-4 max-[920px]:right-4'>
                               <span className='group-data-[state=open]:hidden'>+</span>
-                              <span className='hidden group-data-[state=open]:inline'>−</span>
+                              <span className='hidden group-data-[state=open]:inline'>-</span>
                             </span>
                           </AccordionPrimitive.Trigger>
                         </h3>
@@ -78,7 +78,7 @@ const Experience = () => (
                       {/* forceMount + hidden keeps every description in the HTML (SEO, find-in-page). */}
                       <AccordionContent
                         forceMount
-                        className='max-w-[720px] px-[18px] pb-[18px] text-body text-muted-foreground min-[920px]:px-6 min-[920px]:pb-6'>
+                        className='max-w-180 px-4.5 pb-4.5 text-body text-muted-foreground min-[920px]:px-6 min-[920px]:pb-6'>
                         {job.description}
                       </AccordionContent>
                     </SurfaceCard>

@@ -14,7 +14,7 @@ const Footer = () => (
         <span className='max-[920px]:hidden'>{siteMeta.city} · </span>
         <LocalTime timeZone={siteMeta.timeZone} />
       </span>
-      <a href='#home' className='group flex flex-col gap-[3px]'>
+      <a href='#home' className='group flex flex-col gap-0.75'>
         Back to top ↑
         <HoverUnderline />
       </a>

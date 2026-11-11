@@ -8,14 +8,14 @@ const Copy = ({ hidden }: { hidden?: boolean }) => (
     {names.map((name) => (
       <li key={name} className='inline-flex items-center gap-10'>
         {name}
-        <span className='size-[5px] rounded-full bg-accent-decorative' />
+        <span className='size-1.25 rounded-full bg-accent-decorative' />
       </li>
     ))}
   </ul>
 );
 
 const Marquee = () => (
-  <div className='overflow-hidden border-y border-border py-[18px]'>
+  <div className='overflow-hidden border-y border-border py-4.5'>
     <div className='flex w-max animate-marquee font-mono text-sm whitespace-nowrap text-muted-foreground hover:[animation-play-state:paused]'>
       <Copy />
       <Copy hidden />

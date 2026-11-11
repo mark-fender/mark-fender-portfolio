@@ -47,7 +47,7 @@ const Contours = () => {
   return (
     <div
       aria-hidden
-      className='pointer-events-none absolute inset-y-0 -right-[260px] z-0 flex w-[1100px] items-center'>
+      className='pointer-events-none absolute inset-y-0 -right-65 z-0 flex w-275 items-center'>
       <motion.div style={{ x: driftX, y: driftY }}>
         <svg
           data-contours
@@ -55,11 +55,11 @@ const Contours = () => {
           fill='none'
           stroke='currentColor'
           strokeWidth={1.2}
-          className='h-[640px] w-[1100px] flex-none origin-[60%_45%] animate-contour-sway text-border motion-reduce:animate-none'>
+          className='h-160 w-275 flex-none origin-[60%_45%] animate-contour-sway text-border motion-reduce:animate-none'>
           {CONTOUR_PATHS.map((d, i) => (
             <g
               key={d}
-              className='origin-center animate-contour-breathe [animation-fill-mode:backwards] [transform-box:fill-box] motion-reduce:animate-none'
+              className='origin-center animate-contour-breathe [animation-fill-mode:backwards] transform-fill motion-reduce:animate-none'
               style={{ animationDelay: `${DRAW_S - i * BREATHE_STAGGER_S}s` }}>
               <path
                 d={d}
