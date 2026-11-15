@@ -6,11 +6,69 @@
   @apply mx-auto w-full max-w-[calc(var(--container-content)+3rem)] px-4 sm:px-6;
 }
 
-@utility card-light {
-  --card-light: color-mix(in srgb, var(--foreground) 7%, transparent);
-  [data-theme='light'] & {
-    --card-light: color-mix(in srgb, var(--foreground) 5%, transparent);
+/* Translucent fills keep pills visible on both base and hover surfaces. */
+@utility pill {
+  border-radius: calc(infinity* 1px);
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  background: color-mix(in srgb, var(--foreground) 4.5%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+/* Inset shadows preserve 0.5px rims that Chrome borders and masks round away.
+   Set --glass-edge instead of a border; position the host and clip children separately. */
+@property --glass-rim {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+@property --glass-edge {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@utility glass {
+  --glass-edge: var(--border);
+  --glass-light: var(--foreground);
+  --glass-far: color-mix(in srgb, var(--foreground) 6%, transparent);
+  --glass-rim: 26%;
+  --glass-sheen: color-mix(in srgb, var(--glass-light) 3%, transparent);
+  --glass-border: 1px;
+  background-image: linear-gradient(
+    var(--light-angle, 160deg),
+    var(--glass-sheen, transparent),
+    transparent 55%
+  );
+  @media (min-resolution: 2dppx) {
+    --glass-border: 0.5px;
   }
+  [data-theme='light'] & {
+    --glass-light: #fff;
+    --glass-far: color-mix(in srgb, var(--foreground) 6%, transparent);
+    --glass-rim: 55%;
+    --glass-sheen: transparent;
+  }
+  &::before {
+    /* Resolved here, not on the host, so it follows the --glass-rim this pseudo transitions. */
+    --glass-rim-lit: color-mix(in srgb, var(--glass-light) var(--glass-rim), transparent);
+    /* Opposite shadow offsets light the near and far edges. */
+    --glass-x: calc(sin(var(--light-angle, 160deg)) * var(--glass-border));
+    --glass-y: calc(cos(var(--light-angle, 160deg)) * var(--glass-border) * -1);
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+      inset var(--glass-x) var(--glass-y) 0 var(--glass-rim-lit, transparent),
+      inset calc(var(--glass-x) * -1) calc(var(--glass-y) * -1) 0 var(--glass-far, transparent),
+      inset 0 0 0 var(--glass-border) var(--glass-edge);
+    transition:
+      --glass-rim 240ms var(--ease-out-strong),
+      --glass-edge 240ms var(--ease-out-strong);
+  }
+}
+@utility glass-hover {
+  --glass-hover-sheen: color-mix(in srgb, var(--glass-light, var(--foreground)) 7%, transparent);
   &::after {
     content: '';
     position: absolute;
@@ -18,16 +76,56 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: 0;
-    background: radial-gradient(
-      420px circle at var(--mx, 50%) var(--my, 50%),
-      var(--card-light),
+    background: linear-gradient(
+      var(--light-angle, 160deg),
+      var(--glass-hover-sheen, transparent),
       transparent 60%
     );
     transition: opacity 240ms var(--ease-out-strong);
   }
-  @media (hover: hover) {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --glass-edge: var(--input);
+      --glass-rim: 45%;
+    }
+    [data-theme='light'] &:hover {
+      --glass-rim: 70%;
+    }
     &:hover::after {
       opacity: 1;
+    }
+  }
+}
+@utility glass-text {
+  --glass-light: var(--foreground);
+  --glass-rim: 26%;
+  --glass-text-lit: color-mix(
+    in srgb,
+    var(--glass-light) var(--glass-rim),
+    var(--subtle-foreground)
+  );
+  color: var(--subtle-foreground);
+  transition: --glass-rim 400ms var(--ease-out-strong);
+  [data-theme='light'] & {
+    --glass-light: #fff;
+    --glass-rim: 55%;
+  }
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    color: transparent;
+    background-image: linear-gradient(
+      var(--light-angle, 160deg),
+      var(--glass-text-lit, var(--subtle-foreground)),
+      var(--subtle-foreground) 45%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --glass-rim: 48%;
+    }
+    [data-theme='light'] &:hover {
+      --glass-rim: 85%;
     }
   }
 }
@@ -47,5 +145,53 @@
   from {
     opacity: 0;
     rotate: -90deg;
+  }
+}
+.language-icon {
+  view-transition-name: language-icon;
+}
+::view-transition-old(language-icon) {
+  animation: language-icon-out 200ms var(--ease-out-strong) both;
+}
+::view-transition-new(language-icon) {
+  animation: language-icon-in 200ms var(--ease-out-strong) both;
+}
+@keyframes language-icon-out {
+  to {
+    opacity: 0;
+    translate: 0 -60%;
+  }
+}
+@keyframes language-icon-in {
+  from {
+    opacity: 0;
+    translate: 0 60%;
+  }
+}
+
+.confetti {
+  opacity: 0;
+  animation: confetti 1100ms both;
+}
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    translate: -50% -50%;
+    rotate: 0deg;
+    scale: 0.4;
+    animation-timing-function: var(--ease-out-strong);
+  }
+  40% {
+    opacity: 1;
+    translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
+    rotate: var(--spin);
+    scale: 1;
+    animation-timing-function: ease-in;
+  }
+  100% {
+    opacity: 0;
+    translate: calc(var(--x) - 50%) calc(var(--y) + var(--fall) - 50%);
+    rotate: calc(var(--spin) * 2);
+    scale: 1;
   }
 }

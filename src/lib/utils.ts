@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { clsx, type ClassValue } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
@@ -12,7 +13,6 @@ const twMerge = extendTailwindMerge({
             'statement',
             'section',
             'feature',
-            'reveal',
             'title',
             'lead',
             'body',
@@ -27,3 +27,17 @@ const twMerge = extendTailwindMerge({
 });
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+export const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value));
+
+// A light direction in degrees (0–359) that looks random but is the same for the same seed on
+// every render, server and client. FNV-1a over the seed's UTF-16 code units.
+export const lightAngle = (seed: string) => {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < seed.length; i++) hash = Math.imul(hash ^ seed.charCodeAt(i), 0x01000193);
+  return (hash >>> 0) % 360;
+};
+
+export const lightStyle = (seed: string) =>
+  ({ '--light-angle': `${lightAngle(seed)}deg` }) as CSSProperties;

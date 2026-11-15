@@ -9,6 +9,7 @@ export const test = base.extend<{ pageErrors: string[] }>({
       await page.route('**/_vercel/**', (route) =>
         route.fulfill({ contentType: 'text/javascript', body: '' }),
       );
+      await page.route('**/api/listening', (route) => route.fulfill({ json: null }));
       const errors: string[] = [];
       page.on('console', (msg) => {
         if (msg.type() === 'error') errors.push(msg.text());

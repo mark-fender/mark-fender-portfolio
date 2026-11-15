@@ -17,9 +17,15 @@ export default defineConfig({
   webServer: {
     command: 'npm run build && npm run start -- -p 3100',
     url: 'http://localhost:3100',
-    reuseExistingServer: !process.env.CI,
+    // Form tests require the isolated credentials below, even on a developer's machine.
+    reuseExistingServer: false,
     timeout: 180_000,
-    // Never send real email from tests: these override .env.local.
-    env: { RESEND_API_KEY: '', MY_EMAIL: '', RESEND_EMAIL_DOMAIN: '' },
+    // Never call real services from tests: these override .env.local.
+    env: {
+      RESEND_API_KEY: '',
+      MY_EMAIL: '',
+      RESEND_EMAIL_DOMAIN: '',
+      SPOTIFY_REFRESH_TOKEN: '',
+    },
   },
 });

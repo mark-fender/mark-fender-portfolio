@@ -3,5 +3,6 @@ package-lock.json
 .next/
 playwright-report/
 test-results/
+coverage/
 .superpowers/
 src/features/travel/data/world.json

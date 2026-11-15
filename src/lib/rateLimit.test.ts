@@ -13,4 +13,20 @@ describe('isRateLimited', () => {
     expect(isRateLimited('c', 3, 1000, 999)).toBe(true);
     expect(isRateLimited('c', 3, 1000, 1000)).toBe(false);
   });
+
+  it('expires individual hits in a rolling window without extending it for blocked attempts', () => {
+    expect(isRateLimited('rolling', 2, 1000, 0)).toBe(false);
+    expect(isRateLimited('rolling', 2, 1000, 500)).toBe(false);
+    expect(isRateLimited('rolling', 2, 1000, 999)).toBe(true);
+    expect(isRateLimited('rolling', 2, 1000, 1000)).toBe(false);
+    expect(isRateLimited('rolling', 2, 1000, 1499)).toBe(true);
+    expect(isRateLimited('rolling', 2, 1000, 1500)).toBe(false);
+  });
+
+  it('bounds long-lived limiter storage by discarding old keys at capacity', () => {
+    expect(isRateLimited('capacity-anchor', 1, 1000, 0)).toBe(false);
+    expect(isRateLimited('capacity-anchor', 1, 1000, 0)).toBe(true);
+    for (let i = 0; i < 10_001; i++) isRateLimited(`capacity-${i}`, 1, 1000, 0);
+    expect(isRateLimited('capacity-anchor', 1, 1000, 0)).toBe(false);
+  });
 });
