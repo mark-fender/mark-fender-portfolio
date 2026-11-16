@@ -52,7 +52,7 @@ describe('reducer', () => {
   });
 
   it('does not accept overlapping lines whose points are only collinear up to rounding', () => {
-    // Four nodes dropped on y = 0.1x + 5: lines r1–r2 and r1–r3 then lie on top of each other.
+    // Four nodes dropped on y = 0.1x + 5: lines r1-r2 and r1-r3 then lie on top of each other.
     let s = start(0);
     const drops: Point[] = [
       [10, 6],

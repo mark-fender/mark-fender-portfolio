@@ -1,6 +1,6 @@
 import type { Localized } from '@/lib/i18n';
 
-export type YearMonth = { year: number; month: number }; // month 1–12
+export type YearMonth = { year: number; month: number }; // month 1-12
 
 export type Role = {
   company: string;

@@ -12,7 +12,7 @@ type Level = {
   perm: readonly number[];
 };
 
-// Ordered by difficulty: more lines per node each time. Levels 1–3 are the v4 artboard's three
+// Ordered by difficulty: more lines per node each time. Levels 1-3 are the v4 artboard's three
 // (its second and third swapped: the tree is easier than the two rings).
 export const LEVELS: readonly Level[] = [
   {

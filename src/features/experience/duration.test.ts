@@ -61,8 +61,8 @@ describe('formatRange', () => {
 
   it('writes Slovak months in lower case, with a dash between the dates', () => {
     expect(formatRange({ year: 2023, month: 5 }, { year: 2025, month: 7 }, 'sk')).toBe(
-      'máj 2023 – júl 2025',
+      'máj 2023 - júl 2025',
     );
-    expect(formatRange({ year: 2026, month: 3 }, null, 'sk')).toBe('mar 2026 – súčasnosť');
+    expect(formatRange({ year: 2026, month: 3 }, null, 'sk')).toBe('mar 2026 - súčasnosť');
   });
 });

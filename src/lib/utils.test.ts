@@ -24,7 +24,7 @@ describe('lightAngle', () => {
     expect(lightAngle('«R1»')).toBe(lightAngle('«R1»'));
   });
 
-  it('stays in 0–359 and spreads different seeds apart', () => {
+  it('stays in 0-359 and spreads different seeds apart', () => {
     const angles = Array.from({ length: 50 }, (_, i) => lightAngle(`«R${i}»`));
     for (const angle of angles) expect(angle).toBeGreaterThanOrEqual(0);
     for (const angle of angles) expect(angle).toBeLessThan(360);

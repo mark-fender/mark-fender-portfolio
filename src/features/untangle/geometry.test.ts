@@ -36,14 +36,14 @@ describe('crossingSet', () => {
       [5, 0],
       [5, 10],
     ];
-    // 0–1 and 0–2 leave node 0 in the same direction.
+    // 0-1 and 0-2 leave node 0 in the same direction.
     expect(
       crossingSet(line, [
         [0, 1],
         [0, 2],
       ]).count,
     ).toBe(1);
-    // Node 2 sits on the line 0–1.
+    // Node 2 sits on the line 0-1.
     expect(
       crossingSet(line, [
         [0, 1],

@@ -42,7 +42,7 @@ const en = {
   game: {
     heading: 'Untangle the network',
     intro:
-      'Five small networks, from a ring with two shortcuts to four sites on a backbone. Drag the nodes until no two lines cross. A line turns red while it crosses another, and you can show the solution if you get stuck.',
+      'Five small networks, increasing in difficulty. A line turns red while it crosses another, drag the nodes until no two lines cross. You can show the solution if you get stuck.',
     board: {
       level: 'Level {level} of {total}: {name}',
       network: 'Network to untangle',
@@ -80,7 +80,7 @@ const en = {
   },
   offTheClock: {
     intro:
-      "I feel most at home somewhere outdoors, preferably with mountains nearby and no particular rush to be anywhere. I love exploring unfamiliar places, taking the longer route, and seeing what's around the next corner. When I'm not out exploring, there's usually music playing, coffee brewing, or some new idea I'm experimenting with. I enjoy getting lost in the details of things I care about, whether it's a good album, a perfectly brewed cup of coffee, or a little project that started with a random thought.",
+      "I feel most at home outdoors, preferably with mountains nearby and nowhere I need to be. I love exploring unfamiliar places, taking the longer route, and seeing what's around the next corner. When I'm not out exploring, there's usually music playing, coffee brewing, and some new idea I'm experimenting with.",
     now: 'Now',
     photos: 'Photos',
   },
@@ -122,7 +122,7 @@ const sk: UiCopy = {
     menu: 'Menu',
     closeMenu: 'Zavrieť',
     theme: 'Prepnúť motív',
-    language: 'prepnúť do angličtiny',
+    language: 'Prepnúť do angličtiny',
   },
   footer: { backToTop: 'Späť hore' },
   notifications: 'Upozornenia',
@@ -141,7 +141,7 @@ const sk: UiCopy = {
     summary: 'od roku {year} po dnešok, {roles}',
     roles: { one: 'pozícia', few: 'pozície', other: 'pozícií' },
     tabs: 'Pozície, od najstaršej',
-    range: '{from} – {to}',
+    range: '{from} - {to}',
     present: 'súčasnosť',
     years: { one: 'rok', few: 'roky', other: 'rokov' },
     months: { one: 'mesiac', few: 'mesiace', other: 'mesiacov' },
@@ -156,7 +156,7 @@ const sk: UiCopy = {
   game: {
     heading: 'Rozmotajte sieť',
     intro:
-      'Päť malých sietí, od kruhu s dvoma skratkami po štyri pobočky na chrbticovej sieti. Ťahajte uzly, kým sa žiadne dve čiary nekrížia. Čiara, ktorá križuje inú, je červená, a keď sa zaseknete, môžete si nechať ukázať riešenie.',
+      'Päť malých sietí s rastúcou náročnosťou. Čiara sčervenie, keď križuje inú. Ťahajte uzly, kým sa žiadne dve čiary nekrížia. Ak sa zaseknete, môžete si nechať ukázať riešenie.',
     board: {
       level: 'Úroveň {level} z {total}: {name}',
       network: 'Sieť na rozmotanie',
@@ -195,7 +195,7 @@ const sk: UiCopy = {
   },
   offTheClock: {
     intro:
-      'Najviac doma sa cítim niekde vonku, najlepšie s horami nablízku a bez toho, aby som sa musel niekam ponáhľať. Rád objavujem neznáme miesta, idem dlhšou cestou a pozerám, čo je za ďalšou zákrutou. Keď práve nie som vonku, zvyčajne mi hrá hudba, varí sa káva alebo skúšam nejaký nový nápad. Rád sa strácam v detailoch vecí, na ktorých mi záleží, či je to dobrý album, dokonale uvarená šálka kávy, alebo malý projekt, ktorý začal náhodnou myšlienkou.',
+      'Najviac doma sa cítim vonku, najlepšie s horami nablízku a bez náhlenia. Rád objavujem neznáme miesta, chodím dlhšou cestou a pozerám, čo je za ďalšou zákrutou. Keď práve nie som vonku, zvyčajne mi hrá hudba, varí sa káva a skúšam nejaký nový nápad.',
     now: 'Teraz',
     photos: 'Fotky',
   },

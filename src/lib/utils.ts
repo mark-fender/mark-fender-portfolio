@@ -31,7 +31,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 export const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-// A light direction in degrees (0–359) that looks random but is the same for the same seed on
+// A light direction in degrees (0-359) that looks random but is the same for the same seed on
 // every render, server and client. FNV-1a over the seed's UTF-16 code units.
 export const lightAngle = (seed: string) => {
   let hash = 0x811c9dc5;
