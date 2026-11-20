@@ -15,7 +15,8 @@ import {
   validateString,
 } from '@/lib/validation';
 
-type Result = { error: string | null };
+export type ContactField = 'senderName' | 'senderEmail' | 'message';
+type Result = { error: string | null; field?: ContactField };
 
 export const sendEmail = async (formData: FormData): Promise<Result> => {
   if (formData.get('website')) return { error: null }; // honeypot: bots get a silent success
@@ -30,10 +31,12 @@ export const sendEmail = async (formData: FormData): Promise<Result> => {
   const senderEmail = formData.get('senderEmail');
   const message = formData.get('message');
 
-  if (!validateString(senderName, NAME_MAX_LENGTH)) return { error: errors.name };
+  if (!validateString(senderName, NAME_MAX_LENGTH))
+    return { error: errors.name, field: 'senderName' };
   if (!validateString(senderEmail, EMAIL_MAX_LENGTH) || !isEmail(senderEmail.trim()))
-    return { error: errors.email };
-  if (!validateString(message, MESSAGE_MAX_LENGTH)) return { error: errors.message };
+    return { error: errors.email, field: 'senderEmail' };
+  if (!validateString(message, MESSAGE_MAX_LENGTH))
+    return { error: errors.message, field: 'message' };
   const content = { message, senderName, senderEmail: senderEmail.trim() };
 
   const { RESEND_API_KEY, MY_EMAIL, RESEND_EMAIL_DOMAIN } = process.env;

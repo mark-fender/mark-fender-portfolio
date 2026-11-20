@@ -56,20 +56,26 @@ describe('sendEmail', () => {
   });
 
   it('rejects a bad email and an over-long message', async () => {
-    expect(await sendEmail(form({ senderEmail: 'a@b' }))).toEqual({ error: 'Invalid email' });
+    expect(await sendEmail(form({ senderEmail: 'a@b' }))).toEqual({
+      error: 'Please enter a valid email address.',
+      field: 'senderEmail',
+    });
     expect(await sendEmail(form({ message: 'a'.repeat(MESSAGE_MAX_LENGTH + 1) }))).toEqual({
-      error: 'Invalid message',
+      error: 'Please write a message of up to 1000 characters.',
+      field: 'message',
     });
     expect(send).not.toHaveBeenCalled();
   });
 
   it('answers in the language the form was sent from', async () => {
     expect(await sendEmail(form({ senderEmail: 'a@b', locale: 'sk' }))).toEqual({
-      error: 'Neplatný e-mail',
+      error: 'Zadajte platnú e-mailovú adresu.',
+      field: 'senderEmail',
     });
     // Anything that isn't a known language gets English.
     expect(await sendEmail(form({ senderEmail: 'a@b', locale: 'xx' }))).toEqual({
-      error: 'Invalid email',
+      error: 'Please enter a valid email address.',
+      field: 'senderEmail',
     });
   });
 
@@ -110,29 +116,33 @@ describe('sendEmail', () => {
   });
 
   it.each([
-    ['senderName', '', 'Invalid name'],
-    ['senderName', ' \n\t ', 'Invalid name'],
-    ['senderName', 'a'.repeat(NAME_MAX_LENGTH + 1), 'Invalid name'],
-    ['senderEmail', '', 'Invalid email'],
-    ['senderEmail', 'a'.repeat(EMAIL_MAX_LENGTH) + '@example.com', 'Invalid email'],
-    ['message', '', 'Invalid message'],
-    ['message', '\n\t ', 'Invalid message'],
+    ['senderName', '', 'Please enter your name.'],
+    ['senderName', ' \n\t ', 'Please enter your name.'],
+    ['senderName', 'a'.repeat(NAME_MAX_LENGTH + 1), 'Please enter your name.'],
+    ['senderEmail', '', 'Please enter a valid email address.'],
+    [
+      'senderEmail',
+      'a'.repeat(EMAIL_MAX_LENGTH) + '@example.com',
+      'Please enter a valid email address.',
+    ],
+    ['message', '', 'Please write a message of up to 1000 characters.'],
+    ['message', '\n\t ', 'Please write a message of up to 1000 characters.'],
   ])('rejects invalid %s before invoking delivery', async (field, value, error) => {
-    expect(await sendEmail(form({ [field]: value }))).toEqual({ error });
+    expect(await sendEmail(form({ [field]: value }))).toEqual({ error, field });
     expect(send).not.toHaveBeenCalled();
   });
 
   it.each([
-    ['senderName', 'Invalid name'],
-    ['senderEmail', 'Invalid email'],
-    ['message', 'Invalid message'],
+    ['senderName', 'Please enter your name.'],
+    ['senderEmail', 'Please enter a valid email address.'],
+    ['message', 'Please write a message of up to 1000 characters.'],
   ])('rejects missing and file-valued %s', async (field, error) => {
     const missing = form();
     missing.delete(field);
-    expect(await sendEmail(missing)).toEqual({ error });
+    expect(await sendEmail(missing)).toEqual({ error, field });
     const file = form();
     file.set(field, new File(['text'], 'upload.txt'));
-    expect(await sendEmail(file)).toEqual({ error });
+    expect(await sendEmail(file)).toEqual({ error, field });
     expect(send).not.toHaveBeenCalled();
   });
 

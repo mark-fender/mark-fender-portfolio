@@ -1,4 +1,4 @@
-/* Dark is the default; next-themes opts into light via data-theme. */
+/* Dark is the no-JS fallback; next-themes applies the system or saved preference. */
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 @custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
@@ -8,17 +8,20 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  /* Surfaces: page → card → raised/hover */
-  --background: #262a30;
-  --card: #2e333a;
-  --card-foreground: #ecede8;
-  --popover: #373d45;
-  --popover-foreground: #ecede8;
-  --surface-raised: #373d45;
+  --surface-0: #262a30; /* page */
+  --surface-1: #2e333a; /* card */
+  --surface-2: #373d45; /* raised */
+
+  --background: var(--surface-0);
+  --card: var(--surface-1);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-2);
+  --popover-foreground: var(--foreground);
+  --surface-raised: var(--surface-2);
 
   /* Text */
   --foreground: #ecede8; /* 12.3:1 on background */
-  --muted-foreground: #a7adb5; /* 6.4:1 — secondary text, labels, metadata */
+  --muted-foreground: #a7adb5; /* 6.4:1 — secondary text, labels, metadata (4.9:1 on raised) */
   --subtle-foreground: #5a616c; /* 2.3:1 — decorative only: unrevealed scroll text, footer wordmark */
 
   /* Accent = an action or the "now / current" state. Nothing else. */
@@ -26,12 +29,12 @@
   --primary-foreground: #1e2126; /* 6.8:1 label on primary */
   --accent-decorative: #8a9652; /* dots/separators only, never text */
 
-  /* Neutral fills used by shadcn (secondary buttons, hover rows, chips) */
-  --secondary: #373d45;
-  --secondary-foreground: #ecede8;
-  --muted: #373d45;
-  --accent: #373d45; /* shadcn "accent" = hover background, not brand accent */
-  --accent-foreground: #ecede8;
+  /* shadcn's neutral fills. Its "accent" is a hover fill, not the brand accent above. */
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--foreground);
 
   /* Lines */
   --border: #3e444d; /* dividers and card outlines, decorative (1.3:1) */
@@ -39,31 +42,33 @@
   --ring: #a3ae6a; /* focus ring, 2px + 2-3px offset */
 
   /* Syntax (code accents, used sparingly) */
-  --syntax-keyword: #88a9b5;
+  --syntax-keyword: #98b6c1; /* 5.1:1 on raised (the portrait card's labels), 6.7:1 on background */
 
-  /* Feedback — not in the approved palette yet; text + icon carry the meaning */
-  --destructive: #ecede8;
+  --danger: #f0937e; /* 5.6:1 on card, 4.8:1 on raised */
+  --destructive: var(--danger);
 
-  /* A problem inside an illustration or the game (crossed lines). Not an error colour. */
-  --marker-red: #e0705a; /* 4.6:1 on background */
+  --marker-red: var(--danger);
 
   /* Travel globe: sea, land and hovered land. Land is 1.8:1 on the sea, visited (primary) 3.3:1 on land. */
-  --globe-sea: #262a30;
+  --globe-sea: var(--surface-0);
   --globe-land: #4a525c;
   --globe-land-hover: #5f6873;
 
   --shadow-card: 0 24px 48px -24px rgb(0 0 0 / 0.55);
+  --shadow-overlay: 0 32px 64px -24px rgb(0 0 0 / 0.6);
 }
 
 [data-theme='light'] {
   color-scheme: light;
 
-  --background: #f2f1ec;
-  --card: #fbfaf6;
-  --card-foreground: #1f2328;
-  --popover: #fbfaf6;
-  --popover-foreground: #1f2328;
-  --surface-raised: #e8e7e0;
+  --surface-0: #f2f1ec;
+  --surface-1: #fbfaf6;
+  --surface-2: #e8e7e0;
+
+  --background: var(--surface-0);
+  --card: var(--surface-1);
+  --popover: var(--surface-1);
+  --surface-raised: var(--surface-2);
 
   --foreground: #1f2328; /* 14.0:1 */
   --muted-foreground: #555b63; /* 6.1:1 */
@@ -73,27 +78,36 @@
   --primary-foreground: #f2f1ec; /* 5.0:1 */
   --accent-decorative: #8a9652;
 
-  --secondary: #e8e7e0;
-  --secondary-foreground: #1f2328;
-  --muted: #e8e7e0;
-  --accent: #e8e7e0;
-  --accent-foreground: #1f2328;
+  --secondary: var(--surface-2);
+  --muted: var(--surface-2);
+  --accent: var(--surface-2);
 
-  --border: #dad9d0;
+  --border: #d1d0c6; /* 1.4:1 — enough for a card to hold its edge without the shadow */
   --input: #7e8689;
   --ring: #636c3c;
 
-  --syntax-keyword: #3f6b7a;
+  --syntax-keyword: #3f6b7a; /* 4.7:1 on raised */
 
-  --destructive: #1f2328;
-
-  --marker-red: #b4472f; /* 4.8:1 */
+  --danger: #a8402a; /* 5.9:1 on card, 4.9:1 on raised */
 
   --globe-sea: #ebeae4; /* a step below card, so the sphere reads against it */
   --globe-land: #c5c8c0; /* 1.4:1 on the sea; visited (primary) 3.5:1 on land */
   --globe-land-hover: #a9ada5;
 
   --shadow-card: 0 24px 48px -28px rgb(31 35 40 / 0.28);
+  --shadow-overlay: 0 32px 64px -24px rgb(31 35 40 / 0.22);
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  [data-theme='dark'] {
+    --border: var(--input);
+    --muted-foreground: #c4c9cf; /* 8.7:1 */
+  }
+  [data-theme='light'] {
+    --border: var(--input);
+    --muted-foreground: #41464d; /* 8.4:1 */
+  }
 }
 
 /* ---------- Tailwind theme mapping ---------- */
@@ -119,6 +133,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-danger: var(--danger);
   --color-destructive: var(--destructive);
   --color-marker-red: var(--marker-red);
   --color-globe-sea: var(--globe-sea);
@@ -129,58 +144,70 @@
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
   --shadow-card: var(--shadow-card);
+  --shadow-overlay: var(--shadow-overlay);
 }
 
 @theme {
-  /* Type scale → text-display, text-section, ... (size, line-height, tracking, weight in one class) */
-  --text-display: clamp(2.5rem, 6.2vw, 5.5rem); /* hero headline */
+  /* Type utilities bundle size, line height, tracking and weight. text-caption is the 12px floor. */
+  --text-display: clamp(2.5rem, 6.2vw, 5.5rem); /* hero headline, contact headline */
   --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.045em;
+  --text-display--letter-spacing: -0.025em; /* Inter at opsz 32 is drawn tight already */
   --text-display--font-weight: 600;
-
-  --text-statement: clamp(2.5rem, 6vw, 5.25rem); /* contact headline */
-  --text-statement--line-height: 1;
-  --text-statement--letter-spacing: -0.045em;
-  --text-statement--font-weight: 600;
 
   --text-section: clamp(2.25rem, 4vw, 3.25rem); /* section h2 */
   --text-section--line-height: 1.05;
-  --text-section--letter-spacing: -0.035em;
+  --text-section--letter-spacing: -0.022em;
   --text-section--font-weight: 600;
 
   --text-feature: clamp(1.5rem, 2.6vw, 2.125rem); /* project title, company name */
   --text-feature--line-height: 1.1;
-  --text-feature--letter-spacing: -0.03em;
+  --text-feature--letter-spacing: -0.018em;
   --text-feature--font-weight: 600;
 
   --text-title: 1.3125rem; /* 21px card / role title */
   --text-title--line-height: 1.25;
-  --text-title--letter-spacing: -0.015em;
+  --text-title--letter-spacing: -0.01em;
   --text-title--font-weight: 600;
 
-  --text-lead: clamp(1.125rem, 1.6vw, 1.3125rem); /* hero intro, contact intro */
+  --text-lead: clamp(1.125rem, 1.6vw, 1.3125rem); /* hero intro, contact intro, section intros */
   --text-lead--line-height: 1.6;
 
   --text-body: 1rem;
   --text-body--line-height: 1.7;
 
+  --text-ui: 0.9375rem; /* 15px — nav, inline links, small buttons, the name in the header */
+  --text-ui--line-height: 1.5;
+
   --text-label: 0.8125rem; /* 13px — mono section index, chips, meta */
   --text-label--line-height: 1.5;
 
-  --text-caption: 0.75rem; /* 12px — mono dates, counts */
+  --text-caption: 0.75rem; /* 12px — mono dates, counts, tags, photo captions */
   --text-caption--line-height: 1.5;
 
-  /* Radius: field 12 · card 20 · feature card 24 · pill full */
+  /* Radius: control 8 · field 12 · tile 14 (inset in a card) · 16 · card 20 · feature card 24 · pill full */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
+  --radius-tile: 0.875rem;
   --radius-lg: 1rem;
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
 
   /* Layout */
   --container-content: 75rem; /* 1200px max content width, 24px gutters */
+  /* Inter's wide "0" makes 54ch roughly 72 characters per line. */
+  --container-measure: 54ch;
 
-  /* Motion */
+  /* Fluid section rhythm: pt-section-top, pb-section, mb-section-head. */
+  --spacing-section-top: clamp(1.5rem, 2.8vw, 2.5rem); /* 24 → 40 */
+  --spacing-section: clamp(4.5rem, 9.5vw, 8.5rem); /* 72 → 136, below each section */
+  --spacing-section-head: clamp(2.5rem, 4.5vw, 4rem); /* 40 → 64, eyebrow to content */
+
+  /* Motion. Durations → duration-fast, duration-base, ...; mirrored in motion.ts for Framer Motion. */
+  --transition-duration-fast: 160ms; /* hover, press, colour changes */
+  --transition-duration-base: 240ms; /* surfaces lighting up, closing panels */
+  --transition-duration-slow: 400ms; /* opening panels, larger moves */
+  --transition-duration-enter: 700ms; /* first-paint and scroll entrances */
+
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
@@ -190,6 +217,41 @@
   --animate-now-ring: now-ring 2.4s var(--ease-out-strong) infinite;
   --animate-contour-draw: contour-draw 2.8s var(--ease-out-strong) both; /* paths need pathLength="1" + stroke-dasharray: 1 */
   --animate-eq: eq 1.2s ease-in-out infinite;
+  /* Pair hero entrances with motion-reduce:animate-none; the global reset preserves delays. */
+  --animate-lift: lift 0.8s var(--ease-out-strong) both;
+  --animate-word-brighten: word-brighten 0.8s var(--ease-out-strong) both; /* plain inline words: see Hero.tsx */
+  --animate-rise: rise var(--transition-duration-enter) var(--ease-out-strong) both;
+  --animate-develop: develop 1.5s var(--ease-out-strong) backwards; /* backwards: the resting filter stays the element's own */
+  --animate-fade-in: fade-in var(--transition-duration-enter) var(--ease-out-strong) both;
+
+  /* Keep headline words inline and visible so the full headline remains one LCP candidate. */
+  @keyframes lift {
+    from {
+      transform: translateY(0.3em);
+    }
+  }
+  @keyframes word-brighten {
+    from {
+      color: var(--subtle-foreground);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  @keyframes develop {
+    from {
+      filter: saturate(0) contrast(1.04) brightness(0.75);
+      transform: scale(1.06);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
 
   @keyframes contour-draw {
     from {
@@ -244,15 +306,39 @@
 }
 
 @layer base {
+  html {
+    scrollbar-color: var(--input) transparent;
+    accent-color: var(--primary);
+    caret-color: var(--primary);
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 32%, transparent);
+    color: var(--foreground);
+  }
   body {
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
+  }
+  /* Programmatic landmark focus moves the tab position without outlining the whole section. */
+  :where(main, main section)[tabindex='-1']:focus {
+    outline: none;
   }
   /* Text fields: the ring sits on top of the field's own 1px edge instead of a second line around it. */
   :where(input, textarea, select):focus-visible {

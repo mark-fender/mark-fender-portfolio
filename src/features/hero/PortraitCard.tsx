@@ -2,7 +2,7 @@
 import { motion, useReducedMotion, useSpring } from 'motion/react';
 import Image from 'next/image';
 import type { PointerEvent, ReactNode } from 'react';
-import { ease, spring, TILT_MAX_DEG } from '@/design-system/motion';
+import { duration, ease, spring, TILT_MAX_DEG } from '@/design-system/motion';
 import { cn, lightStyle } from '@/lib/utils';
 
 const HOVER_SCALE = 1.02;
@@ -35,22 +35,25 @@ const PortraitCard = ({ alt, children, className }: Props) => {
     <motion.div
       initial={{ y: 14 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.7, ease: ease.out, delay: 0.08 }}
+      transition={{ duration: duration.enter, ease: ease.out, delay: 0.08 }}
       className={cn('perspective-midrange', className)}
       onPointerMove={onMove}
       onPointerLeave={reset}>
       <motion.figure
         style={{ rotateX, rotateY, scale, ...PORTRAIT_LIGHT }}
         className='glass relative m-0 rounded-2xl bg-surface-raised p-2.5 shadow-card'>
-        <Image
-          src='/assets/photo.jpeg'
-          alt={alt}
-          width={800}
-          height={800}
-          preload
-          sizes='(max-width: 452px) 100vw, 420px'
-          className='aspect-4/5 w-full rounded-lg object-cover object-[50%_28%] saturate-[.7] contrast-[1.04]'
-        />
+        {/* Keep the mobile LCP image visible throughout its entrance. */}
+        <div className='overflow-hidden rounded-lg'>
+          <Image
+            src='/assets/photo.jpeg'
+            alt={alt}
+            width={800}
+            height={800}
+            preload
+            sizes='(max-width: 452px) 100vw, 420px'
+            className='aspect-4/5 w-full animate-develop object-cover object-[50%_28%] saturate-[.7] contrast-[1.04] [animation-delay:0.1s] motion-reduce:animate-none'
+          />
+        </div>
         <figcaption className='px-2 pt-3.5 pb-1'>{children}</figcaption>
       </motion.figure>
     </motion.div>

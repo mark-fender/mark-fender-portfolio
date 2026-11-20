@@ -25,6 +25,8 @@ const inter = Inter({
   // Preload latin only; the latin-ext @font-face (for "č") is still emitted and loads on demand.
   subsets: ['latin'],
   variable: '--font-inter',
+  // Optical size: the headlines get Inter's tighter Display drawing instead of the text cut scaled up.
+  axes: ['opsz'],
   display: 'swap',
 });
 const jetbrainsMono = JetBrains_Mono({
@@ -106,6 +108,19 @@ const RootLayout = async ({ children, params }: LayoutProps<'/[lang]'>) => {
       className={`${inter.variable} ${jetbrainsMono.variable} motion-safe:scroll-smooth scroll-pt-24`}
       suppressHydrationWarning>
       <body className='flex min-h-dvh flex-col overscroll-none'>
+        {/* Show server-rendered content when entrance animations cannot run. */}
+        <noscript>
+          <style>
+            {
+              "[style*='opacity:0'],[style*='translateY(105%)'],[style*='clip-path']{opacity:1!important;transform:none!important;clip-path:none!important;filter:none!important}"
+            }
+          </style>
+        </noscript>
+        <a
+          href='#main'
+          className='sr-only rounded-full bg-primary px-5 py-3 text-ui font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-100'>
+          {copy.header.skip}
+        </a>
         <Providers>
           <Header
             name={site.name}

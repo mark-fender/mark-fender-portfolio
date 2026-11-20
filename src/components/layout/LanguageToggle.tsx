@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useLayoutEffect, type MouseEvent } from 'react';
+import { useLayoutEffect, useRef, type MouseEvent } from 'react';
 import { LOCALE_COOKIE, localePath, otherLocale, type Locale } from '@/lib/i18n';
 import { lightStyle } from '@/lib/utils';
 
@@ -45,7 +45,7 @@ const hold = (place: Place) => {
 };
 
 // Kept in the module: the header may remount with the new page, the module stays loaded.
-let pending: { to: Locale; place: Place | null; done: () => void } | null = null;
+let pending: { to: Locale; place: Place | null; refocus: boolean; done: () => void } | null = null;
 
 type Props = {
   locale: Locale;
@@ -54,6 +54,7 @@ type Props = {
 
 const LanguageToggle = ({ locale, label }: Props) => {
   const router = useRouter();
+  const self = useRef<HTMLAnchorElement>(null);
   const to = otherLocale(locale);
   // /en clears a saved Slovak cookie for new tabs and navigation without JavaScript.
   const href = localePath(to);
@@ -61,9 +62,10 @@ const LanguageToggle = ({ locale, label }: Props) => {
 
   useLayoutEffect(() => {
     if (pending?.to !== locale) return;
-    const { place, done } = pending;
+    const { place, refocus, done } = pending;
     pending = null;
     if (place) hold(place);
+    if (refocus) self.current?.focus({ preventScroll: true });
     done();
   }, [locale]);
 
@@ -72,9 +74,10 @@ const LanguageToggle = ({ locale, label }: Props) => {
     e.preventDefault();
     document.cookie = `${LOCALE_COOKIE}=${to}; path=/; max-age=${COOKIE_MAX_AGE_S}; samesite=lax`;
     const place = findPlace();
+    const refocus = document.activeElement === e.currentTarget;
     const go = () =>
       new Promise<void>((resolve) => {
-        pending = { to, place, done: resolve };
+        pending = { to, place, refocus, done: resolve };
         router.push(href, { scroll: false });
         setTimeout(resolve, SWITCH_TIMEOUT_MS);
       });
@@ -87,6 +90,7 @@ const LanguageToggle = ({ locale, label }: Props) => {
 
   return (
     <a
+      ref={self}
       href={linkHref}
       hrefLang={to}
       onClick={onClick}

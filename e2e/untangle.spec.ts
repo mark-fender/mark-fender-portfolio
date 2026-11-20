@@ -1,9 +1,40 @@
+import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
+
+// Every round opens with the nodes popping in and the lines growing; the board is busy until then.
+const playable = (page: Page) =>
+  expect(page.getByRole('group', { name: 'Network to untangle' })).toHaveAttribute(
+    'aria-busy',
+    'false',
+  );
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/en#game');
   await page.locator('#game').scrollIntoViewIfNeeded();
   await expect(page.getByRole('group', { name: 'Network to untangle' })).toBeVisible();
+  await playable(page);
+});
+
+test('a new round can only be played once its intro has finished', async ({ page }) => {
+  const game = page.locator('#game');
+  const node = game.getByRole('button', { name: 'Node r1. Arrow keys move it.' });
+  const circle = node.locator('circle').first();
+  const x = await circle.getAttribute('cx');
+  await game.getByRole('button', { name: 'Reset', exact: true }).click();
+  const board = game.getByRole('group', { name: 'Network to untangle' });
+  await expect(board).toHaveAttribute('aria-busy', 'true');
+  await expect(game.getByRole('button', { name: 'Show solution' })).toHaveAttribute(
+    'aria-disabled',
+    'true',
+  );
+  // Arrow keys do nothing while the round opens.
+  await node.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(circle).toHaveAttribute('cx', x!);
+  await playable(page);
+  await node.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(circle).toHaveAttribute('cx', String(Number(x) + 2));
 });
 
 test('keyboard moves a focused node and reset restores the board', async ({ page }) => {
@@ -43,12 +74,14 @@ test('showing solutions supports retrying and navigating every level', async ({ 
   await expect(game.getByRole('button', { name: 'Reset', exact: true })).toHaveCount(0);
   await game.getByRole('button', { name: 'Try again', exact: true }).click();
   await expect(game.getByText('Level 1 of 5:', { exact: false })).toBeVisible();
+  await playable(page);
   await expect(game.getByRole('button', { name: 'Show solution' })).toBeVisible();
 
   const nodeCounts = [6, 10, 8, 9, 12];
   for (let level = 1; level <= 5; level++) {
     await expect(game.getByText(`Level ${level} of 5:`, { exact: false })).toBeVisible();
     await expect(game.getByRole('button', { name: /^Node / })).toHaveCount(nodeCounts[level - 1]!);
+    await playable(page);
     await game.getByRole('button', { name: 'Show solution' }).click();
     await expect(game.getByRole('status')).toContainText('Solution shown.');
     await expect(game.locator('dd').first()).toHaveText('0');

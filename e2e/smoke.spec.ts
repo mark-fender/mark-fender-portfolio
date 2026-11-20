@@ -21,7 +21,7 @@ test('switching languages preserves the theme without console errors', async ({ 
   await page.getByRole('button', { name: 'Prepnúť motív' }).click();
   await expect(html).toHaveAttribute('data-theme', 'dark');
 
-  await page.getByRole('link', { name: /prepnúť do angličtiny/ }).click();
+  await page.getByRole('link', { name: /Prepnúť do angličtiny/ }).click();
   await expect(html).toHaveAttribute('lang', 'en');
   await expect(html).toHaveAttribute('data-theme', 'dark');
 });

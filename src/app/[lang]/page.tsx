@@ -27,7 +27,7 @@ const Home = async ({ params }: PageProps<'/[lang]'>) => {
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : defaultLocale;
   return (
-    <main className='flex flex-col'>
+    <main id='main' tabIndex={-1} className='flex flex-col overflow-x-clip'>
       <Hero locale={locale} />
       <Marquee />
       {sections.map(({ id }) => {

@@ -23,7 +23,7 @@ const MobileNav = ({ links, active, onNavigate, copy }: Props) => {
           type='button'
           aria-label={copy.openMenu}
           style={lightStyle('menu')}
-          className='glass relative inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-card/60 text-foreground min-[820px]:hidden'>
+          className='glass relative inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-card/60 text-foreground min-[1000px]:hidden'>
           <Equal className='size-4.5' strokeWidth={1.75} aria-hidden />
         </button>
       </SheetTrigger>
@@ -32,13 +32,19 @@ const MobileNav = ({ links, active, onNavigate, copy }: Props) => {
         closeLabel={copy.closeMenu}
         aria-describedby={undefined}
         className='bg-background'
-        onCloseAutoFocus={() => {
+        onCloseAutoFocus={(e) => {
           const hash = target.current;
           target.current = null;
           if (!hash) return;
+          // Move focus to the destination so the next Tab continues there.
+          e.preventDefault();
           requestAnimationFrame(() => {
             history.pushState(null, '', hash);
-            document.querySelector(hash)?.scrollIntoView();
+            const section = document.querySelector<HTMLElement>(hash);
+            if (!section) return;
+            section.scrollIntoView();
+            if (!section.hasAttribute('tabindex')) section.setAttribute('tabindex', '-1');
+            section.focus({ preventScroll: true });
           });
         }}>
         <SheetTitle className='px-6 pt-6 font-mono text-label font-normal text-muted-foreground'>

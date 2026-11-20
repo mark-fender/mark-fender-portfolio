@@ -3,8 +3,8 @@ import { skillGroups } from '@/content/skills';
 const names = skillGroups.flatMap((g) => g.items);
 
 // Each copy carries its own trailing gap (pr-10), so the -50% loop lands exactly on the second copy.
-const Copy = ({ hidden }: { hidden?: boolean }) => (
-  <ul aria-hidden={hidden || undefined} className='flex gap-10 pr-10'>
+const Copy = () => (
+  <ul className='flex gap-10 pr-10'>
     {names.map((name) => (
       <li key={name} className='inline-flex items-center gap-10'>
         {name}
@@ -14,11 +14,14 @@ const Copy = ({ hidden }: { hidden?: boolean }) => (
   </ul>
 );
 
+// The Skills section already exposes these names to assistive tech.
 const Marquee = () => (
-  <div className='mb-12 overflow-hidden border-y border-border py-4.5 min-[920px]:mb-24'>
-    <div className='flex w-max animate-marquee font-mono text-sm whitespace-nowrap text-muted-foreground hover:[animation-play-state:paused]'>
+  <div
+    aria-hidden
+    className='mb-12 animate-fade-in overflow-hidden border-y border-border py-4.5 [animation-delay:0.7s] motion-reduce:animate-none min-[920px]:mb-24'>
+    <div className='flex w-max animate-marquee font-mono text-label whitespace-nowrap text-muted-foreground hover:[animation-play-state:paused]'>
       <Copy />
-      <Copy hidden />
+      <Copy />
     </div>
   </div>
 );

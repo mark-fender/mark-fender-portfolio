@@ -1,6 +1,12 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { GLOBE_TURN_TAU_MS, GLOBE_ZOOM_TAU_MS } from '@/design-system/motion';
+import {
+  GLOBE_LIGHT_DELAY_MS,
+  GLOBE_LIGHT_MS,
+  GLOBE_LIGHT_STEP_MS,
+  GLOBE_TURN_TAU_MS,
+  GLOBE_ZOOM_TAU_MS,
+} from '@/design-system/motion';
 import type { CountryCode } from './data/countries';
 import type { Locale } from '@/lib/i18n';
 import { clamp } from '@/lib/utils';
@@ -21,9 +27,9 @@ export type Place = { name: string; visited: boolean };
 type Props = {
   visited: readonly CountryCode[];
   locale: Locale;
-  // The canvas's name for assistive tech: what it shows and how to turn it.
   label: string;
   zoom: number;
+  play: boolean;
   zoomRange: readonly [number, number];
   onHover: (place: Place | null) => void;
   // A pinch changed the zoom; the buttons need to know.
@@ -35,6 +41,19 @@ const countries = (Object.entries(world.countries) as [CountryCode, number[][]][
 );
 const borders = world.borders.map((border) => toVectors(border, world.scale));
 const grid = graticule();
+
+// A country's rough middle longitude: the direction of the sum of its points.
+const middleLon = (rings: Float32Array[]) => {
+  let x = 0;
+  let y = 0;
+  for (const ring of rings)
+    for (let i = 0; i < ring.length; i += 3) {
+      x += ring[i]!;
+      y += ring[i + 1]!;
+    }
+  return Math.atan2(y, x);
+};
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 // On load the globe turns into place from this far west of home.
 const INTRO_TURN_DEG = 80;
@@ -68,8 +87,21 @@ const createGlobe = (
 ) => {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // `at` is what is drawn; it follows `to`. Drag moves both, everything else moves only `to`.
-  const to = { ...HOME, zoom: 1 };
-  const at = { ...to, lon: still ? HOME.lon : HOME.lon - INTRO_TURN_DEG };
+  const at = { ...HOME, zoom: 1, lon: still ? HOME.lon : HOME.lon - INTRO_TURN_DEG };
+  const to = { ...at };
+  let turned = still;
+  // Light visited countries west to east; infinities represent not started / already lit.
+  const order = new Map(
+    countries
+      .filter(({ code }) => visited.has(code))
+      .sort((a, b) => middleLon(a.rings) - middleLon(b.rings))
+      .map(({ code }, i) => [code, i]),
+  );
+  let litAt = still ? -Infinity : Infinity;
+  const lighting = (now: number) =>
+    Number.isFinite(litAt) && now < litAt + (order.size - 1) * GLOBE_LIGHT_STEP_MS + GLOBE_LIGHT_MS;
+  const light = (code: CountryCode, now: number) =>
+    easeOut(clamp((now - litAt - order.get(code)! * GLOBE_LIGHT_STEP_MS) / GLOBE_LIGHT_MS, 0, 1));
   let hover: CountryCode | null = null;
   // Where the mouse rests on the canvas, so the hover can follow the map when it turns under it.
   let mouse: { x: number; y: number } | null = null;
@@ -112,17 +144,31 @@ const createGlobe = (
     ctx.stroke();
 
     // One path per colour: neighbours in the same fill then leave no antialiasing seams.
+    const now = performance.now();
     const land = new Path2D();
     const hovered = new Path2D();
     const been = new Path2D();
-    for (const { code, rings } of countries)
-      traceCountry(visited.has(code) ? been : code === hover ? hovered : land, rings, v);
+    const rising: { path: Path2D; alpha: number }[] = [];
+    for (const { code, rings } of countries) {
+      const lit = visited.has(code) ? light(code, now) : 0;
+      if (lit === 1) traceCountry(been, rings, v);
+      else traceCountry(code === hover ? hovered : land, rings, v);
+      if (lit > 0 && lit < 1) {
+        const path = new Path2D();
+        if (traceCountry(path, rings, v)) rising.push({ path, alpha: lit });
+      }
+    }
     ctx.fillStyle = colors.land;
     ctx.fill(land, 'evenodd');
     ctx.fillStyle = colors.hover;
     ctx.fill(hovered, 'evenodd');
     ctx.fillStyle = colors.visited;
     ctx.fill(been, 'evenodd');
+    for (const { path, alpha } of rising) {
+      ctx.globalAlpha = alpha;
+      ctx.fill(path, 'evenodd');
+    }
+    ctx.globalAlpha = 1;
 
     ctx.beginPath();
     for (const border of borders) traceLine(ctx, border, v);
@@ -148,6 +194,7 @@ const createGlobe = (
     at.lat += (to.lat - at.lat) * turn;
     at.zoom += (to.zoom - at.zoom) * zoom;
     const moving =
+      lighting(now) ||
       Math.abs(to.lon - at.lon) > 0.02 ||
       Math.abs(to.lat - at.lat) > 0.02 ||
       Math.abs(to.zoom - at.zoom) > 0.002;
@@ -219,6 +266,7 @@ const createGlobe = (
       return;
     }
     drag = { x: e.clientX, y: e.clientY, time: e.timeStamp, vLon: 0, vLat: 0, moved: false };
+    turned = true;
     // Catch the globe: whatever it was doing stops here.
     to.lon = at.lon;
     to.lat = at.lat;
@@ -306,6 +354,7 @@ const createGlobe = (
     const step = KEYS[e.key];
     if (!step) return;
     e.preventDefault();
+    turned = true;
     to.lon += step[0];
     to.lat = clampLat(to.lat + step[1]);
     invalidate();
@@ -339,6 +388,13 @@ const createGlobe = (
   size.observe(canvas);
 
   return {
+    start: () => {
+      if (litAt !== Infinity) return;
+      litAt = performance.now() + GLOBE_LIGHT_DELAY_MS;
+      if (!turned) to.lon = HOME.lon;
+      turned = true;
+      invalidate();
+    },
     zoomTo: (zoom: number) => {
       to.zoom = zoom;
       invalidate();
@@ -352,7 +408,7 @@ const createGlobe = (
   };
 };
 
-const GlobeCanvas = ({ visited, locale, label, zoom, zoomRange, onHover, onZoom }: Props) => {
+const GlobeCanvas = ({ visited, locale, label, zoom, play, zoomRange, onHover, onZoom }: Props) => {
   const canvas = useRef<HTMLCanvasElement>(null);
   const globe = useRef<ReturnType<typeof createGlobe>>(null);
 
@@ -369,6 +425,9 @@ const GlobeCanvas = ({ visited, locale, label, zoom, zoomRange, onHover, onZoom 
   }, [visited, locale, zoomRange, onHover, onZoom]);
 
   useEffect(() => globe.current?.zoomTo(zoom), [zoom]);
+  useEffect(() => {
+    if (play) globe.current?.start();
+  }, [play, visited, locale, zoomRange, onHover, onZoom]);
 
   return (
     <canvas

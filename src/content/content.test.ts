@@ -58,7 +58,7 @@ describe('skills', () => {
 });
 
 describe('nav', () => {
-  it('derives the header links from the sections that are in the nav', () => {
+  it('derives the header links from the page sections', () => {
     expect(navLinks('en').map((l) => l.hash)).toEqual([
       '#home',
       '#projects',
@@ -66,6 +66,7 @@ describe('nav', () => {
       '#skills',
       '#game',
       '#travel',
+      '#off-the-clock',
       '#contact',
     ]);
   });
@@ -75,9 +76,12 @@ describe('nav', () => {
     for (const { hash } of navLinks('en')) expect(ids.has(hash.slice(1)), hash).toBe(true);
   });
 
-  it('maps a section outside the nav to the nav section before it', () => {
-    expect(spySections.find((s) => s.id === 'off-the-clock')?.nav).toBe('travel');
-    expect(spySections.every((s) => navLinks('en').some((l) => l.hash === `#${s.nav}`))).toBe(true);
+  it('highlights each section’s own nav link', () => {
+    expect(spySections.find((s) => s.id === 'off-the-clock')?.nav).toBe('off-the-clock');
+    for (const { id, nav } of spySections) {
+      expect(nav).toBe(id);
+      expect(navLinks('en').some((l) => l.hash === `#${nav}`)).toBe(true);
+    }
   });
 
   it('numbers the sections in page order', () => {
@@ -85,7 +89,7 @@ describe('nav', () => {
     expect(sectionHeader('contact', 'sk')).toEqual({ index: 7, label: 'Kontakt', total: 7 });
   });
 
-  // The header stays on one line only while the seven labels are short (CLAUDE.md).
+  // The header stays on one line only while the eight labels are short.
   it('keeps the Slovak nav no longer than the English one', () => {
     const length = (locale: 'en' | 'sk') => navLinks(locale).reduce((n, l) => n + l.name.length, 0);
     expect(length('sk')).toBeLessThanOrEqual(length('en'));
