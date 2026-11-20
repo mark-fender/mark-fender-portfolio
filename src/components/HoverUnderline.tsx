@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 const HoverUnderline = ({ className }: { className?: string }) => (
   <span
     className={cn(
-      'h-px origin-left scale-x-0 bg-current transition-transform duration-240 ease-out-strong group-hover:scale-x-100',
+      'h-px origin-left scale-x-0 bg-current transition-transform duration-base ease-out-strong group-hover:scale-x-100',
       className,
     )}
   />

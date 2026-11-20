@@ -11,7 +11,7 @@ const Summary = ({ id, readMore, showLess, children }: Props) => {
       <p
         id={id}
         className={cn(
-          'text-body/[1.65] text-muted-foreground',
+          'max-w-measure text-body/[1.65] text-muted-foreground',
           !open && 'max-[920px]:line-clamp-2',
         )}>
         {children}
@@ -21,7 +21,7 @@ const Summary = ({ id, readMore, showLess, children }: Props) => {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen(!open)}
-        className='-my-2.5 inline-flex min-h-11 items-center self-start text-[15px] font-medium text-primary underline underline-offset-4 min-[920px]:hidden'>
+        className='-my-2.5 inline-flex min-h-11 items-center self-start text-ui font-medium text-primary underline underline-offset-4 min-[920px]:hidden'>
         {open ? showLess : readMore}
       </button>
     </>

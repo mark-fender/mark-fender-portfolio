@@ -1,3 +1,4 @@
+import RevealHeading from '@/components/motion/RevealHeading';
 import Section from '@/components/section/Section';
 import { sectionHeader } from '@/content/nav';
 import { projects } from '@/content/projects';
@@ -8,7 +9,7 @@ import ProjectDeck from './ProjectDeck';
 
 const ProjectsSection = ({ locale }: { locale: Locale }) => (
   <Section id='projects' {...sectionHeader('projects', locale)}>
-    <h2 className='mb-10 text-section'>{ui[locale].projects.heading}</h2>
+    <RevealHeading className='mb-10 text-section' text={ui[locale].projects.heading} />
     <ProjectDeck>
       {projects.map((project) => (
         <ProjectCard key={project.slug} project={project} locale={locale} />

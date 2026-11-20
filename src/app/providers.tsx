@@ -6,8 +6,8 @@ import type { PropsWithChildren } from 'react';
 const Providers = ({ children }: PropsWithChildren) => (
   <ThemeProvider
     attribute='data-theme'
-    defaultTheme='dark'
-    enableSystem={false}
+    defaultTheme='system'
+    enableSystem
     // shortcut: next-themes 0.4.6 inserts an inert script on client remounts; remove when upstream fixes it.
     scriptProps={{ type: typeof window === 'undefined' ? 'text/javascript' : 'text/plain' }}
     disableTransitionOnChange>

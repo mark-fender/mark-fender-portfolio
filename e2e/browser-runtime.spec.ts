@@ -2,14 +2,11 @@ import { expect, test } from './fixtures';
 
 test.use({ reducedMotion: 'reduce' });
 
-test('scrolling updates the active section, including sections outside the menu', async ({
-  page,
-  isMobile,
-}) => {
+test('scrolling updates the active section', async ({ page, isMobile }) => {
   await page.goto('/');
   for (const [id, label] of [
     ['skills', 'Skills'],
-    ['off-the-clock', 'Travel'],
+    ['off-the-clock', 'Off the clock'],
     ['experience', 'Experience'],
   ]) {
     await page.locator(`#${id}`).evaluate((el) => {

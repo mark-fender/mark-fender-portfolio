@@ -1,3 +1,4 @@
+import NewTabCue from '@/components/NewTabCue';
 import SurfaceCard from '@/components/SurfaceCard';
 import TagList from '@/components/TagList';
 import type { Project } from '@/content/projects';
@@ -6,7 +7,15 @@ import type { Locale } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import Summary from './Summary';
 
-const SummaryText = ({ summary, link }: { summary: string; link: Project['link'] }) => {
+const SummaryText = ({
+  summary,
+  link,
+  locale,
+}: {
+  summary: string;
+  link: Project['link'];
+  locale: Locale;
+}) => {
   const at = link ? summary.indexOf(link.label) : -1;
   if (!link || at < 0) return summary;
   return (
@@ -18,6 +27,7 @@ const SummaryText = ({ summary, link }: { summary: string; link: Project['link']
         rel='noopener noreferrer'
         className='font-medium text-primary underline decoration-1 underline-offset-4 hover:decoration-2'>
         {link.label}
+        <NewTabCue locale={locale} text={ui[locale].newTab} />
       </a>
       {summary.slice(at + link.label.length)}
     </>
@@ -43,7 +53,7 @@ const ProjectText = ({ project, locale, className }: Props & { className?: strin
       </div>
       <div className='flex flex-1 flex-col gap-3.5'>
         <Summary id={`project-${project.slug}`} readMore={copy.readMore} showLess={copy.showLess}>
-          <SummaryText summary={project.summary[locale]} link={project.link} />
+          <SummaryText summary={project.summary[locale]} link={project.link} locale={locale} />
         </Summary>
         <TagList tags={project.tags} className='mt-auto' />
       </div>

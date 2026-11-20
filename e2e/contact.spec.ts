@@ -22,8 +22,12 @@ for (const locale of ['en', 'sk'] as const) {
     await expect(form.getByText(copy.form.required, { exact: true })).toHaveCount(3);
     for (const field of [name, email, message]) {
       await expect(field).toHaveAttribute('aria-invalid', 'true');
+    }
+    for (const field of [name, email]) {
       await expect(field).toHaveAccessibleDescription(copy.form.required);
     }
+    await expect(message).toHaveAccessibleDescription(`${copy.form.required} 0 / 1000`);
+    await expect(name).toBeFocused();
     await name.fill('A reader');
     await email.fill('invalid-address');
     await message.fill('I would like to discuss a project.');

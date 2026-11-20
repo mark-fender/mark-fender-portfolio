@@ -55,12 +55,14 @@ test('mobile menu traps focus and restores it when dismissed', async ({ page, is
   await expect(trigger).toBeFocused();
 });
 
-test('theme defaults to dark and a saved choice survives system changes and reload', async ({
+test('theme follows the system until chosen, and a saved choice survives system changes and reload', async ({
   page,
 }) => {
   await page.emulateMedia({ colorScheme: 'light', reducedMotion: 'reduce' });
   await page.goto('/');
   const html = page.locator('html');
+  await expect(html).toHaveAttribute('data-theme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
   await expect(html).toHaveAttribute('data-theme', 'dark');
   await page.getByRole('button', { name: 'Toggle theme', exact: true }).click();
   await expect(html).toHaveAttribute('data-theme', 'light');

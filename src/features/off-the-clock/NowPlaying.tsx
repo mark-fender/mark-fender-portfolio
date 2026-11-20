@@ -1,7 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import HoverUnderline from '@/components/HoverUnderline';
+import NewTabCue from '@/components/NewTabCue';
 import useNearViewport from '@/hooks/useNearViewport';
+import type { Locale } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import type { Listening } from './spotify';
 
@@ -25,9 +27,9 @@ const Equaliser = ({ playing }: { playing: boolean }) => (
   </span>
 );
 
-type Props = { fallback: string; lastPlayedLabel: string };
+type Props = { fallback: string; lastPlayedLabel: string; locale: Locale; newTabLabel: string };
 
-const NowPlaying = ({ fallback, lastPlayedLabel }: Props) => {
+const NowPlaying = ({ fallback, lastPlayedLabel, locale, newTabLabel }: Props) => {
   const ref = useRef<HTMLSpanElement>(null);
   const near = useNearViewport(ref);
   const [track, setTrack] = useState<Listening | null>(null);
@@ -70,10 +72,13 @@ const NowPlaying = ({ fallback, lastPlayedLabel }: Props) => {
             <span>
               {track.title} · {track.artist}
             </span>
+            <NewTabCue locale={locale} text={newTabLabel} />
             <HoverUnderline />
           </a>
           {!track.playing && (
-            <span className='font-mono text-caption text-muted-foreground'>{lastPlayedLabel}</span>
+            <span lang={locale} className='font-mono text-caption text-muted-foreground'>
+              {lastPlayedLabel}
+            </span>
           )}
         </span>
       ) : (

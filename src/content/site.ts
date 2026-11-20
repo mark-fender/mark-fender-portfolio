@@ -12,8 +12,8 @@ export const site = {
     sk: 'Tvorím zložitý softvér, ktorý sa jednoducho používa.',
   },
   intro: {
-    en: "I'm Marek, a software engineer. I like working out how things are built and how to make them better, and I care about the small details that make software easy to use. Simple solutions usually win, even when they're hard to find.",
-    sk: 'Som Marek, softvérový inžinier. Baví ma zisťovať, ako sú veci postavené a ako ich vylepšiť, a záleží mi na drobnostiach, vďaka ktorým sa softvér ľahko používa. Jednoduché riešenia zvyčajne vyhrávajú, aj keď je ťažké ich nájsť.',
+    en: "I'm Marek, a software engineer who enjoys understanding how things work and finding ways to make them better. I care about the details that make software feel intuitive, and I believe good solutions don't need to be complicated.",
+    sk: 'Som Marek, softvérový inžinier, ktorého baví pochopiť, ako veci fungujú, a hľadať spôsoby, ako ich vylepšiť. Záleží mi na detailoch, vďaka ktorým pôsobí softvér intuitívne, a verím, že dobré riešenia nemusia byť zložité.',
   },
   // Page description and share card. Keep it to one sentence without numbers that go stale.
   description: {
