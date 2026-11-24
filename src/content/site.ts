@@ -1,6 +1,5 @@
 export const site = {
   name: 'Marek Lipčák',
-  initials: 'ML',
   url: 'https://www.markfender.dev/',
   role: 'Frontend Software Engineer',
   city: 'Košice',

@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { LOGO_PATH, LOGO_VIEWBOX } from '@/components/Logo';
 import { site } from '@/content/site';
 import { CONTOUR_PATHS, FIELD_VIEWBOX } from '@/features/hero';
 import { defaultLocale, isLocale, locales } from '@/lib/i18n';
@@ -14,6 +15,9 @@ const FOREGROUND = '#ecede8';
 const MUTED = '#a7adb5';
 const BORDER = '#3e444d';
 const PRIMARY = '#a3ae6a';
+
+// The header sets the mark at 2.5x the name's size; 30px name, 76px mark keeps that.
+const LOGO_W = 76;
 
 const RINGS = CONTOUR_PATHS.filter((_, i) => i % 2 === 1);
 
@@ -43,20 +47,9 @@ export default async function OpengraphImage({ params }: { params: Promise<{ lan
         ))}
       </svg>
       <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: 30 }}>
-        <div
-          style={{
-            width: 64,
-            height: 64,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: `2px solid ${PRIMARY}`,
-            borderRadius: 16,
-            color: PRIMARY,
-            fontSize: 24,
-          }}>
-          {site.initials}
-        </div>
+        <svg viewBox={LOGO_VIEWBOX} width={LOGO_W} height={(LOGO_W * 369) / 731}>
+          <path d={LOGO_PATH} fill={PRIMARY} />
+        </svg>
         {site.name}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 28, maxWidth: 860 }}>

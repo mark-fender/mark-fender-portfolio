@@ -123,8 +123,6 @@ const RootLayout = async ({ children, params }: LayoutProps<'/[lang]'>) => {
         </a>
         <Providers>
           <Header
-            name={site.name}
-            initials={site.initials}
             links={navLinks(locale)}
             spy={spySections}
             locale={locale}

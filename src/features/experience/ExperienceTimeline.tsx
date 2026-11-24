@@ -11,7 +11,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import NowDot from '@/components/NowDot';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { duration, ease, inView as inViewOptions, spring } from '@/design-system/motion';
-import { lightStyle } from '@/lib/utils';
+import { cn, lightStyle } from '@/lib/utils';
 
 type TimelineRole = {
   company: string;
@@ -181,7 +181,11 @@ const ExperienceTimeline = ({ label, roles, panels }: Props) => {
                     ...spring.navPill,
                     opacity: { delay: reach(1), duration: duration.slow },
                   }}
-                  className='absolute inset-x-0 top-0.5 h-1 rounded-full bg-foreground'
+                  // Spans the gap to the next node; the last cell's end dot sits on its own edge.
+                  className={cn(
+                    'absolute top-0.5 left-0 h-1 rounded-full bg-primary',
+                    i === roles.length - 1 ? 'right-0' : '-right-1.5',
+                  )}
                 />
               )}
               <motion.span

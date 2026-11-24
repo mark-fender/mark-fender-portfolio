@@ -144,19 +144,13 @@ for (const locale of ['en', 'sk'] as const) {
     page,
   }) => {
     await page.goto(path);
-    const marquee = page.locator('.animate-marquee');
-    await marquee.locator('..').scrollIntoViewIfNeeded();
-    await expect(marquee).toBeVisible();
-    await expect(marquee.getByRole('list', { includeHidden: true })).toHaveCount(2);
-    await expect(marquee.getByRole('list')).toHaveCount(0);
 
-    for (const { id, label } of sections) {
+    for (const { id } of sections) {
       const section = page.locator(`#${id}`);
-      const eyebrow = section.locator(':scope > div').first();
+      const rule = section.locator(':scope > div').first();
       await section.scrollIntoViewIfNeeded();
-      await expect(eyebrow).toBeVisible();
-      await expect(eyebrow).toContainText(label[locale]);
-      await expect.poll(() => eyebrow.ariaSnapshot()).toBe('');
+      await expect(rule).toBeVisible();
+      await expect.poll(() => rule.ariaSnapshot()).toBe('');
       await expect(section.getByRole('heading', { level: 2 })).toHaveCount(1);
     }
 

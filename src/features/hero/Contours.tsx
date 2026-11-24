@@ -14,7 +14,7 @@ const Contours = () => (
     fill='none'
     stroke='currentColor'
     strokeWidth={1.2}
-    className='size-full origin-[60%_45%] animate-contour-sway text-border motion-reduce:animate-none'>
+    className='size-full origin-[60%_45%] animate-contour-sway overflow-visible text-border motion-reduce:animate-none'>
     {CONTOUR_PATHS.map((d, i) => (
       <g
         key={d}

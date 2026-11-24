@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { sections, type SectionId } from '@/content/nav';
 import { Contact } from '@/features/contact';
 import { ExperienceSection } from '@/features/experience';
-import { Hero, Marquee } from '@/features/hero';
+import { Hero } from '@/features/hero';
 import { OffTheClock } from '@/features/off-the-clock';
 import { ProjectsSection } from '@/features/projects';
 import { SkillsSection } from '@/features/skills';
@@ -29,7 +29,6 @@ const Home = async ({ params }: PageProps<'/[lang]'>) => {
   return (
     <main id='main' tabIndex={-1} className='flex flex-col overflow-x-clip'>
       <Hero locale={locale} />
-      <Marquee />
       {sections.map(({ id }) => {
         const Component = sectionComponents[id];
         return <Component key={id} locale={locale} />;
