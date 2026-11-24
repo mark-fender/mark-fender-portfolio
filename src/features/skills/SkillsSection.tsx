@@ -1,7 +1,6 @@
 import * as m from 'motion/react-client';
 import RevealHeading from '@/components/motion/RevealHeading';
 import Section from '@/components/section/Section';
-import { sectionHeader } from '@/content/nav';
 import { skillGroups } from '@/content/skills';
 import { ui } from '@/content/ui';
 import { duration, ease } from '@/design-system/motion';
@@ -16,7 +15,7 @@ const chip = {
 } as const;
 
 const SkillsSection = ({ locale }: { locale: Locale }) => (
-  <Section id='skills' {...sectionHeader('skills', locale)}>
+  <Section id='skills'>
     <RevealHeading className='mb-10 text-section' text={ui[locale].skills.heading} />
     <SkillsGraph
       groups={skillGroups.map(({ id, name, items }) => ({

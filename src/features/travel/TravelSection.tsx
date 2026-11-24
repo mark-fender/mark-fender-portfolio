@@ -2,7 +2,6 @@ import * as m from 'motion/react-client';
 import RevealHeading from '@/components/motion/RevealHeading';
 import Section from '@/components/section/Section';
 import SurfaceCard from '@/components/SurfaceCard';
-import { sectionHeader } from '@/content/nav';
 import { visited } from '@/content/travel';
 import { ui } from '@/content/ui';
 import { delayed, inView, variants } from '@/design-system/motion';
@@ -16,7 +15,7 @@ const TravelSection = ({ locale }: { locale: Locale }) => {
     visited.map((code) => placeName(code, locale)),
   );
   return (
-    <Section id='travel' {...sectionHeader('travel', locale)}>
+    <Section id='travel'>
       <SurfaceCard className='grid gap-4 rounded-2xl p-[clamp(1.25rem,3vw,2.5rem)] min-[920px]:grid-cols-[minmax(260px,392px)_minmax(0,1fr)] min-[920px]:grid-rows-[auto_auto_1fr] min-[920px]:gap-x-12 min-[920px]:gap-y-6'>
         <RevealHeading className='text-section min-[920px]:col-span-2' text={copy.heading} />
         <div className='flex flex-col gap-4 min-[920px]:col-start-1 min-[920px]:row-start-2'>

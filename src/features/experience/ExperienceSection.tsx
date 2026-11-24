@@ -4,7 +4,6 @@ import RevealHeading from '@/components/motion/RevealHeading';
 import Section from '@/components/section/Section';
 import TagList from '@/components/TagList';
 import { roles } from '@/content/experience';
-import { sectionHeader } from '@/content/nav';
 import { ui } from '@/content/ui';
 import { variants } from '@/design-system/motion';
 import { type Locale } from '@/lib/i18n';
@@ -57,7 +56,7 @@ const ExperienceSection = ({ locale }: { locale: Locale }) => {
   ));
 
   return (
-    <Section id='experience' {...sectionHeader('experience', locale)}>
+    <Section id='experience'>
       <RevealHeading className='mb-10 text-section' text={copy.heading} />
       <ExperienceTimeline
         label={copy.tabs}

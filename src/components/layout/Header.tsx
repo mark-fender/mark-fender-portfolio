@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import MobileNav from '@/components/layout/MobileNav';
 import ThemeToggle from '@/components/layout/ThemeToggle';
+import Logo from '@/components/Logo';
 import { spring } from '@/design-system/motion';
 import useActiveSection from '@/hooks/useActiveSection';
 import type { Locale } from '@/lib/i18n';
@@ -20,15 +21,13 @@ export type HeaderCopy = {
 };
 
 type Props = {
-  name: string;
-  initials: string;
   links: readonly { name: string; hash: string }[];
   spy: readonly { id: string; nav: string }[];
   locale: Locale;
   copy: HeaderCopy;
 };
 
-const Header = ({ name, initials, links, spy, locale, copy }: Props) => {
+const Header = ({ links, spy, locale, copy }: Props) => {
   const [active, setActive] = useActiveSection(spy);
   const [showHighlight, setShowHighlight] = useState(false);
 
@@ -45,14 +44,7 @@ const Header = ({ name, initials, links, spy, locale, copy }: Props) => {
           href='#home'
           onClick={() => setActive('home')}
           className='flex shrink-0 items-center gap-3'>
-          <span
-            aria-hidden
-            className='inline-flex size-9 items-center justify-center rounded-sm border border-primary font-mono text-label font-medium text-primary'>
-            {initials}
-          </span>
-          <span aria-hidden className='text-ui font-medium max-[840px]:hidden'>
-            {name}
-          </span>
+          <Logo className='h-auto w-10 text-primary' />
           <span className='sr-only'>{copy.home}</span>
         </a>
 

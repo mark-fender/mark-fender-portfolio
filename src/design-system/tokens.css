@@ -27,7 +27,6 @@
   /* Accent = an action or the "now / current" state. Nothing else. */
   --primary: #a3ae6a; /* 6.1:1 as text on background */
   --primary-foreground: #1e2126; /* 6.8:1 label on primary */
-  --accent-decorative: #8a9652; /* dots/separators only, never text */
 
   /* shadcn's neutral fills. Its "accent" is a hover fill, not the brand accent above. */
   --secondary: var(--surface-2);
@@ -74,9 +73,8 @@
   --muted-foreground: #555b63; /* 6.1:1 */
   --subtle-foreground: #bec1bc; /* decorative only */
 
-  --primary: #636c3c; /* 5.0:1 on background, 4.5:1 on surface-raised (a hovered card): the lightest that keeps AA */
+  --primary: #576f20; /* 5.0:1 on background, 4.6:1 on surface-raised (a hovered card). Saturation, not lightness, carries it: lighter breaks AA */
   --primary-foreground: #f2f1ec; /* 5.0:1 */
-  --accent-decorative: #8a9652;
 
   --secondary: var(--surface-2);
   --muted: var(--surface-2);
@@ -84,14 +82,14 @@
 
   --border: #d1d0c6; /* 1.4:1 — enough for a card to hold its edge without the shadow */
   --input: #7e8689;
-  --ring: #636c3c;
+  --ring: #576f20;
 
   --syntax-keyword: #3f6b7a; /* 4.7:1 on raised */
 
-  --danger: #a8402a; /* 5.9:1 on card, 4.9:1 on raised */
+  --danger: #bf3318; /* 5.4:1 on card, 4.6:1 on raised */
 
   --globe-sea: #ebeae4; /* a step below card, so the sphere reads against it */
-  --globe-land: #c5c8c0; /* 1.4:1 on the sea; visited (primary) 3.5:1 on land */
+  --globe-land: #c5c8c0; /* 1.4:1 on the sea; visited (primary) 3.4:1 on land */
   --globe-land-hover: #a9ada5;
 
   --shadow-card: 0 24px 48px -28px rgb(31 35 40 / 0.28);
@@ -125,7 +123,6 @@
   --color-subtle-foreground: var(--subtle-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-accent-decorative: var(--accent-decorative);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
@@ -211,7 +208,6 @@
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --animate-marquee: marquee 70s linear infinite;
   --animate-contour-sway: contour-sway 30s ease-in-out infinite alternate;
   --animate-contour-breathe: contour-breathe 8s ease-in-out infinite;
   --animate-now-ring: now-ring 2.4s var(--ease-out-strong) infinite;
@@ -222,7 +218,6 @@
   --animate-word-brighten: word-brighten 0.8s var(--ease-out-strong) both; /* plain inline words: see Hero.tsx */
   --animate-rise: rise var(--transition-duration-enter) var(--ease-out-strong) both;
   --animate-develop: develop 1.5s var(--ease-out-strong) backwards; /* backwards: the resting filter stays the element's own */
-  --animate-fade-in: fade-in var(--transition-duration-enter) var(--ease-out-strong) both;
 
   /* Keep headline words inline and visible so the full headline remains one LCP candidate. */
   @keyframes lift {
@@ -247,12 +242,6 @@
       transform: scale(1.06);
     }
   }
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
-
   @keyframes contour-draw {
     from {
       stroke-dashoffset: 1;
@@ -271,11 +260,6 @@
     }
   }
 
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
   @keyframes contour-sway {
     from {
       transform: rotate(-3deg);

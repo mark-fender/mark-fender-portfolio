@@ -10,9 +10,7 @@ const text = (html: string) =>
     .trim();
 
 describe('SectionHeader', () => {
-  it('pads the index and the total to two digits', () => {
-    expect(
-      text(renderToString(createElement(SectionHeader, { index: 1, label: 'Projects', total: 7 }))),
-    ).toBe('01 Projects 01 / 07');
+  it('renders only the rule, with no repeated label or counter', () => {
+    expect(text(renderToString(createElement(SectionHeader)))).toBe('');
   });
 });

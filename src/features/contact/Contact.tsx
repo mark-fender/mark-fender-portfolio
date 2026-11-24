@@ -4,7 +4,6 @@ import RevealHeading from '@/components/motion/RevealHeading';
 import NewTabCue from '@/components/NewTabCue';
 import Section from '@/components/section/Section';
 import SurfaceCard from '@/components/SurfaceCard';
-import { sectionHeader } from '@/content/nav';
 import { socials } from '@/content/site';
 import { ui } from '@/content/ui';
 import { delayed, inView, stagger, variants } from '@/design-system/motion';
@@ -15,7 +14,7 @@ import { socialIcons } from './icons';
 const Contact = ({ locale }: { locale: Locale }) => {
   const copy = ui[locale].contact;
   return (
-    <Section id='contact' {...sectionHeader('contact', locale)}>
+    <Section id='contact'>
       <RevealHeading
         className='mb-8 max-w-225 text-display min-[920px]:mb-14'
         text={copy.heading}

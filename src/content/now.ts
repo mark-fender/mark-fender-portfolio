@@ -10,8 +10,8 @@ export const nowItems: readonly {
     id: 'learning',
     label: { en: 'Learning', sk: 'Učím sa' },
     value: {
-      en: 'Backend development, mostly Node.js and Go',
-      sk: 'Backendový vývoj, hlavne Node.js a Go',
+      en: 'Backend development, Node.js and Go',
+      sk: 'Backendový vývoj, Node.js a Go',
     },
   },
   {

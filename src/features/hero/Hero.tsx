@@ -45,7 +45,7 @@ const Hero = ({ locale }: { locale: Locale }) => {
   const copy = ui[locale].hero;
   return (
     <section id='home' className='relative overflow-hidden'>
-      <div className='page-container relative pt-10 pb-12 min-[920px]:pt-20 min-[920px]:pb-18'>
+      <div className='page-container relative pt-10 pb-20 min-[920px]:pt-20 min-[920px]:pb-36'>
         <div
           aria-hidden
           className='pointer-events-none absolute top-0 -right-35 z-0 flex h-81.5 w-140 items-center min-[920px]:-right-52.5 min-[920px]:bottom-0 min-[920px]:h-auto min-[920px]:w-275'>
@@ -99,6 +99,17 @@ const Hero = ({ locale }: { locale: Locale }) => {
           </PortraitCard>
         </div>
       </div>
+      {/* Fade contours at all four clipping edges, behind the hero content. */}
+      <div
+        aria-hidden
+        className='pointer-events-none absolute inset-0'
+        style={{
+          backgroundImage: [
+            'linear-gradient(to right, var(--background), transparent 3rem, transparent calc(100% - 3rem), var(--background))',
+            'linear-gradient(to bottom, var(--background), transparent 3rem, transparent calc(100% - 3rem), var(--background))',
+          ].join(', '),
+        }}
+      />
     </section>
   );
 };

@@ -67,7 +67,7 @@ const OffTheClock = ({ locale }: { locale: Locale }) => {
   const header = sectionHeader('off-the-clock', locale);
   const copy = ui[locale].offTheClock;
   return (
-    <Section id='off-the-clock' {...header}>
+    <Section id='off-the-clock'>
       <div className='mb-3.5 flex flex-col gap-3.5 min-[920px]:mb-10 min-[920px]:gap-5'>
         <RevealHeading className='text-section' text={header.label} />
         <m.p

@@ -20,8 +20,8 @@ export const roles: readonly Role[] = [
     from: { year: 2017, month: 9 },
     to: { year: 2018, month: 9 },
     description: {
-      en: 'My first job, part time while I was still studying. I tested features with JUnit and Selenium, built internal tools and made the existing test suites more stable and faster to run.',
-      sk: 'Moja prvá práca, na čiastočný úväzok popri štúdiu. Testoval som funkcie v JUnite a Seleniu, robil interné nástroje a existujúce testy som urobil stabilnejšími a rýchlejšími.',
+      en: 'I worked here part time while still at university, writing JUnit and Selenium tests, building internal tools and making the existing test suites faster and less flaky.',
+      sk: 'Pracoval som tu na čiastočný úväzok popri vysokej škole. Písal som testy v JUnite a Seleniu, robil interné nástroje a existujúce testy som zrýchlil a znížil počet ich náhodných zlyhaní.',
     },
   },
   {
@@ -30,8 +30,8 @@ export const roles: readonly Role[] = [
     from: { year: 2018, month: 9 },
     to: { year: 2022, month: 10 },
     description: {
-      en: 'I joined as a junior and worked on Angular apps, mostly for the Austrian client NTS Retail. Over four years I went from working on existing projects to starting new ones from scratch, and I helped refactor and clean up a legacy codebase.',
-      sk: 'Nastúpil som ako junior a pracoval na aplikáciách v Angulari, hlavne pre rakúskeho klienta NTS Retail. Za štyri roky som sa posunul od práce na existujúcich projektoch k zakladaniu nových od nuly a pomáhal som refaktorovať a upratať starý kód.',
+      en: 'This was my first frontend job, and I stayed four years, mostly on Angular apps for the Austrian retailer NTS Retail. I started as a junior fixing things in existing projects and ended up setting up new ones from scratch, alongside refactoring and making a legacy codebase cleaner.',
+      sk: 'Bola to moja prvá frontendová práca a zostal som tam štyri roky, väčšinou na aplikáciách v Angulari pre rakúsku maloobchodnú firmu NTS Retail. Začínal som ako junior opravovaním vecí v existujúcich projektoch a nakoniec som zakladal nové od nuly. Popri tom som refaktoroval a upratoval legacy kód.',
     },
   },
   {
@@ -40,8 +40,8 @@ export const roles: readonly Role[] = [
     from: { year: 2022, month: 11 },
     to: { year: 2023, month: 4 },
     description: {
-      en: 'I was the only frontend developer on Inveox SampleX, so the frontend architecture was my call. I built authentication, authorization and user management, and the WebSocket connection that keeps the interface up to date with the processing state.',
-      sk: 'Na Inveox SampleX som bol jediný frontendový vývojár, takže architektúra frontendu bola na mne. Postavil som autentifikáciu, autorizáciu a správu používateľov a WebSocketové spojenie, ktoré drží rozhranie v súlade so stavom spracovania.',
+      en: 'For six months I was the only frontend developer on Inveox SampleX. I set up the architecture, built login and user permissions, and connected the UI to the machine over WebSockets so it always shows the current processing state.',
+      sk: 'Pol roka som bol jediný frontendový vývojár na Inveox SampleX. Navrhol som architektúru, postavil prihlasovanie a používateľské oprávnenia a cez WebSockety som rozhranie prepojil s prístrojom, takže vždy ukazuje aktuálny stav spracovania.',
     },
   },
   {
@@ -50,25 +50,21 @@ export const roles: readonly Role[] = [
     from: { year: 2023, month: 5 },
     to: { year: 2025, month: 7 },
     description: {
-      en: 'I was on a team building frontends for aviation software, mainly an AIXM editor for digital NOTAMs. The aeronautical data models are large and deeply nested, and much of my work was keeping that data consistent between a form, a map and the final message.',
-      sk: 'Bol som v tíme, ktorý robil frontendy pre letecký softvér, hlavne editor AIXM pre digitálne NOTAM. Letecké dátové modely sú veľké a hlboko vnorené a veľká časť mojej práce bola udržať tieto dáta konzistentné medzi formulárom, mapou a výslednou správou.',
+      en: 'I spent two years on aviation software, mostly the AIXM editor for digital NOTAMs. The data models are deeply nested, and most of my work was keeping one piece of data consistent across a form, a map and the final message.',
+      sk: 'Dva roky som robil na leteckom softvéri, hlavne na editore AIXM pre digitálne NOTAM. Dátové modely sú hlboko vnorené a väčšina mojej práce bola o tom, aby tie isté dáta sedeli vo formulári, na mape aj vo výslednej správe.',
     },
     points: [
       {
-        en: 'Wrote the geometry conversion from the data models to GeoJSON behind a side-by-side map and form editor, where a change in one shows up in the other straight away.',
-        sk: 'Napísal som prevod geometrie z dátových modelov do GeoJSON pre editor, kde sú mapa a formulár vedľa seba a zmena v jednom sa hneď prejaví v druhom.',
+        en: 'Wrote the geometry conversion to GeoJSON, so an edit on the map shows up in the form and the other way round.',
+        sk: 'Napísal som prevod geometrie do GeoJSON, takže úprava na mape sa ukáže vo formulári a naopak.',
       },
       {
-        en: 'Implemented encoding logic for NOTAM scenarios, which turns large nested data objects into short messages that follow the domain rules.',
-        sk: 'Implementoval som kódovanie pre scenáre NOTAM, ktoré mení veľké vnorené dátové objekty na krátke správy podľa pravidiel domény.',
+        en: 'Implemented the encoding that turns a large nested object into a short NOTAM that follows the format rules.',
+        sk: 'Implementoval som kódovanie, ktoré z veľkého vnoreného objektu urobí krátky NOTAM podľa pravidiel formátu.',
       },
       {
-        en: 'Built forms that are generated from the data models instead of written by hand.',
-        sk: 'Postavil som formuláre, ktoré sa generujú z dátových modelov namiesto písania ručne.',
-      },
-      {
-        en: 'Improved the visual design and usability of the apps, raised test coverage and cleaned up code as I went.',
-        sk: 'Zlepšil som vzhľad a použiteľnosť aplikácií, zvýšil pokrytie testami a priebežne upratoval kód.',
+        en: "Built forms that generate themselves from the data models, so a new model doesn't need a hand-written form.",
+        sk: 'Postavil som formuláre, ktoré sa samy generujú z dátových modelov, takže nový model nepotrebuje ručne písaný formulár.',
       },
     ],
   },
@@ -78,8 +74,8 @@ export const roles: readonly Role[] = [
     from: { year: 2025, month: 7 },
     to: { year: 2026, month: 3 },
     description: {
-      en: "I joined Caterpillar's Cat AI Assistant team through the Hotovo agency. My part was the response experience: streaming, the reveal animation, text-to-speech and images from the model. Alongside the features I refactored existing code and took part in architecture discussions.",
-      sk: 'Do tímu Cat AI Assistant v Caterpillari som sa dostal cez agentúru Hotovo. Mojou časťou bolo všetko okolo odpovedí: streamovanie, animácia zobrazovania, prevod textu na reč a obrázky z modelu. Popri funkciách som refaktoroval existujúci kód a zapájal sa do diskusií o architektúre.',
+      en: 'I joined the Cat AI Assistant team as a contractor and worked on how answers show up on screen. The rest of my time went into refactoring older code and architecture discussions as the product grew.',
+      sk: 'Do tímu Cat AI Assistant som nastúpil ako kontraktor a pracoval som na tom, ako sa odpovede zobrazujú na obrazovke. Zvyšok času mi zabral refaktoring staršieho kódu a diskusie o architektúre, keď produkt rástol.',
     },
   },
   {
@@ -88,25 +84,25 @@ export const roles: readonly Role[] = [
     from: { year: 2026, month: 3 },
     to: null,
     description: {
-      en: 'I work on ArkMap, a platform for network discovery and topology management. I build product screens in React and TypeScript, the shared code they run on, and the end-to-end tests that check them against a real backend.',
-      sk: 'Pracujem na ArkMap, platforme na objavovanie sietí a správu ich topológie. Robím obrazovky produktu v Reacte a TypeScripte, spoločný kód, na ktorom bežia, a end-to-end testy, ktoré ich overujú proti skutočnému backendu.',
+      en: 'I build product screens, the shared components under them, and the test setup that checks all of it against a real backend.',
+      sk: 'Robím obrazovky produktu, spoločné komponenty pod nimi a testovacie prostredie, ktoré to celé overuje proti skutočnému backendu.',
     },
     points: [
       {
-        en: 'Reworked the jobs and tasks drawer so people can follow discovery as it runs: status, progress by state, live durations, and links between jobs, tasks and the devices they touch.',
-        sk: 'Prerobil som panel jobov a úloh, aby ľudia mohli sledovať objavovanie siete, kým beží: stav, priebeh podľa stavov, živé trvanie a prepojenia medzi jobmi, úlohami a zariadeniami, ktorých sa týkajú.',
+        en: "Rebuilt the jobs and tasks drawer so you can watch a discovery run live, with each task's state, how long it has been running and which devices it touched.",
+        sk: 'Prerobil som panel jobov a úloh, takže objavovanie siete sa dá sledovať naživo. Pri každej úlohe vidno jej stav, ako dlho beží a ktorých zariadení sa týkala.',
       },
       {
-        en: 'Redesigned the topology dashboard on a lighter data model, with cache-first thumbnails, a queue that limits concurrent graph requests, and guards that drop results once they are stale.',
-        sk: 'Prerobil som dashboard topológie na ľahší dátový model, s náhľadmi primárne z cache, frontou, ktorá obmedzuje súbežné požiadavky na grafy, a poistkami, ktoré zahodia zastarané výsledky.',
+        en: 'Made the topology dashboard faster. It now runs on a lighter data model with cached thumbnails, limits how many graph requests go out at once, and drops responses that come back after the user has moved on.',
+        sk: 'Zrýchlil som dashboard topológie. Teraz beží na ľahšom dátovom modeli s náhľadmi z cache, obmedzuje počet súbežných požiadaviek na grafy a zahodí odpovede, ktoré prídu, až keď je používateľ už inde.',
       },
       {
-        en: 'Built filtering and entity selection that tables, lists and forms share: filter presets, controlled filters, typed reactive option loading, and multiselects for the UI library.',
-        sk: 'Postavil som filtrovanie a výber entít, ktoré zdieľajú tabuľky, zoznamy aj formuláre: predvoľby filtrov, kontrolované filtre, typované reaktívne načítanie možností a multiselecty pre UI knižnicu.',
+        en: 'Wrote the filtering and selection layer that tables, lists and forms share, so a new screen gets saved filters and async option loading for free.',
+        sk: 'Napísal som vrstvu na filtrovanie a výber, ktorú zdieľajú tabuľky, zoznamy aj formuláre, takže nová obrazovka dostane uložené filtre a asynchrónne načítanie možností zadarmo.',
       },
       {
-        en: "Built the E2E testing infrastructure on Playwright: parallel runs against a real local backend, reusable fixtures and coverage collection from the built bundles, all running in Docker in the CI/CD pipeline. It's what keeps the product stable from release to release.",
-        sk: 'Postavil som infraštruktúru E2E testov v Playwrighte: paralelné behy proti skutočnému lokálnemu backendu, znovupoužiteľné fixtures a zber pokrytia zo zostavených balíkov, všetko v Dockeri v CI/CD pipeline. Vďaka tomu je produkt stabilný od vydania k vydaniu.',
+        en: 'Set up end-to-end testing with Playwright from scratch. The tests run in parallel against a real backend in Docker in every pipeline, and coverage is measured on the production build.',
+        sk: 'Od nuly som postavil end-to-end testy v Playwrighte. Bežia paralelne proti skutočnému backendu v Dockeri v každej pipeline a pokrytie sa meria na produkčnom builde.',
       },
     ],
     stack: [

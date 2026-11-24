@@ -68,8 +68,8 @@ const en = {
   },
   travel: {
     heading: "Places I've been",
-    highlighted: "The highlighted countries are the ones I've visited.",
-    drag: 'Drag the globe to turn it.',
+    highlighted: "Highlighted countries are ones I've been to.",
+    drag: 'Drag to spin the globe.',
     visitedList: 'Visited: {list}.',
     globe: {
       label:
@@ -82,7 +82,7 @@ const en = {
   },
   offTheClock: {
     intro:
-      "I feel most at home outdoors, preferably with mountains nearby and nowhere I need to be. I love exploring unfamiliar places, taking the longer route, and seeing what's around the next corner. When I'm not out exploring, there's usually music playing, coffee brewing, and some new idea I'm experimenting with.",
+      "I'm happiest outdoors, ideally somewhere with mountains and no plans, and I'll take the long way round if there's something new to see. At home it's music, coffee and whatever idea I'm trying out at the moment.",
     now: 'Now',
     photos: 'Photos',
   },
@@ -191,15 +191,15 @@ const sk: UiCopy = {
     },
   },
   travel: {
-    heading: 'Kde všade som bol',
-    highlighted: 'Zvýraznené sú krajiny, ktoré som navštívil.',
-    drag: 'Glóbus otočíte potiahnutím.',
+    heading: 'Miesta, kde som bol',
+    highlighted: 'Zvýraznené krajiny som navštívil.',
+    drag: 'Glóbusom môžete otáčať potiahnutím.',
     visitedList: 'Navštívené: {list}.',
     globe: {
       label:
         'Glóbus s krajinami, ktoré som navštívil. Otočíte ho potiahnutím alebo šípkami. Priblížite ho roztiahnutím prstov.',
       // Not an adjective: it would have to agree with each country's gender (Island is masculine).
-      visited: '{name}, kde som bol',
+      visited: '{name}, navštívené',
       zoom: 'Priblíženie',
       zoomOut: 'Oddialiť',
       zoomIn: 'Priblížiť',
@@ -207,7 +207,7 @@ const sk: UiCopy = {
   },
   offTheClock: {
     intro:
-      'Najviac doma sa cítim vonku, najlepšie s horami nablízku a bez náhlenia. Rád objavujem neznáme miesta, chodím dlhšou cestou a pozerám, čo je za ďalšou zákrutou. Keď práve nie som vonku, zvyčajne mi hrá hudba, varí sa káva a skúšam nejaký nový nápad.',
+      'Najlepšie mi je vonku, ideálne niekde pri horách a bez plánu, a keď je čo nové vidieť, rád pôjdem dlhšou cestou. Doma je to hudba, káva a vždy nejaký nový nápad, ktorý práve skúšam.',
     now: 'Teraz',
     photos: 'Fotky',
   },
