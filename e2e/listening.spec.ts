@@ -2,6 +2,18 @@ import { listening } from '../src/content/now';
 import { ui } from '../src/content/ui';
 import { expect, test } from './fixtures';
 
+test('the Go listening endpoint returns cacheable JSON without credentials', async ({
+  request,
+}) => {
+  const response = await request.get('/api/listening');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('application/json');
+  expect(response.headers()['cache-control']).toBe(
+    'public, s-maxage=30, stale-while-revalidate=30',
+  );
+  expect(await response.json()).toBeNull();
+});
+
 const current = {
   title: 'Feel It Still',
   artist: 'Portugal. The Man',

@@ -9,5 +9,6 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 module.exports = {
   poweredByHeader: false,
+  experimental: { goRoutes: true },
   headers: async () => [{ source: '/:path*', headers: securityHeaders }],
 };
